@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+    mysql:
+        container_name: coreapi_mysql
+        ports:
+            - 3306:3306
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: core_api_dev
+        volumes:
+            - mysql_dev:/var/lib/mysql
+            - .:/app
+        image: mysql:5.7
+
+volumes:
+    mysql_dev:

@@ -1,0 +1,21 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+fos_rest:
+  param_fetcher_listener:  true
+  allowed_methods_listener:  true
+  routing_loader: true
+  exception:
+    enabled: true
+    exception_controller: 'fos_rest.exception.controller:showAction'
+  view:
+    formats:  #uses de JMSserializer
+      json: true
+      html: false
+    templating_formats:     #uses templating
+      html: true
+      json: false
+    view_response_listener:  'force'
+  format_listener:
+    enabled: true
+    rules:
+      - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
+      - { path: ^/, prefer_extension: true, priorities: [ 'html' ] }
