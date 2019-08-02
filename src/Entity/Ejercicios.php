@@ -38,6 +38,11 @@ class Ejercicios
      */
     private $entrenamientoLineas;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imagen;
+
 
 
     public function __construct()
@@ -148,6 +153,18 @@ class Ejercicios
                 $entrenamientoLinea->setEjercicio(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }
