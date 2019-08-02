@@ -76,6 +76,16 @@ class TestUsuario
      */
     private $celiaco;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $genero;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $diasEntrenamiento = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -221,6 +231,30 @@ class TestUsuario
     public function setCeliaco(bool $celiaco): self
     {
         $this->celiaco = $celiaco;
+
+        return $this;
+    }
+
+    public function getGenero(): ?string
+    {
+        return $this->genero;
+    }
+
+    public function setGenero(string $genero): self
+    {
+        $this->genero = $genero;
+
+        return $this;
+    }
+
+    public function getDiasEntrenamiento(): ?array
+    {
+        return $this->diasEntrenamiento;
+    }
+
+    public function setDiasEntrenamiento(?array $diasEntrenamiento): self
+    {
+        $this->diasEntrenamiento = $diasEntrenamiento;
 
         return $this;
     }
