@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @Serializer\ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("none")
  * @UniqueEntity(
  *     fields={"username","email"},
  *     errorPath="email",
@@ -23,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
-    use TimestampableEntity;
+    use TimestampableTrait;
     use UuidTrait;
 
     public function __construct()
@@ -73,6 +74,8 @@ class User implements UserInterface
     private $dietaPersonalizada;
 
     /**
+     * @Serializer\Groups({"edit"})
+     * @Serializer\Expose()
      * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
      */
     private $testUsuario;
@@ -97,8 +100,10 @@ class User implements UserInterface
      */
     private $objetivo;
 
-
-
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
 
     /**
      * @return mixed
@@ -172,26 +177,33 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return array[]
-     */
     public function getRoles(): array
     {
-        $stringyfiedRoles = [];
-
-        foreach ($this->roles as $role){
-            $stringyfiedRoles[] = $role->getName();
+        $rolesPlain = [];
+        /** @var Role $role */
+        foreach ($this->roles as $role) {
+            $rolesPlain = $rolesPlain + $this->buildTree($role, $role->getChildren());
         }
+        return array_values($rolesPlain);
+    }
 
-        return $stringyfiedRoles;
+
+    public function buildTree(Role $role, $children)
+    {
+        $tree[$role->getUuid()] = $role->getName();
+        foreach ($children as $role) {
+            $tree = $tree + $this->buildTree($role, $role->getChildren());
+        }
+        return $tree;
     }
 
     public function addRole(Role $role): self
     {
         if (!$this->roles->contains($role)) {
             $this->roles[] = $role;
+//            $children = $role->getChildren();
+//            $this->roles = $this->buildTree($role, $children);
         }
-
         return $this;
     }
 
@@ -199,9 +211,25 @@ class User implements UserInterface
     {
         if ($this->roles->contains($role)) {
             $this->roles->removeElement($role);
+//            $this->updateRoles();
         }
 
         return $this;
+    }
+
+//    public function updateRoles()
+//    {
+//        /** @var Role $role */
+//        foreach ($this->getRolesObj() as $role) {
+//            $roles = $role->getChildren();
+//            array_walk_recursive($roles, function ($role, $key) {
+//            });
+//        }
+//    }
+
+    public function getRolesObj()
+    {
+        return $this->roles;
     }
 
     public function getDietaPersonalizada(): ?DietaPersonalizada
@@ -289,6 +317,18 @@ class User implements UserInterface
     public function setObjetivo(string $objetivo): self
     {
         $this->objetivo = $objetivo;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

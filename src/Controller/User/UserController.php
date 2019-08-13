@@ -114,7 +114,6 @@ class UserController extends AbstractController
     {
         // SECURITY
         $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
-        $this->denyAccessUnlessGranted(UserVoter::VIEW, $user);
 
         return $user;
     }
