@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,32 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TestUsuario
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
+    use TimestampableTrait;
+    use UuidTrait;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="testUsuario", cascade={"persist", "remove"})
      */
     private $user;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $sendentarismo;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adherencia_deporte;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adherencia_dieta;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)
@@ -50,11 +34,6 @@ class TestUsuario
      * @ORM\Column(type="decimal", precision=10, scale=3)
      */
     private $altura;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $composicion_atletica;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -86,6 +65,41 @@ class TestUsuario
      */
     private $diasEntrenamiento = [];
 
+    /**
+     * @ORM\Column(type="decimal", precision=6, scale=3, nullable=true)
+     */
+    private $imc;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $edad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="usuarios_composion_atletica_comienzo")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $composicon_atletica;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="usuario_composicon_atletica_objetivo")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $composicion_atletica_objetivo;
+
+    /**
+     * @ORM\Column(type="decimal", precision=6, scale=3)
+     */
+    private $metabolismo_basal;
+
+    public function __construct()
+    {
+        if($this->getGenero() == "MUJER"){
+            $this->imc = (10 * $this->getPeso())+(6.25 * $this->getAltura()) - (5 * $this->getEdad()) - 161 ;
+        }
+        elseif ($this->getGenero() == "MUJER") $this->imc = (10 * $this->getPeso())+(6.25 * $this->getAltura()) - (5 * $this->getEdad()) + 5;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,42 +113,6 @@ class TestUsuario
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getSendentarismo(): ?bool
-    {
-        return $this->sendentarismo;
-    }
-
-    public function setSendentarismo(bool $sendentarismo): self
-    {
-        $this->sendentarismo = $sendentarismo;
-
-        return $this;
-    }
-
-    public function getAdherenciaDeporte(): ?string
-    {
-        return $this->adherencia_deporte;
-    }
-
-    public function setAdherenciaDeporte(string $adherencia_deporte): self
-    {
-        $this->adherencia_deporte = $adherencia_deporte;
-
-        return $this;
-    }
-
-    public function getAdherenciaDieta(): ?string
-    {
-        return $this->adherencia_dieta;
-    }
-
-    public function setAdherenciaDieta(string $adherencia_dieta): self
-    {
-        $this->adherencia_dieta = $adherencia_dieta;
 
         return $this;
     }
@@ -175,17 +153,6 @@ class TestUsuario
         return $this;
     }
 
-    public function getComposicionAtletica(): ?string
-    {
-        return $this->composicion_atletica;
-    }
-
-    public function setComposicionAtletica(string $composicion_atletica): self
-    {
-        $this->composicion_atletica = $composicion_atletica;
-
-        return $this;
-    }
 
     public function getFrecuenciaEntrenamiento(): ?string
     {
@@ -255,6 +222,66 @@ class TestUsuario
     public function setDiasEntrenamiento(?array $diasEntrenamiento): self
     {
         $this->diasEntrenamiento = $diasEntrenamiento;
+
+        return $this;
+    }
+
+    public function getImc()
+    {
+        return $this->imc;
+    }
+
+    public function setImc($imc): self
+    {
+        $this->imc = $imc;
+
+        return $this;
+    }
+
+    public function getEdad(): ?int
+    {
+        return $this->edad;
+    }
+
+    public function setEdad(int $edad): self
+    {
+        $this->edad = $edad;
+
+        return $this;
+    }
+
+    public function getComposiconAtletica(): ?TipoFisico
+    {
+        return $this->composicon_atletica;
+    }
+
+    public function setComposiconAtletica(?TipoFisico $composicon_atletica): self
+    {
+        $this->composicon_atletica = $composicon_atletica;
+
+        return $this;
+    }
+
+    public function getComposicionAtleticaObjetivo(): ?TipoFisico
+    {
+        return $this->composicion_atletica_objetivo;
+    }
+
+    public function setComposicionAtleticaObjetivo(?TipoFisico $composicion_atletica_objetivo): self
+    {
+        $this->composicion_atletica_objetivo = $composicion_atletica_objetivo;
+
+        return $this;
+    }
+
+    public function getMetabolismoBasal()
+    {
+        return $this->metabolismo_basal;
+    }
+
+    public function setMetabolismoBasal($metabolismo_basal): self
+    {
+        $this->metabolismo_basal = $metabolismo_basal;
 
         return $this;
     }

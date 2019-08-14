@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
-class TestUsuarioDTO implements DTOInterface
+class TestUsuarioCreateDTO implements DTOInterface
 {
     /**
      * @Assert\NotNull()
@@ -97,7 +97,7 @@ class TestUsuarioDTO implements DTOInterface
     private $diasEntrenamiento;
 
     /**
-     * TestUsuarioDTO constructor.
+     * TestUsuarioCreateDTO constructor.
      * @param $uuid
      * @param User $user
      * @param $altura

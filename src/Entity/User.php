@@ -85,20 +85,6 @@ class User implements UserInterface
      */
     private $cuardernoEntrenamiento;
 
-    /**
-     * @ORM\Column(type="decimal", precision=6, scale=3, nullable=true)
-     */
-    private $metabolismo_basal;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $edad;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $objetivo;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -285,41 +271,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getMetabolismoBasal()
-    {
-        return $this->metabolismo_basal;
-    }
-
-    public function setMetabolismoBasal($metabolismo_basal): self
-    {
-        $this->metabolismo_basal = $metabolismo_basal;
-
-        return $this;
-    }
-
-    public function getEdad(): ?int
-    {
-        return $this->edad;
-    }
-
-    public function setEdad(int $edad): self
-    {
-        $this->edad = $edad;
-
-        return $this;
-    }
-
-    public function getObjetivo(): ?string
-    {
-        return $this->objetivo;
-    }
-
-    public function setObjetivo(string $objetivo): self
-    {
-        $this->objetivo = $objetivo;
-
-        return $this;
-    }
 
     public function getPhoto(): ?string
     {
@@ -332,8 +283,5 @@ class User implements UserInterface
 
         return $this;
     }
-
-
-
 
 }
