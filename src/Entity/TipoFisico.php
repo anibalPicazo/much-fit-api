@@ -38,10 +38,22 @@ class TipoFisico
      */
     private $usuario_composicon_atletica_objetivo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TestUsuarioDieta", mappedBy="estado_actual", orphanRemoval=true)
+     */
+    private $estad_actual_test_dieta;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TestUsuarioDieta", mappedBy="estado_objetivo", orphanRemoval=true)
+     */
+    private $estado_objetivo_test_dieta;
+
     public function __construct()
     {
         $this->usuarios_composion_atletica_comienzo = new ArrayCollection();
         $this->usuario_composicon_atletica_objetivo = new ArrayCollection();
+        $this->estad_actual_test_dieta = new ArrayCollection();
+        $this->estado_objetivo_test_dieta = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +141,68 @@ class TipoFisico
             // set the owning side to null (unless already changed)
             if ($usuarioComposiconAtleticaObjetivo->getComposicionAtleticaObjetivo() === $this) {
                 $usuarioComposiconAtleticaObjetivo->setComposicionAtleticaObjetivo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TestUsuarioDieta[]
+     */
+    public function getEstadActualTestDieta(): Collection
+    {
+        return $this->estad_actual_test_dieta;
+    }
+
+    public function addEstadActualTestDietum(TestUsuarioDieta $estadActualTestDietum): self
+    {
+        if (!$this->estad_actual_test_dieta->contains($estadActualTestDietum)) {
+            $this->estad_actual_test_dieta[] = $estadActualTestDietum;
+            $estadActualTestDietum->setEstadoActual($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstadActualTestDietum(TestUsuarioDieta $estadActualTestDietum): self
+    {
+        if ($this->estad_actual_test_dieta->contains($estadActualTestDietum)) {
+            $this->estad_actual_test_dieta->removeElement($estadActualTestDietum);
+            // set the owning side to null (unless already changed)
+            if ($estadActualTestDietum->getEstadoActual() === $this) {
+                $estadActualTestDietum->setEstadoActual(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TestUsuarioDieta[]
+     */
+    public function getEstadoObjetivoTestDieta(): Collection
+    {
+        return $this->estado_objetivo_test_dieta;
+    }
+
+    public function addEstadoObjetivoTestDietum(TestUsuarioDieta $estadoObjetivoTestDietum): self
+    {
+        if (!$this->estado_objetivo_test_dieta->contains($estadoObjetivoTestDietum)) {
+            $this->estado_objetivo_test_dieta[] = $estadoObjetivoTestDietum;
+            $estadoObjetivoTestDietum->setEstadoObjetivo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstadoObjetivoTestDietum(TestUsuarioDieta $estadoObjetivoTestDietum): self
+    {
+        if ($this->estado_objetivo_test_dieta->contains($estadoObjetivoTestDietum)) {
+            $this->estado_objetivo_test_dieta->removeElement($estadoObjetivoTestDietum);
+            // set the owning side to null (unless already changed)
+            if ($estadoObjetivoTestDietum->getEstadoObjetivo() === $this) {
+                $estadoObjetivoTestDietum->setEstadoObjetivo(null);
             }
         }
 

@@ -5,14 +5,13 @@ namespace App\Service\Managers\User;
 
 
 
-use App\DTO\test_usuario\test_usuarioCreateDTO;
-use App\Entity\test_usuario;
+use App\DTO\TestUsuario\TestUsuarioEntrenamientoCreateDTO;
 use App\Entity\TestUsuario;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use phpDocumentor\Reflection\Types\Integer;
 
-class test_usuarioManager extends AbstractManager
+class TestUsuarioEntrenamientoManager extends AbstractManager
 {
 
     /**
@@ -20,22 +19,16 @@ class test_usuarioManager extends AbstractManager
      */
     protected function getRepository()
     {
-        return $this->doctrine->getRepository(test_usuario::class);
+        return $this->doctrine->getRepository(TestUsuario::class);
     }
-    public function createtest_usuario(test_usuarioCreateDTO $DTO){
+    public function createtest_usuario(TestUsuarioEntrenamientoCreateDTO $DTO){
 
         $usuario = $DTO->getUser();
         $test_usuario = new TestUsuario();
         $test_usuario->setUser($usuario);
-        $test_usuario->setPeso($DTO->getPeso());
-        $test_usuario->setAltura($DTO->getAltura());
-        $test_usuario->setGenero($DTO->getGenero());
-
+        $test_usuario->setExperienciaDeporte($DTO->getDiasEntrenamiento());
         $test_usuario->setFrecuenciaEntrenamiento($this->decisionFrecuenciaEntrenamiento($DTO->getDiasEntrenamiento()));
-        $test_usuario->setCeliaco($DTO->getCeliaco());
-        $test_usuario->setDiabetico($DTO->getDiabetico());
-
-
+        $test_usuario->setFormaFisica($DTO->getFormaFisica());
 
 
     }

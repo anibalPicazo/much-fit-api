@@ -61,38 +61,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/asignar",  methods={"POST"})
-     * @View(serializerGroups={"list", "edit"})
-     * @param AsignarEmpresaDTO $DTO
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ExceptionInterface
-     * @ParamConverter("DTO", converter="api.rest.dto.converter")
-     */
-    public function asignar(AsignarEmpresaDTO $DTO, Request $request)
-    {
-        // SECURITY
-        $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
-
-        //VALIDATION
-        $errors = $this->DTOValidator->validate($request);
-        if ($errors) {
-            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
-        }
-
-        //COMMAND
-        $user = $this->manager->asignarEmpresa($DTO);
-
-        //EVENT
-        $event = new UserEvent($DTO);
-        $this->dispatcher->dispatch($event, UserEvent::USER_COMPANY_DESIGNATED);
-
-        //RESPONSE
-        return $user;
-    }
-
-
-    /**
      * @Route("/current",  methods={"GET"})
      * @View(serializerGroups={"list", "edit"})
      * @return mixed

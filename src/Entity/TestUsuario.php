@@ -21,21 +21,6 @@ class TestUsuario
     private $user;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $porcentaje_grasa;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $peso;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $altura;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $frecuencia_entrenamiento;
@@ -44,16 +29,6 @@ class TestUsuario
      * @ORM\Column(type="string", length=255)
      */
     private $experiencia_deporte;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $diabetico;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $celiaco;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -66,44 +41,15 @@ class TestUsuario
     private $diasEntrenamiento = [];
 
     /**
-     * @ORM\Column(type="decimal", precision=6, scale=3, nullable=true)
-     */
-    private $imc;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $edad;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="usuarios_composion_atletica_comienzo")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $composicon_atletica;
+    private $forma_fisica;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="usuario_composicon_atletica_objetivo")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $composicion_atletica_objetivo;
-
-    /**
-     * @ORM\Column(type="decimal", precision=6, scale=3)
-     */
-    private $metabolismo_basal;
-
-    public function __construct()
-    {
-        if($this->getGenero() == "MUJER"){
-            $this->imc = (10 * $this->getPeso())+(6.25 * $this->getAltura()) - (5 * $this->getEdad()) - 161 ;
-        }
-        elseif ($this->getGenero() == "MUJER") $this->imc = (10 * $this->getPeso())+(6.25 * $this->getAltura()) - (5 * $this->getEdad()) + 5;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUser(): ?User
     {
@@ -116,44 +62,6 @@ class TestUsuario
 
         return $this;
     }
-
-    public function getPorcentajeGrasa()
-    {
-        return $this->porcentaje_grasa;
-    }
-
-    public function setPorcentajeGrasa($porcentaje_grasa): self
-    {
-        $this->porcentaje_grasa = $porcentaje_grasa;
-
-        return $this;
-    }
-
-    public function getPeso()
-    {
-        return $this->peso;
-    }
-
-    public function setPeso($peso): self
-    {
-        $this->peso = $peso;
-
-        return $this;
-    }
-
-    public function getAltura()
-    {
-        return $this->altura;
-    }
-
-    public function setAltura($altura): self
-    {
-        $this->altura = $altura;
-
-        return $this;
-    }
-
-
     public function getFrecuenciaEntrenamiento(): ?string
     {
         return $this->frecuencia_entrenamiento;
@@ -178,29 +86,7 @@ class TestUsuario
         return $this;
     }
 
-    public function getDiabetico(): ?bool
-    {
-        return $this->diabetico;
-    }
 
-    public function setDiabetico(bool $diabetico): self
-    {
-        $this->diabetico = $diabetico;
-
-        return $this;
-    }
-
-    public function getCeliaco(): ?bool
-    {
-        return $this->celiaco;
-    }
-
-    public function setCeliaco(bool $celiaco): self
-    {
-        $this->celiaco = $celiaco;
-
-        return $this;
-    }
 
     public function getGenero(): ?string
     {
@@ -226,63 +112,16 @@ class TestUsuario
         return $this;
     }
 
-    public function getImc()
+    public function getFormaFisica(): ?string
     {
-        return $this->imc;
+        return $this->forma_fisica;
     }
 
-    public function setImc($imc): self
+    public function setFormaFisica(string $forma_fisica): self
     {
-        $this->imc = $imc;
+        $this->forma_fisica = $forma_fisica;
 
         return $this;
     }
 
-    public function getEdad(): ?int
-    {
-        return $this->edad;
-    }
-
-    public function setEdad(int $edad): self
-    {
-        $this->edad = $edad;
-
-        return $this;
-    }
-
-    public function getComposiconAtletica(): ?TipoFisico
-    {
-        return $this->composicon_atletica;
-    }
-
-    public function setComposiconAtletica(?TipoFisico $composicon_atletica): self
-    {
-        $this->composicon_atletica = $composicon_atletica;
-
-        return $this;
-    }
-
-    public function getComposicionAtleticaObjetivo(): ?TipoFisico
-    {
-        return $this->composicion_atletica_objetivo;
-    }
-
-    public function setComposicionAtleticaObjetivo(?TipoFisico $composicion_atletica_objetivo): self
-    {
-        $this->composicion_atletica_objetivo = $composicion_atletica_objetivo;
-
-        return $this;
-    }
-
-    public function getMetabolismoBasal()
-    {
-        return $this->metabolismo_basal;
-    }
-
-    public function setMetabolismoBasal($metabolismo_basal): self
-    {
-        $this->metabolismo_basal = $metabolismo_basal;
-
-        return $this;
-    }
 }
