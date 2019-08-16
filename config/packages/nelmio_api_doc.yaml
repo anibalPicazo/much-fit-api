@@ -3,8 +3,8 @@ nelmio_api_doc:
         host: '%env(NELMIO_HOST)%'
         schemes: [http, https]
         info:
-            title: App
-            description: Application
+            title: Much Fit
+            description: Much than a application fitness
             version: 1.0.0
         securityDefinitions:
             Bearer:
@@ -13,7 +13,7 @@ nelmio_api_doc:
                 name: Authorization
                 in: header
         security:
-            - Bearer: []
+              - Bearer: []
     areas: # to filter documented areas
 
         default:

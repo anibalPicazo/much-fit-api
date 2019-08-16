@@ -28,12 +28,18 @@ class UserSubscriber implements EventSubscriberInterface
     {
         return [
             UserEvent::USER_CREATED => 'onUserCreated',
+            UserEvent::USER_COMPANY_DESIGNATED => 'onUserAsignated',
         ];
     }
 
     public function onUserCreated(UserEvent $event)
     {
         $this->eventStore->saveEvent(UserEvent::USER_CREATED, $event->getDTO());
+    }
+
+    public function onUserAsignated(UserEvent $event)
+    {
+        $this->eventStore->saveEvent(UserEvent::USER_COMPANY_DESIGNATED, $event->getDTO());
     }
 
 }

@@ -20,7 +20,7 @@ class DTOExtractor
      * @return array
      * @throws \ReflectionException
      */
-    public function extractData(DTOInterface $DTO)
+    public function extractData($DTO)
     {
         $reflecion = new \ReflectionClass($DTO);
         $properties = $reflecion->getProperties(ReflectionProperty::IS_PROTECTED);

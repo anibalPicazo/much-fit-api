@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\DTO\Cliente\ClienteListarDTO;
+use App\DTO\Cliente\ClienteVisitasDTO;
 use App\Entity\Cliente;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +22,46 @@ class ClienteRepository extends ServiceEntityRepository
         parent::__construct($registry, Cliente::class);
     }
 
-    // /**
-    //  * @return Cliente[] Returns an array of Cliente objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function findByClienteListarDTO(User $user)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $builder = $this->createQueryBuilder('cliente')
+            ->join('cliente.empresa', 'empresa')
+            ->where('empresa = :empresa')
+            ->setParameter('empresa', $user->getEmpresa())
+            ->orderBy('cliente.createdAt', 'DESC');
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Cliente
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $query = $builder->getQuery();
+        return $query->getResult();
+
     }
-    */
+
+    /**
+     * @param ClienteVisitasDTO $DTO
+     * @return mixed
+     */
+    public function findClienteVisitasByDTO(ClienteVisitasDTO $DTO)
+    {
+        $cliente = $DTO->getCliente();
+
+        $builder = $this->createQueryBuilder('cliente')
+            ->join('cliente.visitas', 'visita')
+            ->where('cliente = :cliente')
+            ->setParameters(['cliente' => $cliente]);
+
+        if ($DTO->getFrom()) {
+            $builder->andWhere('visita.desde >= :from');
+        }
+        if ($DTO->getTo()) {
+            $builder->andWhere('visita.hasta <= :to');
+        }
+
+        $query = $builder->getQuery();
+        return $query->getResult();
+    }
+
 }

@@ -15,8 +15,6 @@ class UserTestCest extends BaseApiTestBase
 
     public function _before(ApiTester $I)
     {
-        $this->auth($I, Role::ROLE_ROOT);
-        $this->current($I);
     }
 
     public function _after(ApiTester $I)
@@ -30,6 +28,7 @@ class UserTestCest extends BaseApiTestBase
     public function adminCanLogin(ApiTester $I)
     {
         $I->wantToTest('Admin can login');
+        $this->auth($I, Role::ROLE_ROOT);
         $I->amBearerAuthenticated($this->token);
         $I->sendGet('api/users/current');
         $I->seeResponseCodeIs(200);

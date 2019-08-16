@@ -9,13 +9,17 @@ fos_rest:
   view:
     formats:  #uses de JMSserializer
       json: true
-      html: false
+      html: true
     templating_formats:     #uses templating
       html: true
       json: false
     view_response_listener:  'force'
   format_listener:
-    enabled: true
     rules:
-      - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
-      - { path: ^/, prefer_extension: true, priorities: [ 'html' ] }
+      prefer_extension: false
+      fallback_format: json
+#    enabled: true
+#    rules:
+#      - { path: ^/doc, prefer_extension: false, fallback_format: html, priorities: [ 'html' ] }
+#      - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
+#      - { path: ^/, prefer_extension: true, priorities: [ 'html' ] }

@@ -2,12 +2,11 @@
 
 namespace App\Controller\User;
 
-use App\DTO\User\AsignarEmpresaDTO;
 use App\DTO\User\UserCreateDTO;
+use App\DTO\User\UserRegisterDTO;
 use App\Entity\Role;
 use App\Entity\User;
 use App\EventSubscriber\Event\UserEvent;
-use App\Security\Voter\UserVoter;
 use App\Service\Managers\User\UserManager;
 use App\Validator\DTOValidator;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -19,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Security;
+
 
 /**
  * @Route("/users")
@@ -60,9 +62,17 @@ class UserController extends AbstractController
         return $this->getUser()->getEmpresa()->getUsers();
     }
 
+
     /**
      * @Route("/current",  methods={"GET"})
      * @View(serializerGroups={"list", "edit"})
+     *
+     * @SWG\Tag(name="Users")
+     * @SWG\Response(
+     *     response=200,
+     *     description=""
+     * )
+     * @Security(name="Bearer")
      * @return mixed
      */
     public function getCurrentUser()
@@ -129,6 +139,30 @@ class UserController extends AbstractController
         $this->manager->remove($user);
 
         return new JsonResponse(null, Response::HTTP_OK);
+
+    }
+
+    /**
+     * @Route("/register",  methods={"POST"})
+     * @ParamConverter("DTO", converter="api.rest.dto.converter")
+     * @param UserRegisterDTO $DTO
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ExceptionInterface
+     */
+    public function register(UserRegisterDTO $DTO, Request $request){
+        //SECURITY
+
+
+        //VALIDATION
+        $errors = $this->DTOValidator->validate($request);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
+        }
+        //COMAND
+        $this->manager->register($DTO);
+        //RESPONSE
+        return new JsonResponse(null, Response::HTTP_CREATED);
 
     }
 

@@ -4,13 +4,17 @@
 namespace App\Service\Managers;
 
 use App\DTO\DTOInterface;
+use App\Entity\User;
 use App\Serializer\ApiRestErrorNormalizer;
+use App\Service\Events\EventStore;
 use App\Service\Forms\DTOFormFactory;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 abstract class AbstractManager
@@ -24,41 +28,76 @@ abstract class AbstractManager
      */
     protected $tokenStorage;
     /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+    /**
+     * @var EventStore
+     */
+    protected $eventStore;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    protected $encoder;
+    /**
      * @var DTOFormFactory
      */
-    private $formFactory;
+    protected $formFactory;
     /**
      * @var ApiRestErrorNormalizer
      */
-    private $normalizer;
+    protected $normalizer;
 
     /**
      * AbstractService constructor.
+     * @param UserPasswordEncoderInterface $encoder
      * @param ApiRestErrorNormalizer $normalizer
      * @param DTOFormFactory $formFactory
      * @param EntityManagerInterface $doctrine
      * @param TokenStorageInterface $tokenStorage
+     * @param EventDispatcherInterface $dispatcher
+     * @param EventStore $eventStore
      */
-    public function __construct(ApiRestErrorNormalizer $normalizer, DTOFormFactory $formFactory, EntityManagerInterface $doctrine, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        UserPasswordEncoderInterface $encoder,
+        ApiRestErrorNormalizer $normalizer,
+        DTOFormFactory $formFactory,
+        EntityManagerInterface $doctrine,
+        TokenStorageInterface $tokenStorage,
+        EventDispatcherInterface $dispatcher,
+        EventStore $eventStore
+    ) {
         $this->doctrine = $doctrine;
         $this->formFactory = $formFactory;
         $this->normalizer = $normalizer;
         $this->tokenStorage = $tokenStorage;
+        $this->dispatcher = $dispatcher;
+        $this->eventStore = $eventStore;
+        $this->encoder = $encoder;
     }
 
     /**
+     * @param array $params
      * @return object[]
      */
-    public function getList()
+    public function getList($params = [])
     {
-        return $this->getRepository()->findBy([]);
+        return $this->getRepository()->findBy($params,['id' => 'DESC']);
     }
 
     /**
      * @return ObjectRepository
      */
     abstract protected function getRepository();
+
+    /**
+     * @param array $params
+     * @return object[]
+     */
+    public function findBy(array $params)
+    {
+        return $this->getRepository()->findBy($params);
+    }
 
     /**
      * Get Item
@@ -95,7 +134,7 @@ abstract class AbstractManager
             return $formFactory->save();
         } else {
             return new JsonResponse(
-                ['status' => 'error', 'errors' => $this->normalizer->normalize($form)],
+                ['status' => 'error', 'errors' => $this->normalizer->normalize($formFactory->getForm()->getErrors())],
                 JsonResponse::HTTP_BAD_REQUEST
             );
         }
@@ -119,4 +158,26 @@ abstract class AbstractManager
         $this->doctrine->flush();
     }
 
+
+    public function beginTransaction()
+    {
+        $this->doctrine->getConnection()->beginTransaction();
+    }
+
+    public function rollback()
+    {
+        $this->doctrine->getConnection()->rollBack();
+    }
+
+    public function commit()
+    {
+        $this->doctrine->getConnection()->commit();
+    }
+
+    /**
+     * @return User
+     */
+    public function getCurrent(){
+        return $this->tokenStorage->getToken()->getUser();
+    }
 }
