@@ -7,7 +7,7 @@ namespace App\DTO\TestUsuario;
 use App\DTO\DTOInterface;
 use App\Entity\User;
 use JMS\Serializer\Annotation as JMSSerializer;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;;
 
 
 
@@ -16,14 +16,14 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     /**
      * @Assert\NotNull()
      * @Assert\NotBlank
-     * @Serializer\Type("Entity<App\Entity\User>")
+     * @JMSSerializer\Type("Entity<App\Entity\User>")
      */
     protected $user;
 
     /**
      * @Assert\NotNull()
      * @Assert\NotBlank
-     * @Serializer\Type("string")
+     * @JMSSerializer\Type("string")
      */
     protected $experiencia_deporte;
 
@@ -32,16 +32,18 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
      * @JMSSerializer\Type("string")
      */
     protected $uuid;
-    /**
-     * @Assert\NotNull()
-     * @JMSSerializer\Type("array")
-     */
-    protected $diasEntrenamiento;
+
     /**
      * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
     protected $forma_fisica;
+
+    /**
+     * @Assert\NotNull()
+     * @JMSSerializer\Type("integer")
+     */
+    protected $frecuencia;
 
 
     /**
@@ -49,16 +51,16 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
      * @param $uuid
      * @param User $user
      * @param $experiencia_deporte
-     * @param $diasEntrenamiento
+     * @param $frecuencia
      * @param $forma_fisica
      */
-    public function __construct($uuid,$user,$experiencia_deporte,$diasEntrenamiento,$forma_fisica)
+    public function __construct($uuid,$user,$experiencia_deporte,$frecuencia,$forma_fisica)
     {
         $this->uuid = $uuid;
         $this->user = $user;
         $this->experiencia_deporte = $experiencia_deporte;
-        $this->diasEntrenamiento = $diasEntrenamiento;
         $this->forma_fisica = $forma_fisica;
+        $this->frecuencia = $frecuencia;
     }
 
     /**
@@ -80,14 +82,6 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     /**
      * @return mixed
      */
-    public function getDiasEntrenamiento()
-    {
-        return $this->diasEntrenamiento;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getUuid()
     {
         return $this->uuid;
@@ -99,6 +93,14 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     public function getFormaFisica()
     {
         return $this->forma_fisica;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFrecuencia()
+    {
+        return $this->frecuencia;
     }
 
 

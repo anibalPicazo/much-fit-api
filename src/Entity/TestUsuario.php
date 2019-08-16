@@ -15,13 +15,9 @@ class TestUsuario
     use TimestampableTrait;
     use UuidTrait;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="testUsuario", cascade={"persist", "remove"})
-     */
-    private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
     private $frecuencia_entrenamiento;
 
@@ -33,35 +29,16 @@ class TestUsuario
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $genero;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $diasEntrenamiento = [];
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $edad;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $forma_fisica;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="testUsuario", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
-        return $this;
-    }
     public function getFrecuenciaEntrenamiento(): ?string
     {
         return $this->frecuencia_entrenamiento;
@@ -86,32 +63,6 @@ class TestUsuario
         return $this;
     }
 
-
-
-    public function getGenero(): ?string
-    {
-        return $this->genero;
-    }
-
-    public function setGenero(string $genero): self
-    {
-        $this->genero = $genero;
-
-        return $this;
-    }
-
-    public function getDiasEntrenamiento(): ?array
-    {
-        return $this->diasEntrenamiento;
-    }
-
-    public function setDiasEntrenamiento(?array $diasEntrenamiento): self
-    {
-        $this->diasEntrenamiento = $diasEntrenamiento;
-
-        return $this;
-    }
-
     public function getFormaFisica(): ?string
     {
         return $this->forma_fisica;
@@ -120,6 +71,18 @@ class TestUsuario
     public function setFormaFisica(string $forma_fisica): self
     {
         $this->forma_fisica = $forma_fisica;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

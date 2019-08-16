@@ -74,13 +74,6 @@ class User implements UserInterface
     private $dietaPersonalizada;
 
     /**
-     * @Serializer\Groups({"edit"})
-     * @Serializer\Expose()
-     * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $testUsuario;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\CuardernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
@@ -100,6 +93,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $surname;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $testUsuario;
 
     /**
      * @return mixed
@@ -246,23 +244,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTestUsuario(): ?TestUsuario
-    {
-        return $this->testUsuario;
-    }
-
-    public function setTestUsuario(?TestUsuario $testUsuario): self
-    {
-        $this->testUsuario = $testUsuario;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $testUsuario === null ? null : $this;
-        if ($newUser !== $testUsuario->getUser()) {
-            $testUsuario->setUser($newUser);
-        }
-
-        return $this;
-    }
 
     public function getCuardernoEntrenamiento(): ?CuardernoEntrenamiento
     {
@@ -314,6 +295,23 @@ class User implements UserInterface
     public function setSurname(string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getTestUsuario(): ?TestUsuario
+    {
+        return $this->testUsuario;
+    }
+
+    public function setTestUsuario(TestUsuario $testUsuario): self
+    {
+        $this->testUsuario = $testUsuario;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $testUsuario->getUser()) {
+            $testUsuario->setUser($this);
+        }
 
         return $this;
     }
