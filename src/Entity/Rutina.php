@@ -53,9 +53,15 @@ class Rutina
      */
     private $objetivos = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="rutina")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->Dia = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,37 @@ class Rutina
     public function setObjetivos(array $objetivos): self
     {
         $this->objetivos = $objetivos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getRutina() === $this) {
+                $user->setRutina(null);
+            }
+        }
 
         return $this;
     }

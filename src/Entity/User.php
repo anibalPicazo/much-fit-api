@@ -31,6 +31,7 @@ class User implements UserInterface
     {
         $this->setActivo(true);
         $this->roles = new ArrayCollection();
+        $this->entrenamientos = new ArrayCollection();
     }
 
     /**
@@ -98,6 +99,16 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
      */
     private $testUsuario;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="User", orphanRemoval=true)
+     */
+    private $entrenamientos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
+     */
+    private $rutina;
 
     /**
      * @return mixed
@@ -312,6 +323,49 @@ class User implements UserInterface
         if ($this !== $testUsuario->getUser()) {
             $testUsuario->setUser($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entrenamiento[]
+     */
+    public function getEntrenamientos(): Collection
+    {
+        return $this->entrenamientos;
+    }
+
+    public function addEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if (!$this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos[] = $entrenamiento;
+            $entrenamiento->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if ($this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos->removeElement($entrenamiento);
+            // set the owning side to null (unless already changed)
+            if ($entrenamiento->getUser() === $this) {
+                $entrenamiento->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRutina(): ?Rutina
+    {
+        return $this->rutina;
+    }
+
+    public function setRutina(?Rutina $rutina): self
+    {
+        $this->rutina = $rutina;
 
         return $this;
     }
