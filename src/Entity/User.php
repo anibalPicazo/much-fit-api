@@ -75,7 +75,7 @@ class User implements UserInterface
     private $dietaPersonalizada;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CuardernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
 
@@ -256,12 +256,12 @@ class User implements UserInterface
     }
 
 
-    public function getCuardernoEntrenamiento(): ?CuardernoEntrenamiento
+    public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
     {
         return $this->cuardernoEntrenamiento;
     }
 
-    public function setCuardernoEntrenamiento(CuardernoEntrenamiento $cuardernoEntrenamiento): self
+    public function setCuardernoEntrenamiento(CuadernoEntrenamiento $cuardernoEntrenamiento): self
     {
         $this->cuardernoEntrenamiento = $cuardernoEntrenamiento;
 

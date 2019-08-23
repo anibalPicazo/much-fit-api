@@ -39,7 +39,7 @@ class HojaCuaderno
     private $datos = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CuardernoEntrenamiento", inversedBy="hojas")
+     * @ORM\ManyToOne(targetEntity="CuadernoEntrenamiento", inversedBy="hojas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cuardernoEntrenamiento;
@@ -141,12 +141,12 @@ class HojaCuaderno
         return $this;
     }
 
-    public function getCuardernoEntrenamiento(): ?CuardernoEntrenamiento
+    public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
     {
         return $this->cuardernoEntrenamiento;
     }
 
-    public function setCuardernoEntrenamiento(?CuardernoEntrenamiento $cuardernoEntrenamiento): self
+    public function setCuardernoEntrenamiento(?CuadernoEntrenamiento $cuardernoEntrenamiento): self
     {
         $this->cuardernoEntrenamiento = $cuardernoEntrenamiento;
 

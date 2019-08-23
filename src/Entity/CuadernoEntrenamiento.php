@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CuardernoEntrenamientoRepository")
  */
-class CuardernoEntrenamiento
+class CuadernoEntrenamiento
 {
     use UuidTrait;
     use TimestampableTrait;

@@ -84,10 +84,16 @@ class Dieta
      */
     private $hojaCuadernos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuadernoDieta", mappedBy="dieta", orphanRemoval=true)
+     */
+    private $hojaCuadernoDietas;
+
 
     public function __construct()
     {
         $this->hojaCuadernos = new ArrayCollection();
+        $this->hojaCuadernoDietas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +272,37 @@ class Dieta
     public function setPostcena(?PostcenaDieta $postcena): self
     {
         $this->postcena = $postcena;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HojaCuadernoDieta[]
+     */
+    public function getHojaCuadernoDietas(): Collection
+    {
+        return $this->hojaCuadernoDietas;
+    }
+
+    public function addHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if (!$this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas[] = $hojaCuadernoDieta;
+            $hojaCuadernoDieta->setDieta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if ($this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas->removeElement($hojaCuadernoDieta);
+            // set the owning side to null (unless already changed)
+            if ($hojaCuadernoDieta->getDieta() === $this) {
+                $hojaCuadernoDieta->setDieta(null);
+            }
+        }
 
         return $this;
     }
