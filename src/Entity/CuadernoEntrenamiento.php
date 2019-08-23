@@ -27,9 +27,15 @@ class CuardernoEntrenamiento
      */
     private $hojas;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuadernoDieta", mappedBy="cuaderno", orphanRemoval=true)
+     */
+    private $hojaCuadernoDietas;
+
     public function __construct()
     {
         $this->hojas = new ArrayCollection();
+        $this->hojaCuadernoDietas = new ArrayCollection();
     }
 
 
@@ -77,6 +83,37 @@ class CuardernoEntrenamiento
             // set the owning side to null (unless already changed)
             if ($hoja->getCuardernoEntrenamiento() === $this) {
                 $hoja->setCuardernoEntrenamiento(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HojaCuadernoDieta[]
+     */
+    public function getHojaCuadernoDietas(): Collection
+    {
+        return $this->hojaCuadernoDietas;
+    }
+
+    public function addHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if (!$this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas[] = $hojaCuadernoDieta;
+            $hojaCuadernoDieta->setCuaderno($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if ($this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas->removeElement($hojaCuadernoDieta);
+            // set the owning side to null (unless already changed)
+            if ($hojaCuadernoDieta->getCuaderno() === $this) {
+                $hojaCuadernoDieta->setCuaderno(null);
             }
         }
 
