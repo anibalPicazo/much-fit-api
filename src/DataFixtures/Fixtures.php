@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class InitFixtures extends Fixture
+class InitFixtures extends Fixture implements ContainerAwareInterface
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -29,11 +29,20 @@ class InitFixtures extends Fixture
     {
 
 
-        #ROLE ADMIN
-        $role = new Role();
-        $role->setUuid(Uuid::uuid4()->toString());
-        $role->setName('ROLE_ADMIN');
-        $manager->persist($role);
+        #ROLE ROOT
+        $roleAdmin = new Role();
+        $roleAdmin->setUuid(Uuid::uuid4()->toString());
+        $roleAdmin->setName(Role::ROLE_ROOT);
+
+        #ROLE_USER
+        $roleUser = new Role();
+        $roleUser->setUuid(Uuid::uuid4()->toString());
+        $roleUser->setName(Role::ROLE_USER);
+        $manager->persist($roleUser);
+
+        $roleAdmin->addChild($roleUser);
+        $manager->persist($roleAdmin);
+
 
         #ADMIN
         $admin = new User();
@@ -41,26 +50,21 @@ class InitFixtures extends Fixture
         $admin->setEmail('admin@admin.com');
         $admin->setUsername('admin');
         $admin->setPassword($this->encoder->encodePassword($admin, 'admin'));
-        $admin->addRole($role);
+        $admin->addRole($roleAdmin);
         $manager->persist($admin);
 
-        #ROLE_EMPLOYEE
-        $role_employee = new Role();
-        $role_employee->setUuid(Uuid::uuid4()->toString());
-        $role_employee->setName('ROLE_EMPLOYEE');
-        $role_employee->setParent($role);
-        $manager->persist($role_employee);
 
-        #EMPLOYEE
-        $employee = new User();
-        $employee->setUuid(Uuid::uuid4()->toString());
-        $employee->setEmail('demo@demo.com');
-        $employee->setUsername('demo');
-        $employee->setPassword($this->encoder->encodePassword($admin, 'demo'));
-        $employee->addRole($role_employee);
-        $manager->persist($employee);
+        #USER
+        $user = new User();
+        $user->setUuid(Uuid::uuid4()->toString());
+        $user->setEmail('demo@demo.com');
+        $user->setUsername('demo');
+        $user->setPassword($this->encoder->encodePassword($admin, 'demo'));
+        $user->addRole($roleUser);
+        $manager->persist($user);
 
 
         $manager->flush();
     }
+
 }
