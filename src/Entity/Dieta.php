@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DietasGenericasRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DietaRepository")
  */
 class Dieta
 {
@@ -24,30 +24,40 @@ class Dieta
     private $descripcion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\DesayunoDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DesayunoDieta", inversedBy="dietas")
      */
     private $desayuno;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AlmuerzoDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AlmuerzoDieta", inversedBy="dietas")
      */
     private $almuerzo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ComidaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ComidaDieta", inversedBy="dietas")
      */
     private $comida;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MeriendaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\MeriendaDieta", inversedBy="dietas")
      */
     private $meriendaDieta;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CenaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CenaDieta", inversedBy="dietas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cenaDieta;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PasabocasDieta", inversedBy="dietas")
+     */
+    private $pasabocas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PostcenaDieta", inversedBy="dietas")
+     */
+    private $postcena;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2)
@@ -74,15 +84,6 @@ class Dieta
      */
     private $hojaCuadernos;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PasabocasDieta", inversedBy="dietas")
-     */
-    private $pasabocas;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PostcenaDieta", inversedBy="dietas")
-     */
-    private $postcena;
 
     public function __construct()
     {

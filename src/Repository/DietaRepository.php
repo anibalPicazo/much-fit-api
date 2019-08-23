@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Dieta[]    findAll()
  * @method Dieta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DietasGenericasRepository extends ServiceEntityRepository
+class DietaRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
