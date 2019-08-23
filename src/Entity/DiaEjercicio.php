@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DiaEjercicio
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="Dia", inversedBy="diaEjercicios")
@@ -22,12 +18,12 @@ class DiaEjercicio
     private $dia;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $Series;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
     private $repeticiones;
 

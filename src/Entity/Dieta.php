@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DietasGenericasRepository")
  */
-class DietasGenericas
+class Dieta
 {
     /**
      * @ORM\Id()
@@ -73,6 +73,16 @@ class DietasGenericas
      * @ORM\OneToMany(targetEntity="App\Entity\HojaCuaderno", mappedBy="Dieta", orphanRemoval=true)
      */
     private $hojaCuadernos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PasabocasDieta", inversedBy="dietas")
+     */
+    private $pasabocas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PostcenaDieta", inversedBy="dietas")
+     */
+    private $postcena;
 
     public function __construct()
     {
@@ -231,6 +241,30 @@ class DietasGenericas
                 $hojaCuaderno->setDieta(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPasabocas(): ?PasabocasDieta
+    {
+        return $this->pasabocas;
+    }
+
+    public function setPasabocas(?PasabocasDieta $pasabocas): self
+    {
+        $this->pasabocas = $pasabocas;
+
+        return $this;
+    }
+
+    public function getPostcena(): ?PostcenaDieta
+    {
+        return $this->postcena;
+    }
+
+    public function setPostcena(?PostcenaDieta $postcena): self
+    {
+        $this->postcena = $postcena;
 
         return $this;
     }

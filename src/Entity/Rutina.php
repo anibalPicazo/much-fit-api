@@ -26,7 +26,7 @@ class Rutina
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dia", mappedBy="rutina")
      */
-    private $Dia;
+    private $dia;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
@@ -53,9 +53,21 @@ class Rutina
      */
     private $objetivos = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="rutina")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuaderno", mappedBy="rutina", orphanRemoval=true)
+     */
+    private $hojaCuadernos;
+
     public function __construct()
     {
-        $this->Dia = new ArrayCollection();
+        $this->dia = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->hojaCuadernos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,23 +92,23 @@ class Rutina
      */
     public function getDia(): Collection
     {
-        return $this->Dia;
+        return $this->dia;
     }
 
-    public function addDium(Dia $dium): self
+    public function addDium(dia $dium): self
     {
-        if (!$this->Dia->contains($dium)) {
-            $this->Dia[] = $dium;
+        if (!$this->dia->contains($dium)) {
+            $this->dia[] = $dium;
             $dium->setRutina($this);
         }
 
         return $this;
     }
 
-    public function removeDium(Dia $dium): self
+    public function removeDium(dia $dium): self
     {
-        if ($this->Dia->contains($dium)) {
-            $this->Dia->removeElement($dium);
+        if ($this->dia->contains($dium)) {
+            $this->dia->removeElement($dium);
             // set the owning side to null (unless already changed)
             if ($dium->getRutina() === $this) {
                 $dium->setRutina(null);
@@ -162,6 +174,68 @@ class Rutina
     public function setObjetivos(array $objetivos): self
     {
         $this->objetivos = $objetivos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getRutina() === $this) {
+                $user->setRutina(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HojaCuaderno[]
+     */
+    public function getHojaCuadernos(): Collection
+    {
+        return $this->hojaCuadernos;
+    }
+
+    public function addHojaCuaderno(HojaCuaderno $hojaCuaderno): self
+    {
+        if (!$this->hojaCuadernos->contains($hojaCuaderno)) {
+            $this->hojaCuadernos[] = $hojaCuaderno;
+            $hojaCuaderno->setRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHojaCuaderno(HojaCuaderno $hojaCuaderno): self
+    {
+        if ($this->hojaCuadernos->contains($hojaCuaderno)) {
+            $this->hojaCuadernos->removeElement($hojaCuaderno);
+            // set the owning side to null (unless already changed)
+            if ($hojaCuaderno->getRutina() === $this) {
+                $hojaCuaderno->setRutina(null);
+            }
+        }
 
         return $this;
     }

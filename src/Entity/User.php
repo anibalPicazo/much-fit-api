@@ -31,6 +31,7 @@ class User implements UserInterface
     {
         $this->setActivo(true);
         $this->roles = new ArrayCollection();
+        $this->entrenamientos = new ArrayCollection();
     }
 
     /**
@@ -100,6 +101,16 @@ class User implements UserInterface
     private $testUsuario;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="user", orphanRemoval=true)
+     */
+    private $entrenamientos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
+     */
+    private $rutina;
+
+    /**
      * @return mixed
      */
     public function getUsername()
@@ -152,7 +163,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -164,7 +175,7 @@ class User implements UserInterface
         return $this->activo;
     }
 
-    public function setActivo(bool $activo): self
+    public function setActivo(bool $activo)
     {
         $this->activo = $activo;
 
@@ -312,6 +323,49 @@ class User implements UserInterface
         if ($this !== $testUsuario->getUser()) {
             $testUsuario->setUser($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entrenamiento[]
+     */
+    public function getEntrenamientos(): Collection
+    {
+        return $this->entrenamientos;
+    }
+
+    public function addEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if (!$this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos[] = $entrenamiento;
+            $entrenamiento->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if ($this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos->removeElement($entrenamiento);
+            // set the owning side to null (unless already changed)
+            if ($entrenamiento->getUser() === $this) {
+                $entrenamiento->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRutina(): ?Rutina
+    {
+        return $this->rutina;
+    }
+
+    public function setRutina(?Rutina $rutina): self
+    {
+        $this->rutina = $rutina;
 
         return $this;
     }

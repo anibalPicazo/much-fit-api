@@ -7,22 +7,20 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class InitFixtures extends Fixture implements ContainerAwareInterface
+class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
     /**
-     * @var UserPasswordEncoderInterface
+     * @var ContainerInterface
      */
-    private $encoder;
+    private $container;
 
-    /**
-     * InitFixtures constructor.
-     * @param UserPasswordEncoderInterface $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->encoder = $encoder;
+        $this->container = $container;
     }
 
     public function load(ObjectManager $manager)
