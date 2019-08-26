@@ -30,7 +30,13 @@ class Entrenamiento
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="entrenamientos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $User;
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\HojaCuaderno", inversedBy="entrenamientos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $hojaCuaderno;
 
     public function __construct()
     {
@@ -87,12 +93,24 @@ class Entrenamiento
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): self
+    public function setUser(?User $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getHojaCuaderno(): ?HojaCuaderno
+    {
+        return $this->hojaCuaderno;
+    }
+
+    public function setHojaCuaderno(?HojaCuaderno $hojaCuaderno): self
+    {
+        $this->hojaCuaderno = $hojaCuaderno;
 
         return $this;
     }

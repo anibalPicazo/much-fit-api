@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\DietasGenericas;
+use App\Entity\Dieta;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method DietasGenericas|null find($id, $lockMode = null, $lockVersion = null)
- * @method DietasGenericas|null findOneBy(array $criteria, array $orderBy = null)
- * @method DietasGenericas[]    findAll()
- * @method DietasGenericas[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Dieta|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Dieta|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Dieta[]    findAll()
+ * @method Dieta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DietasGenericasRepository extends ServiceEntityRepository
+class DietaRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, DietasGenericas::class);
+        parent::__construct($registry, Dieta::class);
     }
 
     // /**
-    //  * @return DietasGenericas[] Returns an array of DietasGenericas objects
+    //  * @return Dieta[] Returns an array of Dieta objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class DietasGenericasRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?DietasGenericas
+    public function findOneBySomeField($value): ?Dieta
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')

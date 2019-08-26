@@ -75,7 +75,7 @@ class User implements UserInterface
     private $dietaPersonalizada;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CuardernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
 
@@ -101,7 +101,7 @@ class User implements UserInterface
     private $testUsuario;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="User", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="user", orphanRemoval=true)
      */
     private $entrenamientos;
 
@@ -163,7 +163,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -175,7 +175,7 @@ class User implements UserInterface
         return $this->activo;
     }
 
-    public function setActivo(bool $activo): self
+    public function setActivo(bool $activo)
     {
         $this->activo = $activo;
 
@@ -256,12 +256,12 @@ class User implements UserInterface
     }
 
 
-    public function getCuardernoEntrenamiento(): ?CuardernoEntrenamiento
+    public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
     {
         return $this->cuardernoEntrenamiento;
     }
 
-    public function setCuardernoEntrenamiento(CuardernoEntrenamiento $cuardernoEntrenamiento): self
+    public function setCuardernoEntrenamiento(CuadernoEntrenamiento $cuardernoEntrenamiento): self
     {
         $this->cuardernoEntrenamiento = $cuardernoEntrenamiento;
 

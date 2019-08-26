@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CuardernoEntrenamiento;
+use App\Entity\CuadernoEntrenamiento;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method CuardernoEntrenamiento|null find($id, $lockMode = null, $lockVersion = null)
- * @method CuardernoEntrenamiento|null findOneBy(array $criteria, array $orderBy = null)
- * @method CuardernoEntrenamiento[]    findAll()
- * @method CuardernoEntrenamiento[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CuadernoEntrenamiento|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CuadernoEntrenamiento|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CuadernoEntrenamiento[]    findAll()
+ * @method CuadernoEntrenamiento[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CuardernoEntrenamientoRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, CuardernoEntrenamiento::class);
+        parent::__construct($registry, CuadernoEntrenamiento::class);
     }
 
     // /**
-    //  * @return CuardernoEntrenamiento[] Returns an array of CuardernoEntrenamiento objects
+    //  * @return CuadernoEntrenamiento[] Returns an array of CuadernoEntrenamiento objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CuardernoEntrenamientoRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CuardernoEntrenamiento
+    public function findOneBySomeField($value): ?CuadernoEntrenamiento
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

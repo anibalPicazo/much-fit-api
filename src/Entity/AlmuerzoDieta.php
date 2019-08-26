@@ -35,13 +35,13 @@ class AlmuerzoDieta
     private $unidades;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DietasGenericas", mappedBy="almuerzo")
+     * @ORM\OneToMany(targetEntity="Dieta", mappedBy="almuerzo")
      */
-    private $dietasGenericas;
+    private $dietas;
 
     public function __construct()
     {
-        $this->dietasGenericas = new ArrayCollection();
+        $this->dietas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,30 +86,30 @@ class AlmuerzoDieta
     }
 
     /**
-     * @return Collection|DietasGenericas[]
+     * @return Collection|Dieta[]
      */
-    public function getDietasGenericas(): Collection
+    public function getDietas(): Collection
     {
-        return $this->dietasGenericas;
+        return $this->dietas;
     }
 
-    public function addDietasGenerica(DietasGenericas $dietasGenerica): self
+    public function addDieta(Dieta $dieta): self
     {
-        if (!$this->dietasGenericas->contains($dietasGenerica)) {
-            $this->dietasGenericas[] = $dietasGenerica;
-            $dietasGenerica->setAlmuerzo($this);
+        if (!$this->dietas->contains($dieta)) {
+            $this->dietas[] = $dieta;
+            $dieta->setAlmuerzo($this);
         }
 
         return $this;
     }
 
-    public function removeDietasGenerica(DietasGenericas $dietasGenerica): self
+    public function removeDieta(Dieta $dieta): self
     {
-        if ($this->dietasGenericas->contains($dietasGenerica)) {
-            $this->dietasGenericas->removeElement($dietasGenerica);
+        if ($this->dietas->contains($dieta)) {
+            $this->dietas->removeElement($dieta);
             // set the owning side to null (unless already changed)
-            if ($dietasGenerica->getAlmuerzo() === $this) {
-                $dietasGenerica->setAlmuerzo(null);
+            if ($dieta->getAlmuerzo() === $this) {
+                $dieta->setAlmuerzo(null);
             }
         }
 

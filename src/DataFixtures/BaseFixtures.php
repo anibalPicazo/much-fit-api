@@ -19,20 +19,21 @@ class BaseFixtures extends Fixture
      * @var UserPasswordEncoderInterface
      */
     protected $encoder;
-    /**
-     * @var SolicitudManager
-     */
+
+    /** @var ObjectManager */
+    private $manager;
 
     /**
      * BaseFixtures constructor.
      * @param UserPasswordEncoderInterface $encoder
      * @param EntityManagerInterface $manager
-     * @param SolicitudManager $solicitudManager
-     * @param SolicitudAlcanceManager $solicitudAlcanceManager
-     * @param SiteManager $siteManager
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
-    {
+    public function __construct(
+
+        UserPasswordEncoderInterface $encoder,
+        EntityManagerInterface $manager
+
+    ) {
         $this->faker = Factory::create('es_ES');
         $this->encoder = $encoder;
         $this->manager = $manager;
@@ -54,5 +55,4 @@ class BaseFixtures extends Fixture
             $this->addReference($className . '_' . $i, $entity);
         }
     }
-
 }
