@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,22 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CategoriaAlimentos
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descripcion;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDescripcion(): ?string
     {

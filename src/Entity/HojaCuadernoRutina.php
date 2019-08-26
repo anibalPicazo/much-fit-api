@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HojaCuadernoRepository")
  */
-class HojaCuaderno
+class HojaCuadernoRutina
 {
     use UuidTrait;
     use TimestampableTrait;
@@ -39,10 +39,10 @@ class HojaCuaderno
     private $datos = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity="CuadernoEntrenamiento", inversedBy="hojas")
+     * @ORM\ManyToOne(targetEntity="CuadernoEntrenamiento", inversedBy="hojas_cuaderno_rutina")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $cuardernoEntrenamiento;
+    private $cuaderno_entrenamiento;
 
     /**
      * @ORM\Column(type="datetime")
@@ -68,12 +68,7 @@ class HojaCuaderno
     {
         $this->entrenamientos = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     /**
      * @return Collection|Entrenamiento[]
      */
@@ -143,12 +138,12 @@ class HojaCuaderno
 
     public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
     {
-        return $this->cuardernoEntrenamiento;
+        return $this->cuaderno_entrenamiento;
     }
 
-    public function setCuardernoEntrenamiento(?CuadernoEntrenamiento $cuardernoEntrenamiento): self
+    public function setCuardernoEntrenamiento(?CuadernoEntrenamiento $cuaderno_entrenamiento): self
     {
-        $this->cuardernoEntrenamiento = $cuardernoEntrenamiento;
+        $this->cuaderno_entrenamiento = $cuaderno_entrenamiento;
 
         return $this;
     }

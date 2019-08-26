@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Alimentos
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -100,11 +97,6 @@ class Alimentos
     public function __construct()
     {
         $this->comidaDietas = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getDescripcion(): ?string

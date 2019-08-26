@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,13 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Dieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
+    use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -79,10 +74,6 @@ class Dieta
      */
     private $nivel_grasas;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuaderno", mappedBy="Dieta", orphanRemoval=true)
-     */
-    private $hojaCuadernos;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\HojaCuadernoDieta", mappedBy="dieta", orphanRemoval=true)
@@ -92,15 +83,8 @@ class Dieta
 
     public function __construct()
     {
-        $this->hojaCuadernos = new ArrayCollection();
         $this->hojaCuadernoDietas = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getDescripcion(): ?string
     {
         return $this->descripcion;
@@ -217,37 +201,6 @@ class Dieta
     public function setNivelGrasas(string $nivel_grasas): self
     {
         $this->nivel_grasas = $nivel_grasas;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|HojaCuaderno[]
-     */
-    public function getHojaCuadernos(): Collection
-    {
-        return $this->hojaCuadernos;
-    }
-
-    public function addHojaCuaderno(HojaCuaderno $hojaCuaderno): self
-    {
-        if (!$this->hojaCuadernos->contains($hojaCuaderno)) {
-            $this->hojaCuadernos[] = $hojaCuaderno;
-            $hojaCuaderno->setDieta($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHojaCuaderno(HojaCuaderno $hojaCuaderno): self
-    {
-        if ($this->hojaCuadernos->contains($hojaCuaderno)) {
-            $this->hojaCuadernos->removeElement($hojaCuaderno);
-            // set the owning side to null (unless already changed)
-            if ($hojaCuaderno->getDieta() === $this) {
-                $hojaCuaderno->setDieta(null);
-            }
-        }
 
         return $this;
     }

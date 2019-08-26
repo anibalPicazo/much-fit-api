@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ejercicios
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    Use UuidTrait;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -50,11 +46,6 @@ class Ejercicios
         $this->grupo_muscular = new ArrayCollection();
         $this->diaEjercicios = new ArrayCollection();
         $this->entrenamientoLineas = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getDescripcion(): ?string

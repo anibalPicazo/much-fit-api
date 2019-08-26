@@ -23,27 +23,19 @@ class CuadernoEntrenamiento
     private $usuario;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuaderno", mappedBy="cuardernoEntrenamiento", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HojaCuadernoRutina", mappedBy="cuardernoEntrenamiento", orphanRemoval=true)
      */
-    private $hojas;
+    private $hojas_cuaderno_rutina;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuadernoDieta", mappedBy="cuaderno", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HojaCuadernoDieta", mappedBy="cuaderno", orphanRemoval=true)
      */
-    private $hojaCuadernoDietas;
+    private $hojas_cuaderno_dietas;
 
     public function __construct()
     {
-        $this->hojas = new ArrayCollection();
-        $this->hojaCuadernoDietas = new ArrayCollection();
-    }
-
-
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->hojas_cuaderno_rutina = new ArrayCollection();
+        $this->hojas_cuaderno_dietas = new ArrayCollection();
     }
 
     public function getUsuario(): ?User
@@ -59,30 +51,30 @@ class CuadernoEntrenamiento
     }
 
     /**
-     * @return Collection|HojaCuaderno[]
+     * @return Collection|HojaCuadernoRutina[]
      */
-    public function getHojas(): Collection
+    public function getHojasEntrenamiento(): Collection
     {
-        return $this->hojas;
+        return $this->hojas_cuaderno_rutina;
     }
 
-    public function addHoja(HojaCuaderno $hoja): self
+    public function addHojaEntrenamientoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
-        if (!$this->hojas->contains($hoja)) {
-            $this->hojas[] = $hoja;
-            $hoja->setCuardernoEntrenamiento($this);
+        if (!$this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina[] = $hoja_cuaderno_rutina;
+            $hoja_cuaderno_rutina->setCuardernoEntrenamiento($this);
         }
 
         return $this;
     }
 
-    public function removeHoja(HojaCuaderno $hoja): self
+    public function removeHojaEntrenamientoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
-        if ($this->hojas->contains($hoja)) {
-            $this->hojas->removeElement($hoja);
+        if ($this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina->removeElement($hoja_cuaderno_rutina);
             // set the owning side to null (unless already changed)
-            if ($hoja->getCuardernoEntrenamiento() === $this) {
-                $hoja->setCuardernoEntrenamiento(null);
+            if ($hoja_cuaderno_rutina->getCuardernoEntrenamiento() === $this) {
+                $hoja_cuaderno_rutina->setCuardernoEntrenamiento(null);
             }
         }
 
@@ -94,26 +86,26 @@ class CuadernoEntrenamiento
      */
     public function getHojaCuadernoDietas(): Collection
     {
-        return $this->hojaCuadernoDietas;
+        return $this->hojas_cuaderno_dietas;
     }
 
-    public function addHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    public function addHojaCuadernoDieta(HojaCuadernoDieta $hoja_cuaderno_dieta): self
     {
-        if (!$this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
-            $this->hojaCuadernoDietas[] = $hojaCuadernoDieta;
-            $hojaCuadernoDieta->setCuaderno($this);
+        if (!$this->hojas_cuaderno_dietas->contains($hoja_cuaderno_dieta)) {
+            $this->hojas_cuaderno_dietas[] = $hoja_cuaderno_dieta;
+            $hoja_cuaderno_dieta->setCuaderno($this);
         }
 
         return $this;
     }
 
-    public function removeHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    public function removeHojaCuadernoDieta(HojaCuadernoDieta $hojas_cuaderno_dieta): self
     {
-        if ($this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
-            $this->hojaCuadernoDietas->removeElement($hojaCuadernoDieta);
+        if ($this->hojas_cuaderno_dietas->contains($hojas_cuaderno_dieta)) {
+            $this->hojas_cuaderno_dietas->removeElement($hojas_cuaderno_dieta);
             // set the owning side to null (unless already changed)
-            if ($hojaCuadernoDieta->getCuaderno() === $this) {
-                $hojaCuadernoDieta->setCuaderno(null);
+            if ($hojas_cuaderno_dieta->getCuaderno() === $this) {
+                $hojas_cuaderno_dieta->setCuaderno(null);
             }
         }
 

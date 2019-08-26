@@ -39,10 +39,6 @@ class EntrenamientoLineas
      */
     private $entrenamiento;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getEjercicio(): ?Ejercicios
     {

@@ -42,10 +42,6 @@ class DiaEjercicio
      */
     private $intensidad;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDia(): ?Dia
     {

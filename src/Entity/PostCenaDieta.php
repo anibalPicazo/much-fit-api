@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PostCenaDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
@@ -43,12 +39,6 @@ class PostCenaDieta
     {
         $this->dietas = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getAlimento(): ?Alimentos
     {
         return $this->alimento;

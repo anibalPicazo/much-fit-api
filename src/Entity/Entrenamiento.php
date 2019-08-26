@@ -33,20 +33,16 @@ class Entrenamiento
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\HojaCuaderno", inversedBy="entrenamientos")
+     * @ORM\ManyToOne(targetEntity="HojaCuadernoRutina", inversedBy="entrenamientos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $hojaCuaderno;
+    private $hoja_cuaderno_rutina;
 
     public function __construct()
     {
         $this->lineas = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     /**
      * @return Collection|EntrenamientoLineas[]
@@ -103,14 +99,14 @@ class Entrenamiento
         return $this;
     }
 
-    public function getHojaCuaderno(): ?HojaCuaderno
+    public function getHojaCuaderno(): ?HojaCuadernoRutina
     {
-        return $this->hojaCuaderno;
+        return $this->hoja_cuaderno_rutina;
     }
 
-    public function setHojaCuaderno(?HojaCuaderno $hojaCuaderno): self
+    public function setHojaCuaderno(?HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
-        $this->hojaCuaderno = $hojaCuaderno;
+        $this->hoja_cuaderno_rutina = $hoja_cuaderno_rutina;
 
         return $this;
     }

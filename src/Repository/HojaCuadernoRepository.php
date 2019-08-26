@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\HojaCuaderno;
+use App\Entity\HojaCuadernoRutina;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method HojaCuaderno|null find($id, $lockMode = null, $lockVersion = null)
- * @method HojaCuaderno|null findOneBy(array $criteria, array $orderBy = null)
- * @method HojaCuaderno[]    findAll()
- * @method HojaCuaderno[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method HojaCuadernoRutina|null find($id, $lockMode = null, $lockVersion = null)
+ * @method HojaCuadernoRutina|null findOneBy(array $criteria, array $orderBy = null)
+ * @method HojaCuadernoRutina[]    findAll()
+ * @method HojaCuadernoRutina[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class HojaCuadernoRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, HojaCuaderno::class);
+        parent::__construct($registry, HojaCuadernoRutina::class);
     }
 
     // /**
-    //  * @return HojaCuaderno[] Returns an array of HojaCuaderno objects
+    //  * @return HojaCuadernoRutina[] Returns an array of HojaCuadernoRutina objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class HojaCuadernoRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?HojaCuaderno
+    public function findOneBySomeField($value): ?HojaCuadernoRutina
     {
         return $this->createQueryBuilder('h')
             ->andWhere('h.exampleField = :val')

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TestUsuarioDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
@@ -53,11 +50,6 @@ class TestUsuarioDieta
      * @ORM\JoinColumn(nullable=false)
      */
     private $actividad_fisica;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getPeso()
     {

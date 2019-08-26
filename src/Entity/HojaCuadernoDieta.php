@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,18 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HojaCuadernoDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CuadernoEntrenamiento", inversedBy="hojaCuadernoDietas")
+     * @ORM\ManyToOne(targetEntity="CuadernoEntrenamiento", inversedBy="hojas_cuaderno_dietas")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $cuaderno;
+    private $cuaderno_entrenamiento;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Dieta", inversedBy="hojaCuadernoDietas")
@@ -43,19 +39,14 @@ class HojaCuadernoDieta
      */
     private $fecha_fin;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getCuaderno(): ?CuadernoEntrenamiento
     {
-        return $this->cuaderno;
+        return $this->cuaderno_entrenamiento;
     }
 
-    public function setCuaderno(?CuadernoEntrenamiento $cuaderno): self
+    public function setCuaderno(?CuadernoEntrenamiento $cuaderno_entrenamiento): self
     {
-        $this->cuaderno = $cuaderno;
+        $this->cuaderno_entrenamiento = $cuaderno_entrenamiento;
 
         return $this;
     }

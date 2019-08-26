@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rutina
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -59,22 +56,16 @@ class Rutina
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuaderno", mappedBy="rutina", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HojaCuadernoRutina", mappedBy="rutina", orphanRemoval=true)
      */
-    private $hojaCuadernos;
+    private $hojas_cuaderno_rutina;
 
     public function __construct()
     {
         $this->dia = new ArrayCollection();
         $this->user = new ArrayCollection();
-        $this->hojaCuadernos = new ArrayCollection();
+        $this->hojas_cuaderno_rutina = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getNombre(): ?string
     {
         return $this->Nombre;
@@ -210,30 +201,30 @@ class Rutina
     }
 
     /**
-     * @return Collection|HojaCuaderno[]
+     * @return Collection|HojaCuadernoRutina[]
      */
-    public function getHojaCuadernos(): Collection
+    public function getHojaCuadernosRutina(): Collection
     {
-        return $this->hojaCuadernos;
+        return $this->hojas_cuaderno_rutina;
     }
 
-    public function addHojaCuaderno(HojaCuaderno $hojaCuaderno): self
+    public function addHojaCuadernoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
-        if (!$this->hojaCuadernos->contains($hojaCuaderno)) {
-            $this->hojaCuadernos[] = $hojaCuaderno;
-            $hojaCuaderno->setRutina($this);
+        if (!$this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina[] = $hoja_cuaderno_rutina;
+            $hoja_cuaderno_rutina->setRutina($this);
         }
 
         return $this;
     }
 
-    public function removeHojaCuaderno(HojaCuaderno $hojaCuaderno): self
+    public function removeHojaCuadernoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
-        if ($this->hojaCuadernos->contains($hojaCuaderno)) {
-            $this->hojaCuadernos->removeElement($hojaCuaderno);
+        if ($this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina->removeElement($hoja_cuaderno_rutina);
             // set the owning side to null (unless already changed)
-            if ($hojaCuaderno->getRutina() === $this) {
-                $hojaCuaderno->setRutina(null);
+            if ($hoja_cuaderno_rutina->getRutina() === $this) {
+                $hoja_cuaderno_rutina->setRutina(null);
             }
         }
 
