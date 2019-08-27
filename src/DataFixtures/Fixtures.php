@@ -7,6 +7,7 @@ use App\Entity\TestUsuario;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use phpDocumentor\Reflection\Types\Self_;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,6 +80,11 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
         #TEST USUARIO
         //todo: Create many test usuario
+        $this->createMany(TestUsuario::class,self::USUARIOS,function(TestUsuario $testUsuario,$count){
+           $testUsuario->setUuid(Uuid::uuid4()->toString());
+           $testUsuario->setFormaFisica("BUENA");
+           $testUsuario->setUser($this->getReference(self::USER.$count));
+        });
 
         #TEST USUARIO DIETA
         //todo: Create many test usuario dieta
