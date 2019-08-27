@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Role;
+use App\Entity\TestUsuario;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
+    const TEST_USUARIOS = 20;
+    const USUARIOS = 40;
+
     /**
      * @var ContainerInterface
      */
@@ -60,6 +64,14 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $user->setPassword($this->encoder->encodePassword($admin, 'demo'));
         $user->addRole($roleUser);
         $manager->persist($user);
+
+        $this->createMany(User::class, self::USUARIOS, function (User $alcance, $count) use ($gaglobal, $gaeco) {
+            $alcance->setNombre($this->faker->sentence(14, 8));
+            $alcance->setUuid(Uuid::uuid4()->toString());
+            $alcance->setGrupo($this->faker->randomElement([$gaglobal, $gaeco]));
+            $this->addReference(self::ALCANCE . $count, $alcance);
+        });
+
 
 
         $manager->flush();
