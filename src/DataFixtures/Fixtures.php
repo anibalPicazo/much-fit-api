@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
+    const USER = 'user';
     const TEST_USUARIOS = 20;
     const USUARIOS = 40;
 
@@ -56,22 +57,31 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $manager->persist($admin);
 
 
-        #USER
+        #USER ADMIN
         $user = new User();
         $user->setUuid(Uuid::uuid4()->toString());
         $user->setEmail('demo@demo.com');
         $user->setUsername('demo');
-        $user->setPassword($this->encoder->encodePassword($admin, 'demo'));
+        $user->setPassword($this->encoder->encodePassword($admin, 'admin'));
         $user->addRole($roleUser);
         $manager->persist($user);
-
-        $this->createMany(User::class, self::USUARIOS, function (User $alcance, $count) use ($gaglobal, $gaeco) {
-            $alcance->setNombre($this->faker->sentence(14, 8));
-            $alcance->setUuid(Uuid::uuid4()->toString());
-            $alcance->setGrupo($this->faker->randomElement([$gaglobal, $gaeco]));
-            $this->addReference(self::ALCANCE . $count, $alcance);
+        #USERS
+        $this->createMany(User::class, self::USUARIOS, function (User $user, $count) use($roleUser)  {
+            $user->setName($this->faker->sentence(14, 8));
+            $user->setSurname($this->faker->lastName);
+            $user->setUuid(Uuid::uuid4()->toString());
+            $user->setEmail($this->faker->email);
+            $user->setPhoto('https://randomuser.me/api/portraits/men/'.$count.'jpg');
+            $user->setPassword($this->encoder->encodePassword($user, 'usuario'.$count));
+            $user->setActivo(true);
+            $user->addRole($roleUser);
+            $this->addReference(self::USER . $count, $user);
         });
+        #TEST USUARIO
+        //todo: Create many test usuario
 
+        #TEST USUARIO DIETA
+        //todo: Create many test usuario dieta
 
 
         $manager->flush();
