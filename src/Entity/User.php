@@ -32,6 +32,7 @@ class User implements UserInterface
         $this->setActivo(true);
         $this->roles = new ArrayCollection();
         $this->entrenamientos = new ArrayCollection();
+        $this->testUsuarioDietas = new ArrayCollection();
     }
 
     /**
@@ -109,6 +110,11 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
      */
     private $rutina;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TestUsuarioDieta", mappedBy="user", orphanRemoval=true)
+     */
+    private $testUsuarioDietas;
 
     /**
      * @return mixed
@@ -366,6 +372,37 @@ class User implements UserInterface
     public function setRutina(?Rutina $rutina): self
     {
         $this->rutina = $rutina;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TestUsuarioDieta[]
+     */
+    public function getTestUsuarioDietas(): Collection
+    {
+        return $this->testUsuarioDietas;
+    }
+
+    public function addTestUsuarioDieta(TestUsuarioDieta $testUsuarioDieta): self
+    {
+        if (!$this->testUsuarioDietas->contains($testUsuarioDieta)) {
+            $this->testUsuarioDietas[] = $testUsuarioDieta;
+            $testUsuarioDieta->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestUsuarioDieta(TestUsuarioDieta $testUsuarioDieta): self
+    {
+        if ($this->testUsuarioDietas->contains($testUsuarioDieta)) {
+            $this->testUsuarioDietas->removeElement($testUsuarioDieta);
+            // set the owning side to null (unless already changed)
+            if ($testUsuarioDieta->getUser() === $this) {
+                $testUsuarioDieta->setUser(null);
+            }
+        }
 
         return $this;
     }

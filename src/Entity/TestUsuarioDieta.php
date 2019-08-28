@@ -51,6 +51,12 @@ class TestUsuarioDieta
      */
     private $actividad_fisica;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="testUsuarioDietas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getPeso()
     {
         return $this->peso;
@@ -132,6 +138,18 @@ class TestUsuarioDieta
     public function setActividadFisica(?ActividadFisica $actividad_fisica): self
     {
         $this->actividad_fisica = $actividad_fisica;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
