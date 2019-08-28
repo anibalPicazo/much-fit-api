@@ -34,18 +34,6 @@ class TestUsuarioDieta
     private $altura;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="estad_actual_test_dieta")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $estado_actual;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TipoFisico", inversedBy="estado_objetivo_test_dieta")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $estado_objetivo;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ActividadFisica", inversedBy="test_dietas_usuario")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -56,6 +44,16 @@ class TestUsuarioDieta
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $estado_fisico;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $estado_fisico_objetivo;
 
     public function getPeso()
     {
@@ -105,31 +103,6 @@ class TestUsuarioDieta
         return $this;
     }
 
-
-    public function getEstadoActual(): ?TipoFisico
-    {
-        return $this->estado_actual;
-    }
-
-    public function setEstadoActual(?TipoFisico $estado_actual): self
-    {
-        $this->estado_actual = $estado_actual;
-
-        return $this;
-    }
-
-    public function getEstadoObjetivo(): ?TipoFisico
-    {
-        return $this->estado_objetivo;
-    }
-
-    public function setEstadoObjetivo(?TipoFisico $estado_objetivo): self
-    {
-        $this->estado_objetivo = $estado_objetivo;
-
-        return $this;
-    }
-
     public function getActividadFisica(): ?ActividadFisica
     {
         return $this->actividad_fisica;
@@ -150,6 +123,30 @@ class TestUsuarioDieta
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getEstadoFisico(): ?string
+    {
+        return $this->estado_fisico;
+    }
+
+    public function setEstadoFisico(string $estado_fisico): self
+    {
+        $this->estado_fisico = $estado_fisico;
+
+        return $this;
+    }
+
+    public function getEstadoFisicoObjetivo(): ?string
+    {
+        return $this->estado_fisico_objetivo;
+    }
+
+    public function setEstadoFisicoObjetivo(string $estado_fisico_objetivo): self
+    {
+        $this->estado_fisico_objetivo = $estado_fisico_objetivo;
 
         return $this;
     }

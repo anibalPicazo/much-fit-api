@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Role;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
+use App\Entity\TipoFisico;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -87,11 +88,11 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $user->addRole($roleUser);
             $this->addReference(self::USER . $count, $user);
         });
+
         #TEST USUARIO
         //todo: Create many test usuario
         $this->createMany(TestUsuario::class,self::USUARIOS,function(TestUsuario $testUsuario, $count){
            $testUsuario->setUuid(Uuid::uuid4()->toString());
-           $testUsuario->setFormaFisica("BUENA");
            $testUsuario->setExperienciaDeporte($this->faker->randomElement(self::EXPERIENCIA));
            $testUsuario->setFormaFisica($this->faker->randomElement(self::ESTADO_FISICO));
            $testUsuario->setFrecuenciaEntrenamiento($this->faker->randomElement(self::FRECUENCIA));
@@ -106,8 +107,8 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $testUsuarioDieta->setPeso($this->faker->randomFloat(null,40,110));
             $testUsuarioDieta->setGenero($this->faker->randomElement(['HOMBRE','MUJER']));
             $testUsuarioDieta->setEdad($this->faker->numberBetween(16,80));
-            $testUsuarioDieta->setEstadoActual($this->faker->randomElement(self::ESTADO_ACTUAL));
-            $testUsuarioDieta->setEstadoObjetivo($this->faker->randomElement(self::OBJETIVO_METABOLICO));
+            $testUsuarioDieta->setEstadoFisico($this->faker->randomElement(self::ESTADO_ACTUAL));
+            $testUsuarioDieta->setEstadoFisicoObjetivo($this->faker->randomElement(self::OBJETIVO_METABOLICO));
             $testUsuarioDieta->setActividadFisica($this->faker->randomElement(self::ACTIVIDAD_FISICA));
             $testUsuarioDieta->setUser($this->getReference(self::USER.$count));
 
