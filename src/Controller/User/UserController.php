@@ -52,7 +52,6 @@ class UserController extends AbstractController
         $this->manager = $manager;
         $this->dispatcher = $dispatcher;
     }
-
     /**
      * @Route("",   methods={"GET"})
      * @View(serializerGroups={"list"})
@@ -61,7 +60,6 @@ class UserController extends AbstractController
     {
         return $this->getUser()->getEmpresa()->getUsers();
     }
-
 
     /**
      * @Route("/current",  methods={"GET"})

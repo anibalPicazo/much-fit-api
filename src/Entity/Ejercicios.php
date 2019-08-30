@@ -12,8 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ejercicios
 {
-    Use UuidTrait;
-
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -158,6 +162,14 @@ class Ejercicios
         $this->imagen = $imagen;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 }
