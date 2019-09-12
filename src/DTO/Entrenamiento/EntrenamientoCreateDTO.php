@@ -17,9 +17,7 @@ class EntrenamientoCreateDTO implements DTOInterface
      */
     protected $uuid;
     /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank
-     * @JMSSerializer\Type("Entity<App\Entity\User>")
+     * @JMSSerializer\Type("string")
      */
     protected $descripcion;
 
@@ -40,6 +38,14 @@ class EntrenamientoCreateDTO implements DTOInterface
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 
 }

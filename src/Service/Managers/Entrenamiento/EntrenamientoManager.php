@@ -24,6 +24,7 @@ class EntrenamientoManager extends AbstractManager
     public function create(EntrenamientoCreateDTO $DTO){
         $entrenamiento = new Entrenamiento();
         $entrenamiento->setUuid($DTO->getUuid());
+        $DTO->getDescripcion() ? $entrenamiento->setDescripcion($DTO->getDescripcion()) : null;
         $this->save($entrenamiento);
 
         return $entrenamiento;
