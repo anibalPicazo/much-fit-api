@@ -5,6 +5,8 @@ namespace App\Tests\api;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Tests\ApiTester;
+use Faker\Factory;
+use Faker\Generator;
 
 /**
  * Class BaseApiTestBase
@@ -15,7 +17,17 @@ use App\Tests\ApiTester;
 class BaseApiTestBase
 {
 
+    /** @var Generator */
+    protected $faker;
     protected $token, $user;
+
+    /**
+     * BaseApiTestBase constructor.
+     */
+    public function __construct()
+    {
+        $this->faker = Factory::create('es_ES');
+    }
 
     public function _before(ApiTester $I)
     {
@@ -60,6 +72,7 @@ class BaseApiTestBase
                 break;
             default:
                 $user = ['username' => 'admin', 'password' => 'admin'];
+                break;
         }
         $I->sendPOST('api/auth', json_encode($user));
     }
@@ -74,5 +87,15 @@ class BaseApiTestBase
         return $this->user;
     }
 
+    protected function getCollectionResponse(ApiTester $I, $name): array
+    {
+        $I->sendGET("api/{$name}");
+        return \GuzzleHttp\json_decode($I->grabResponse(), true);
+    }
+
+    protected function grabJSONResponse($I)
+    {
+        return \GuzzleHttp\json_decode($I->grabResponse(), true);
+    }
 
 }

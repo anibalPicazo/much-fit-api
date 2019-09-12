@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @Serializer\ExclusionPolicy("all")
+ * @Serializer\ExclusionPolicy("none")
  * @UniqueEntity(
  *     fields={"username","email"},
  *     errorPath="email",
@@ -23,13 +24,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
-    use TimestampableEntity;
+    use TimestampableTrait;
     use UuidTrait;
 
     public function __construct()
     {
         $this->setActivo(true);
         $this->roles = new ArrayCollection();
+        $this->entrenamientos = new ArrayCollection();
+        $this->testUsuarioDietas = new ArrayCollection();
     }
 
     /**
@@ -73,17 +76,45 @@ class User implements UserInterface
     private $dietaPersonalizada;
 
     /**
+     * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
+     */
+    private $cuardernoEntrenamiento;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $surname;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
      */
     private $testUsuario;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CuardernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="user", orphanRemoval=true)
      */
-    private $cuardernoEntrenamiento;
+    private $entrenamientos;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
+     */
+    private $rutina;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TestUsuarioDieta", mappedBy="user", orphanRemoval=true)
+     */
+    private $testUsuarioDietas;
 
     /**
      * @return mixed
@@ -138,7 +169,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -150,33 +181,40 @@ class User implements UserInterface
         return $this->activo;
     }
 
-    public function setActivo(bool $activo): self
+    public function setActivo(bool $activo)
     {
         $this->activo = $activo;
 
         return $this;
     }
 
-    /**
-     * @return array[]
-     */
     public function getRoles(): array
     {
-        $stringyfiedRoles = [];
-
-        foreach ($this->roles as $role){
-            $stringyfiedRoles[] = $role->getName();
+        $rolesPlain = [];
+        /** @var Role $role */
+        foreach ($this->roles as $role) {
+            $rolesPlain = $rolesPlain + $this->buildTree($role, $role->getChildren());
         }
+        return array_values($rolesPlain);
+    }
 
-        return $stringyfiedRoles;
+
+    public function buildTree(Role $role, $children)
+    {
+        $tree[$role->getUuid()] = $role->getName();
+        foreach ($children as $role) {
+            $tree = $tree + $this->buildTree($role, $role->getChildren());
+        }
+        return $tree;
     }
 
     public function addRole(Role $role): self
     {
         if (!$this->roles->contains($role)) {
             $this->roles[] = $role;
+//            $children = $role->getChildren();
+//            $this->roles = $this->buildTree($role, $children);
         }
-
         return $this;
     }
 
@@ -184,9 +222,25 @@ class User implements UserInterface
     {
         if ($this->roles->contains($role)) {
             $this->roles->removeElement($role);
+//            $this->updateRoles();
         }
 
         return $this;
+    }
+
+//    public function updateRoles()
+//    {
+//        /** @var Role $role */
+//        foreach ($this->getRolesObj() as $role) {
+//            $roles = $role->getChildren();
+//            array_walk_recursive($roles, function ($role, $key) {
+//            });
+//        }
+//    }
+
+    public function getRolesObj()
+    {
+        return $this->roles;
     }
 
     public function getDietaPersonalizada(): ?DietaPersonalizada
@@ -207,30 +261,13 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTestUsuario(): ?TestUsuario
-    {
-        return $this->testUsuario;
-    }
 
-    public function setTestUsuario(?TestUsuario $testUsuario): self
-    {
-        $this->testUsuario = $testUsuario;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $testUsuario === null ? null : $this;
-        if ($newUser !== $testUsuario->getUser()) {
-            $testUsuario->setUser($newUser);
-        }
-
-        return $this;
-    }
-
-    public function getCuardernoEntrenamiento(): ?CuardernoEntrenamiento
+    public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
     {
         return $this->cuardernoEntrenamiento;
     }
 
-    public function setCuardernoEntrenamiento(CuardernoEntrenamiento $cuardernoEntrenamiento): self
+    public function setCuardernoEntrenamiento(CuadernoEntrenamiento $cuardernoEntrenamiento): self
     {
         $this->cuardernoEntrenamiento = $cuardernoEntrenamiento;
 
@@ -243,6 +280,131 @@ class User implements UserInterface
     }
 
 
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
 
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): self
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getTestUsuario(): ?TestUsuario
+    {
+        return $this->testUsuario;
+    }
+
+    public function setTestUsuario(TestUsuario $testUsuario): self
+    {
+        $this->testUsuario = $testUsuario;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $testUsuario->getUser()) {
+            $testUsuario->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entrenamiento[]
+     */
+    public function getEntrenamientos(): Collection
+    {
+        return $this->entrenamientos;
+    }
+
+    public function addEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if (!$this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos[] = $entrenamiento;
+            $entrenamiento->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if ($this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos->removeElement($entrenamiento);
+            // set the owning side to null (unless already changed)
+            if ($entrenamiento->getUser() === $this) {
+                $entrenamiento->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRutina(): ?Rutina
+    {
+        return $this->rutina;
+    }
+
+    public function setRutina(?Rutina $rutina): self
+    {
+        $this->rutina = $rutina;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TestUsuarioDieta[]
+     */
+    public function getTestUsuarioDietas(): Collection
+    {
+        return $this->testUsuarioDietas;
+    }
+
+    public function addTestUsuarioDieta(TestUsuarioDieta $testUsuarioDieta): self
+    {
+        if (!$this->testUsuarioDietas->contains($testUsuarioDieta)) {
+            $this->testUsuarioDietas[] = $testUsuarioDieta;
+            $testUsuarioDieta->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestUsuarioDieta(TestUsuarioDieta $testUsuarioDieta): self
+    {
+        if ($this->testUsuarioDietas->contains($testUsuarioDieta)) {
+            $this->testUsuarioDietas->removeElement($testUsuarioDieta);
+            // set the owning side to null (unless already changed)
+            if ($testUsuarioDieta->getUser() === $this) {
+                $testUsuarioDieta->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

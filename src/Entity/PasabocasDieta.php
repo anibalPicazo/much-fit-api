@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PasabocasDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    Use UuidTrait;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
@@ -32,9 +31,14 @@ class PasabocasDieta
      */
     private $unidades;
 
-    public function getId(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Dieta", mappedBy="pasabocas")
+     */
+    private $dietas;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->dietas = new ArrayCollection();
     }
 
     public function getAlimento(): ?Alimentos
@@ -69,6 +73,37 @@ class PasabocasDieta
     public function setUnidades(string $unidades): self
     {
         $this->unidades = $unidades;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dieta[]
+     */
+    public function getDietas(): Collection
+    {
+        return $this->dietas;
+    }
+
+    public function addDieta(Dieta $dieta): self
+    {
+        if (!$this->dietas->contains($dieta)) {
+            $this->dietas[] = $dieta;
+            $dieta->setPasabocas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDieta(Dieta $dieta): self
+    {
+        if ($this->dietas->contains($dieta)) {
+            $this->dietas->removeElement($dieta);
+            // set the owning side to null (unless already changed)
+            if ($dieta->getPasabocas() === $this) {
+                $dieta->setPasabocas(null);
+            }
+        }
 
         return $this;
     }

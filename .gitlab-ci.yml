@@ -1,4 +1,4 @@
-image: registry.gitlab.com/kaamit/core-api/test-image
+image: registry.gitlab.com/kaamit/certiapp/certiapp-api:test
 
 
 cache:
@@ -22,19 +22,21 @@ services:
 
 variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-  MYSQL_DATABASE: core_api_test
+  MYSQL_DATABASE: certiapp_test
   MYSQL_ROOT_PASSWORD: root
-  DATABASE_URL: 'mysql://root:root@mysql:3306/core_api_test'
-
+  DATABASE_URL: 'mysql://root:root@mysql:3306/certiapp_test'
+  SYMFONY_DEPRECATIONS_HELPER: 'disabled'
 
 test:
   variables:
     APP_ENV: test
     APP_DEBUG: 0
+  only:
+    - merge_requests
   script:
     - php bin/console doctrine:schema:create
     - php bin/console doctrine:fixtures:load
-    - vendor/bin/codecept run api
+    - vendor/bin/codecept run api --steps
 
 
 deploy_prod:
@@ -63,5 +65,5 @@ deploy_staging:
     - gcloud --quiet app deploy dev.yaml --project $PROJECT_ID
 
 
-after_script:
-  - rm /tmp/$CI_PIPELINE_ID.json
+#after_script:
+#  - rm /tmp/$CI_PIPELINE_ID.json

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EntrenamientoLineas
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ejercicios", inversedBy="serie")
@@ -43,10 +39,6 @@ class EntrenamientoLineas
      */
     private $entrenamiento;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getEjercicio(): ?Ejercicios
     {

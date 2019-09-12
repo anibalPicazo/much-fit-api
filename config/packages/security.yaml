@@ -1,56 +1,63 @@
 security:
 
-  role_hierarchy:
-    ROLE_CLIENTE:               ROLE_USER
-    ROLE_AUDITOR:               ROLE_CLIENTE
-    ROLE_AUDITOR_FREELANCE:     ROLE_CLIENTE
-    ROLE_AUDITOR_ADMIN:         [ROLE_AUDITOR, ROLE_AUDITOR_FREELANCE]
-    ROLE_ROOT:                  [ROLE_AUDITOR_ADMIN]
+#    role_hierarchy:
+#        ROLE_CLIENTE:               ROLE_USER
+#        ROLE_AUDITOR:               ROLE_CLIENTE
+#        ROLE_AUDITOR_FREELANCE:     ROLE_CLIENTE
+#        ROLE_AUDITOR_ADMIN:         [ROLE_AUDITOR, ROLE_AUDITOR_FREELANCE]
+#        ROLE_ROOT:                  [ROLE_AUDITOR_ADMIN]
 
-  encoders:
-    App\Entity\User:
-      algorithm: bcrypt
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
 
-  providers:
-    user_provider:
-      entity:
-        class: App\Entity\User
-        property: username
-
-
-  firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
-
-    refresh:
-      pattern:  ^/api/token/refresh
-      stateless: true
-      anonymous: true
-
-    login:
-      pattern:  ^/api/auth
-      stateless: true
-      anonymous: true
-      provider: user_provider
-      json_login:
-        check_path:               /api/auth
-        success_handler:          lexik_jwt_authentication.handler.authentication_success
-        failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-        require_previous_session: false
-
-    api:
-      pattern:   ^/api
-      stateless: true
-      provider: user_provider
-      anonymous: false
-      guard:
-        authenticators:
-          - lexik_jwt_authentication.jwt_token_authenticator
+    providers:
+        user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
 
 
-  access_control:
-    - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        apidoc:
+            pattern: ^/doc
+            security: false
+
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
+
+        login:
+            pattern:  ^/api/auth
+            stateless: true
+            anonymous: true
+            provider: user_provider
+            json_login:
+                check_path:               /api/auth
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            provider: user_provider
+            anonymous: false
+            logout:
+                path: users_logout
+                target: /
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+
+    access_control:
+        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

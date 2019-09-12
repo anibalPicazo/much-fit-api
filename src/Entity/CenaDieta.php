@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CenaDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
@@ -35,13 +32,13 @@ class CenaDieta
     private $unidades;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DietasGenericas", mappedBy="cenaDieta")
+     * @ORM\OneToMany(targetEntity="Dieta", mappedBy="cenaDieta")
      */
-    private $dietasGenericas;
+    private $dietas;
 
     public function __construct()
     {
-        $this->dietasGenericas = new ArrayCollection();
+        $this->dietas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,30 +83,30 @@ class CenaDieta
     }
 
     /**
-     * @return Collection|DietasGenericas[]
+     * @return Collection|Dieta[]
      */
-    public function getDietasGenericas(): Collection
+    public function getdietas(): Collection
     {
-        return $this->dietasGenericas;
+        return $this->dietas;
     }
 
-    public function addDietasGenerica(DietasGenericas $dietasGenerica): self
+    public function addDieta(Dieta $dieta): self
     {
-        if (!$this->dietasGenericas->contains($dietasGenerica)) {
-            $this->dietasGenericas[] = $dietasGenerica;
-            $dietasGenerica->setCenaDieta($this);
+        if (!$this->dietas->contains($dieta)) {
+            $this->dietas[] = $dieta;
+            $dieta->setCenaDieta($this);
         }
 
         return $this;
     }
 
-    public function removeDietasGenerica(DietasGenericas $dietasGenerica): self
+    public function remove(Dieta $dieta): self
     {
-        if ($this->dietasGenericas->contains($dietasGenerica)) {
-            $this->dietasGenericas->removeElement($dietasGenerica);
+        if ($this->dietas->contains($dieta)) {
+            $this->dietas->removeElement($dieta);
             // set the owning side to null (unless already changed)
-            if ($dietasGenerica->getCenaDieta() === $this) {
-                $dietasGenerica->setCenaDieta(null);
+            if ($dieta->getCenaDieta() === $this) {
+                $dieta->setCenaDieta(null);
             }
         }
 

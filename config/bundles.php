@@ -19,8 +19,8 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Onurb\Bundle\YumlBundle\OnurbYumlBundle::class => ['all' => true],
     Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle::class => ['all' => true],
-    App\Bundles\ApiDtoGeneratorBundle\ApiDtoGeneratorBundle::class => ['all' => true],
-    Knp\Bundle\GaufretteBundle\KnpGaufretteBundle::class => ['all' => true],
     Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
+    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
 ];

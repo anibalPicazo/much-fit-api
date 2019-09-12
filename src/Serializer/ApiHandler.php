@@ -72,13 +72,13 @@ class ApiHandler implements SubscribingHandlerInterface
 
     /**
      * @param                                  $visitor
-     * @param                                  $id
+     * @param $uuid
      * @param array $type
      * @return object|null
      */
-    public function deserializeEntity($visitor, $id, array $type)
+    public function deserializeEntity($visitor, $uuid, array $type)
     {
-        if (null === $id && $type['name'] !== 'Entity') {
+        if (null === $uuid && $type['name'] !== 'Entity') {
             return null;
         }
 
@@ -90,8 +90,8 @@ class ApiHandler implements SubscribingHandlerInterface
         $isCollection = array_key_exists(1, $type['params']) && ($type['params'][1]['name'] === 'collection');
 
         $results = ($isCollection)
-            ? $this->entityManager->getRepository($entityClass)->findById($id)
-            : $this->entityManager->getRepository($entityClass)->find($id);
+            ? $this->entityManager->getRepository($entityClass)->findBy(['uuid' => $uuid])
+            : $this->entityManager->getRepository($entityClass)->findOneBy(['uuid' => $uuid]);
 
         return $results;
     }

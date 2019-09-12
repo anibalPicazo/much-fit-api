@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rutina
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -26,7 +23,7 @@ class Rutina
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dia", mappedBy="rutina")
      */
-    private $Dia;
+    private $dia;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
@@ -53,16 +50,22 @@ class Rutina
      */
     private $objetivos = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="rutina")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="HojaCuadernoRutina", mappedBy="rutina", orphanRemoval=true)
+     */
+    private $hojas_cuaderno_rutina;
+
     public function __construct()
     {
-        $this->Dia = new ArrayCollection();
+        $this->dia = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->hojas_cuaderno_rutina = new ArrayCollection();
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getNombre(): ?string
     {
         return $this->Nombre;
@@ -80,23 +83,23 @@ class Rutina
      */
     public function getDia(): Collection
     {
-        return $this->Dia;
+        return $this->dia;
     }
 
-    public function addDium(Dia $dium): self
+    public function addDium(dia $dium): self
     {
-        if (!$this->Dia->contains($dium)) {
-            $this->Dia[] = $dium;
+        if (!$this->dia->contains($dium)) {
+            $this->dia[] = $dium;
             $dium->setRutina($this);
         }
 
         return $this;
     }
 
-    public function removeDium(Dia $dium): self
+    public function removeDium(dia $dium): self
     {
-        if ($this->Dia->contains($dium)) {
-            $this->Dia->removeElement($dium);
+        if ($this->dia->contains($dium)) {
+            $this->dia->removeElement($dium);
             // set the owning side to null (unless already changed)
             if ($dium->getRutina() === $this) {
                 $dium->setRutina(null);
@@ -162,6 +165,68 @@ class Rutina
     public function setObjetivos(array $objetivos): self
     {
         $this->objetivos = $objetivos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getRutina() === $this) {
+                $user->setRutina(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HojaCuadernoRutina[]
+     */
+    public function getHojaCuadernosRutina(): Collection
+    {
+        return $this->hojas_cuaderno_rutina;
+    }
+
+    public function addHojaCuadernoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
+    {
+        if (!$this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina[] = $hoja_cuaderno_rutina;
+            $hoja_cuaderno_rutina->setRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHojaCuadernoRutina(HojaCuadernoRutina $hoja_cuaderno_rutina): self
+    {
+        if ($this->hojas_cuaderno_rutina->contains($hoja_cuaderno_rutina)) {
+            $this->hojas_cuaderno_rutina->removeElement($hoja_cuaderno_rutina);
+            // set the owning side to null (unless already changed)
+            if ($hoja_cuaderno_rutina->getRutina() === $this) {
+                $hoja_cuaderno_rutina->setRutina(null);
+            }
+        }
 
         return $this;
     }

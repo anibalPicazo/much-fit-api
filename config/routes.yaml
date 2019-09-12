@@ -1,20 +1,29 @@
+doctrine_yuml:
+    resource: "@OnurbYumlBundle/Resources/config/routing.yml"
+    prefix:   /yuml/
+
 app.swagger_ui:
-  path: /doc
-  methods: GET
-  defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+    path: /doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
 
 app.swagger:
-  path: /doc.json
-  methods: GET
-  defaults: { _controller: nelmio_api_doc.controller.swagger }
+    path: /doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
 
 api:
   resource: ./routes/annotations.yaml
   prefix: /api/
 
 api_login_check:
-  path: /api/auth
+    path: /api/auth
 
 gesdinet_jwt_refresh_token:
-  path:       /api/token/refresh
-  controller: gesdinet.jwtrefreshtoken::refresh
+    path:       /api/token/refresh
+    controller: gesdinet.jwtrefreshtoken::refresh
+
+api_register:
+    path:       /register
+    controller: App\Controller\User\RegisterController::register
+    methods:    POST

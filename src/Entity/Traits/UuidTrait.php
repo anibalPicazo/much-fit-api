@@ -20,6 +20,7 @@ trait UuidTrait
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      * @Serializer\Expose()
+     * @Serializer\Groups({"list-custom","list"})
      */
     protected $uuid;
 

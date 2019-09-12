@@ -10,6 +10,7 @@ use App\Service\DTO\DTOExtractor;
 use App\Service\Storage\StorageManagerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
+use ReflectionException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class EventStore
@@ -44,8 +45,8 @@ class EventStore
         StorageManagerInterface $storageManager,
         TokenStorageInterface $tokenStorage,
         SerializerInterface $serializer,
-        DTOExtractor $extractor)
-    {
+        DTOExtractor $extractor
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->serializer = $serializer;
         $this->storageManager = $storageManager;
@@ -55,23 +56,27 @@ class EventStore
     /**
      * @param string $name
      * @param DTOInterface $payload
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function saveEvent(string $name, DTOInterface $payload)
     {
-        $user = $this->tokenStorage->getToken()->getUser();
-        $event = new Event();
-        $event->setName($name);
-        $event->setPayload($this->serialize($payload));
-        $event->setUser($user);
+        //todo: realizar test api para comprobar que se serializa correctamente.
+        if ($this->tokenStorage->getToken()) {  //is used in tests you dont have the logged user.
+            $user = $this->tokenStorage->getToken()->getUser();
+            $event = new Event();
+            $event->setName($name);
+            $event->setPayload($this->serialize($payload));
+            $event->setUser($user);
+            $event->setEmpresa($user->getEmpresa());
 
-        $this->storageManager->save($event);
+            $this->storageManager->save($event);
+        }
     }
 
     /**
      * @param DTOInterface $DTO
      * @return array
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function serialize(DTOInterface $DTO): array
     {

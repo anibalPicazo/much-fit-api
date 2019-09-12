@@ -2,50 +2,57 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DietasGenericasRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DietaRepository")
  */
-class DietasGenericas
+class Dieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
+    use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $descripcion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\DesayunoDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DesayunoDieta", inversedBy="dietas")
      */
     private $desayuno;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AlmuerzoDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AlmuerzoDieta", inversedBy="dietas")
      */
     private $almuerzo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ComidaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ComidaDieta", inversedBy="dietas")
      */
     private $comida;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MeriendaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\MeriendaDieta", inversedBy="dietas")
      */
     private $meriendaDieta;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CenaDieta", inversedBy="dietasGenericas")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CenaDieta", inversedBy="dietas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cenaDieta;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PasabocasDieta", inversedBy="dietas")
+     */
+    private $pasabocas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PostcenaDieta", inversedBy="dietas")
+     */
+    private $postcena;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2)
@@ -67,11 +74,17 @@ class DietasGenericas
      */
     private $nivel_grasas;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HojaCuadernoDieta", mappedBy="dieta", orphanRemoval=true)
+     */
+    private $hojaCuadernoDietas;
+
+
+    public function __construct()
+    {
+        $this->hojaCuadernoDietas = new ArrayCollection();
+    }
     public function getDescripcion(): ?string
     {
         return $this->descripcion;
@@ -188,6 +201,61 @@ class DietasGenericas
     public function setNivelGrasas(string $nivel_grasas): self
     {
         $this->nivel_grasas = $nivel_grasas;
+
+        return $this;
+    }
+
+    public function getPasabocas(): ?PasabocasDieta
+    {
+        return $this->pasabocas;
+    }
+
+    public function setPasabocas(?PasabocasDieta $pasabocas): self
+    {
+        $this->pasabocas = $pasabocas;
+
+        return $this;
+    }
+
+    public function getPostcena(): ?PostcenaDieta
+    {
+        return $this->postcena;
+    }
+
+    public function setPostcena(?PostcenaDieta $postcena): self
+    {
+        $this->postcena = $postcena;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HojaCuadernoDieta[]
+     */
+    public function getHojaCuadernoDietas(): Collection
+    {
+        return $this->hojaCuadernoDietas;
+    }
+
+    public function addHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if (!$this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas[] = $hojaCuadernoDieta;
+            $hojaCuadernoDieta->setDieta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHojaCuadernoDieta(HojaCuadernoDieta $hojaCuadernoDieta): self
+    {
+        if ($this->hojaCuadernoDietas->contains($hojaCuadernoDieta)) {
+            $this->hojaCuadernoDietas->removeElement($hojaCuadernoDieta);
+            // set the owning side to null (unless already changed)
+            if ($hojaCuadernoDieta->getDieta() === $this) {
+                $hojaCuadernoDieta->setDieta(null);
+            }
+        }
 
         return $this;
     }

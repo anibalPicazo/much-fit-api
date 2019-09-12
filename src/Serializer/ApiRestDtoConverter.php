@@ -48,11 +48,16 @@ class ApiRestDtoConverter implements ParamConverterInterface
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
+        //todo: fix better
+        $content = $request->getContent();
+        if ($content == ""){
+            $content = "{}";
+        }
         $class = $configuration->getClass();
 
         try {
             $object = $this->serializer->deserialize(
-                $request->getContent(),
+                $content,
                 $class,
                 'json'
             );

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,55 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TestUsuario
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
+    use TimestampableTrait;
+    use UuidTrait;
+
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="testUsuario", cascade={"persist", "remove"})
-     */
-    private $user;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $sendentarismo;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adherencia_deporte;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adherencia_dieta;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $porcentaje_grasa;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $peso;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=3)
-     */
-    private $altura;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $composicion_atletica;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
     private $frecuencia_entrenamiento;
 
@@ -67,115 +27,17 @@ class TestUsuario
     private $experiencia_deporte;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $diabetico;
+    private $forma_fisica;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="testUsuario", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $celiaco;
+    private $user;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getSendentarismo(): ?bool
-    {
-        return $this->sendentarismo;
-    }
-
-    public function setSendentarismo(bool $sendentarismo): self
-    {
-        $this->sendentarismo = $sendentarismo;
-
-        return $this;
-    }
-
-    public function getAdherenciaDeporte(): ?string
-    {
-        return $this->adherencia_deporte;
-    }
-
-    public function setAdherenciaDeporte(string $adherencia_deporte): self
-    {
-        $this->adherencia_deporte = $adherencia_deporte;
-
-        return $this;
-    }
-
-    public function getAdherenciaDieta(): ?string
-    {
-        return $this->adherencia_dieta;
-    }
-
-    public function setAdherenciaDieta(string $adherencia_dieta): self
-    {
-        $this->adherencia_dieta = $adherencia_dieta;
-
-        return $this;
-    }
-
-    public function getPorcentajeGrasa()
-    {
-        return $this->porcentaje_grasa;
-    }
-
-    public function setPorcentajeGrasa($porcentaje_grasa): self
-    {
-        $this->porcentaje_grasa = $porcentaje_grasa;
-
-        return $this;
-    }
-
-    public function getPeso()
-    {
-        return $this->peso;
-    }
-
-    public function setPeso($peso): self
-    {
-        $this->peso = $peso;
-
-        return $this;
-    }
-
-    public function getAltura()
-    {
-        return $this->altura;
-    }
-
-    public function setAltura($altura): self
-    {
-        $this->altura = $altura;
-
-        return $this;
-    }
-
-    public function getComposicionAtletica(): ?string
-    {
-        return $this->composicion_atletica;
-    }
-
-    public function setComposicionAtletica(string $composicion_atletica): self
-    {
-        $this->composicion_atletica = $composicion_atletica;
-
-        return $this;
-    }
 
     public function getFrecuenciaEntrenamiento(): ?string
     {
@@ -201,27 +63,28 @@ class TestUsuario
         return $this;
     }
 
-    public function getDiabetico(): ?bool
+    public function getFormaFisica(): ?string
     {
-        return $this->diabetico;
+        return $this->forma_fisica;
     }
 
-    public function setDiabetico(bool $diabetico): self
+    public function setFormaFisica(string $forma_fisica): self
     {
-        $this->diabetico = $diabetico;
+        $this->forma_fisica = $forma_fisica;
 
         return $this;
     }
 
-    public function getCeliaco(): ?bool
+    public function getUser(): ?User
     {
-        return $this->celiaco;
+        return $this->user;
     }
 
-    public function setCeliaco(bool $celiaco): self
+    public function setUser(User $user): self
     {
-        $this->celiaco = $celiaco;
+        $this->user = $user;
 
         return $this;
     }
+
 }

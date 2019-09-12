@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PostCenaDieta
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
@@ -32,11 +30,15 @@ class PostCenaDieta
      */
     private $unidades;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Dieta", mappedBy="postcena")
+     */
+    private $dietas;
 
+    public function __construct()
+    {
+        $this->dietas = new ArrayCollection();
+    }
     public function getAlimento(): ?Alimentos
     {
         return $this->alimento;
@@ -69,6 +71,37 @@ class PostCenaDieta
     public function setUnidades(string $unidades): self
     {
         $this->unidades = $unidades;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dieta[]
+     */
+    public function getDietas(): Collection
+    {
+        return $this->dietas;
+    }
+
+    public function addDieta(Dieta $dieta): self
+    {
+        if (!$this->dietas->contains($dieta)) {
+            $this->dietas[] = $dieta;
+            $dieta->setPostcena($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDieta(Dieta $dieta): self
+    {
+        if ($this->dietas->contains($dieta)) {
+            $this->dietas->removeElement($dieta);
+            // set the owning side to null (unless already changed)
+            if ($dieta->getPostcena() === $this) {
+                $dieta->setPostcena(null);
+            }
+        }
 
         return $this;
     }

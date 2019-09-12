@@ -6,7 +6,7 @@ namespace App\Serializer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Form\FormError;
 
 /**
  * Class ApiRestErrorNormalizer
@@ -28,15 +28,27 @@ class ApiRestErrorNormalizer implements NormalizerInterface
 
     /**
      * This code has been taken from JMSSerializer.
-     * @param \Symfony\Component\Validator\ConstraintViolationList $data
+     * @param $data
      * @return array
      */
-    private function convertToArray(ConstraintViolationList $data)
+    private function convertToArray($data)
     {
         $errors = [];
 
-        foreach ($data->getIterator() as $error) {
-            $errors[$error->getPropertyPath()] = $error->getMessage();
+        foreach ($data as $error) {
+            $typeof = get_class($error);
+            switch ($typeof) {
+                case 'Symfony\Component\Form\FormError':
+                    /** FormError $error */
+                    $key = $error->getCause()->getPropertyPath();
+                    $errors[$key] = $error->getMessage();
+                    break;
+
+                case 'Symfony\Component\Validator\ConstraintViolation':
+                    $errors[$error->getPropertyPath()] = $error->getMessage();
+                    break;
+
+            }
         }
 
         return $errors;
