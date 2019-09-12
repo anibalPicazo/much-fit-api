@@ -7,7 +7,7 @@ namespace App\DTO\TestUsuario;
 use App\DTO\DTOInterface;
 use App\Entity\User;
 use JMS\Serializer\Annotation as JMSSerializer;
-use Symfony\Component\Validator\Constraints as Assert;;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 

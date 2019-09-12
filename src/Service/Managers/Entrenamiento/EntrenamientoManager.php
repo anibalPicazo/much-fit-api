@@ -8,7 +8,6 @@ use App\DTO\Entrenamiento\EntrenamientoCreateDTO;
 use App\DTO\Entrenamiento\EntrenamientoLineaCreateDTO;
 use App\Entity\Entrenamiento;
 use App\Entity\EntrenamientoLineas;
-use App\EventSubscriber\Event\DelegacionEvent;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 

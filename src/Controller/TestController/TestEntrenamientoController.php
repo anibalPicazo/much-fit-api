@@ -10,12 +10,15 @@ use App\Service\Managers\TestManager\TestEntrenamientoManager;
 use App\Validator\DTOValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Swagger\Annotations as SWG;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
@@ -59,6 +62,20 @@ class TestEntrenamientoController extends AbstractController
      * @return JsonResponse
      * @ParamConverter("DTO", converter="api.rest.dto.converter")
      * @throws ExceptionInterface
+     * @SWG\Tag(name="Test Entrenamiento")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Crear Test de Entrenamiento"
+     * )
+     * @SWG\Parameter(
+     *     in="body",
+     *     name="DTO",
+     *     @SWG\Schema(
+     *         type="object",
+     *         ref=@Model(type=TestUsuarioEntrenamientoCreateDTO::class)
+     *     )
+     * )
+     * @Security(name="Bearer")
      */
     public function createTest(TestUsuarioEntrenamientoCreateDTO $DTO, Request $request){
         //SECURITY
