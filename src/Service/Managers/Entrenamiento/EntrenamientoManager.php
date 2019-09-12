@@ -25,6 +25,7 @@ class EntrenamientoManager extends AbstractManager
         $entrenamiento = new Entrenamiento();
         $entrenamiento->setUuid($DTO->getUuid());
         $DTO->getDescripcion() ? $entrenamiento->setDescripcion($DTO->getDescripcion()) : null;
+        $entrenamiento->setUser($this->getCurrent());
         $this->save($entrenamiento);
 
         return $entrenamiento;
