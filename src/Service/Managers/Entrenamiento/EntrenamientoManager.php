@@ -3,13 +3,15 @@
 
 namespace App\Service\Managers\Entrenamiento;
 
-
+use Ramsey\Uuid\Uuid;
+use App\DTO\CuadernoEntrenamiento\CuadernoEntrenamientoCreateDTO;
 use App\DTO\Entrenamiento\EntrenamientoCreateDTO;
 use App\DTO\Entrenamiento\EntrenamientoLineaCreateDTO;
 use App\Entity\Entrenamiento;
 use App\Entity\EntrenamientoLineas;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+use GuzzleHttp\Psr7\Request;
 
 class EntrenamientoManager extends AbstractManager
 {
@@ -26,6 +28,9 @@ class EntrenamientoManager extends AbstractManager
         $entrenamiento->setUuid($DTO->getUuid());
         $DTO->getDescripcion() ? $entrenamiento->setDescripcion($DTO->getDescripcion()) : null;
         $entrenamiento->setUser($this->getCurrent());
+        if (!$this->getCurrent()->getCuardernoEntrenamiento()){
+
+        }
         $this->save($entrenamiento);
 
         return $entrenamiento;

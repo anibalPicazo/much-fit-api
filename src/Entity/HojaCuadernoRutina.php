@@ -27,11 +27,7 @@ class HojaCuadernoRutina
      */
     private $rutina;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Dieta", inversedBy="hojaCuadernos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Dieta;
+
 
     /**
      * @ORM\Column(type="json")
@@ -45,7 +41,7 @@ class HojaCuadernoRutina
     private $cuaderno_entrenamiento;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $hasta;
 
@@ -68,7 +64,7 @@ class HojaCuadernoRutina
     {
         $this->entrenamientos = new ArrayCollection();
     }
-    
+
     /**
      * @return Collection|Entrenamiento[]
      */
@@ -108,18 +104,6 @@ class HojaCuadernoRutina
     public function setRutina(?Rutina $rutina): self
     {
         $this->rutina = $rutina;
-
-        return $this;
-    }
-
-    public function getDieta(): ?Dieta
-    {
-        return $this->Dieta;
-    }
-
-    public function setDieta(?Dieta $Dieta): self
-    {
-        $this->Dieta = $Dieta;
 
         return $this;
     }
