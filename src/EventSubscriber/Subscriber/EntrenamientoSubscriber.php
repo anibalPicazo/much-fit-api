@@ -74,8 +74,21 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
             $this->cuadernoEntrenamientoManager->create($DTO);
             $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(),$user->getRutina()->getUuid(),$user->getCuardernoEntrenamiento()->getUuid());
             $this->hojaCuadernoManager->create($hojaEntrenamientoDTO);
+            //todo: Agregar el entrenamiento a la hoja
+        }
+        else{
+            $hojas = $this->hojaCuadernoManager->findBy(['cuaderno' => $user->getCuardernoEntrenamiento()]);
+            if(count($hojas) == 0) {
+                $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(), $user->getRutina()->getUuid(), $user->getCuardernoEntrenamiento()->getUuid());
+                $this->hojaCuadernoManager->create($hojaEntrenamientoDTO);
+                //todo: Agregar el entrenamiento a la hoja
 
+            }
+                else{
+                    //todo: Agregar el entrenamiento a la hoja
 
+                }
+            }
         }
 
     }
