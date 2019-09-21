@@ -20,7 +20,6 @@ class HojaCuadernoEntrenamientoCreateDTO implements DTOInterface
      * @JMSSerializer\Type("Entity<App\Entity\Rutina")
      */
     protected $rutina;
-
     /**
      * @Assert\NotNull()
      * @JMSSerializer\Type("Entity<App\Entity\Rutina")
