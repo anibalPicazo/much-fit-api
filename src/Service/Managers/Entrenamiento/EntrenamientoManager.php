@@ -3,6 +3,8 @@
 
 namespace App\Service\Managers\Entrenamiento;
 
+use App\EventSubscriber\Event\EntrenamientoEvent;
+use App\EventSubscriber\Event\PresupuestoEvent;
 use Ramsey\Uuid\Uuid;
 use App\DTO\CuadernoEntrenamiento\CuadernoEntrenamientoCreateDTO;
 use App\DTO\Entrenamiento\EntrenamientoCreateDTO;
@@ -30,6 +32,8 @@ class EntrenamientoManager extends AbstractManager
         $entrenamiento->setUser($this->getCurrent());
 
         $this->save($entrenamiento);
+
+        $this->dispatcher->dispatch(new EntrenamientoEvent($DTO), EntrenamientoEvent::ENTRENAMIENTO_CREATED);
 
         //TODO: Lllamar al evento para que este entrenamiento lo añada a la hoja de entrenamiento ACTUAL
 

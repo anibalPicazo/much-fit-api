@@ -17,7 +17,7 @@ class CuadernoEntrenamientoManager extends AbstractManager
      */
     protected function getRepository()
     {
-        return $this->doctrine->getRepository(Entrenamiento::class);
+        return $this->doctrine->getRepository(CuadernoEntrenamiento::class);
     }
     public function create(CuadernoEntrenamientoCreateDTO $DTO){
         $cuaderno = new CuadernoEntrenamiento();

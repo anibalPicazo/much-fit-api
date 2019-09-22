@@ -34,7 +34,6 @@ class Entrenamiento
 
     /**
      * @ORM\ManyToOne(targetEntity="HojaCuadernoRutina", inversedBy="entrenamientos")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $hoja_cuaderno_rutina;
 

@@ -6,6 +6,7 @@ namespace App\Service\Events;
 
 use App\DTO\DTOInterface;
 use App\Entity\Event;
+use App\Entity\User;
 use App\Service\DTO\DTOExtractor;
 use App\Service\Storage\StorageManagerInterface;
 use JMS\Serializer\SerializationContext;
@@ -62,12 +63,12 @@ class EventStore
     {
         //todo: realizar test api para comprobar que se serializa correctamente.
         if ($this->tokenStorage->getToken()) {  //is used in tests you dont have the logged user.
+            /** @var User $user */
             $user = $this->tokenStorage->getToken()->getUser();
             $event = new Event();
             $event->setName($name);
             $event->setPayload($this->serialize($payload));
             $event->setUser($user);
-            $event->setEmpresa($user->getEmpresa());
 
             $this->storageManager->save($event);
         }

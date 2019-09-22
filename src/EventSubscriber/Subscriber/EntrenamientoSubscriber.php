@@ -72,11 +72,11 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
     {
        return  [EntrenamientoEvent::ENTRENAMIENTO_CREATED => 'onEntrenamientoCreate'];
     }
-    protected function onEntrenamientoCreate(EntrenamientoEvent $event){
+    public function onEntrenamientoCreate(EntrenamientoEvent $event){
 
         $this->eventStore->saveEvent(EntrenamientoEvent::ENTRENAMIENTO_CREATED,$event->getDTO());
         $user = $this->cuadernoEntrenamientoManager->getCurrent();
-        $cuaderno = $this->cuadernoEntrenamientoManager->findBy(['user' => $user]);
+        $cuaderno = $this->cuadernoEntrenamientoManager->findBy(['usuario' => $user]);
         if(count($cuaderno) == 0){
             $DTO = new CuadernoEntrenamientoCreateDTO(Uuid::uuid4());
             $this->cuadernoEntrenamientoManager->create($DTO);
@@ -97,7 +97,7 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
                 }
             }
         }
-        protected function addEntrenamiento(String $idEntrenamiento) {
+        public function addEntrenamiento(String $idEntrenamiento) {
             /** @var Entrenamiento $entrenamiento */
             $entrenamiento = $this->entrenamientoManager->findBy(['Uuid' => $idEntrenamiento]);
             $this->hojaCuadernoManager->addEntrenamiento($entrenamiento);

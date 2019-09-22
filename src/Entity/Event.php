@@ -12,9 +12,14 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Event
 {
-    use UuidTrait;
     use TimestampableEntity;
 
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -31,7 +36,10 @@ class Event
      */
     private $user;
 
-
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
     public function getName(): ?string
     {
         return $this->name;
