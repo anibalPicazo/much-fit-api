@@ -28,10 +28,10 @@ class EntrenamientoManager extends AbstractManager
         $entrenamiento->setUuid($DTO->getUuid());
         $DTO->getDescripcion() ? $entrenamiento->setDescripcion($DTO->getDescripcion()) : null;
         $entrenamiento->setUser($this->getCurrent());
-        if (!$this->getCurrent()->getCuardernoEntrenamiento()){
 
-        }
         $this->save($entrenamiento);
+
+        //TODO: Lllamar al evento para que este entrenamiento lo añada a la hoja de entrenamiento ACTUAL
 
         return $entrenamiento;
     }

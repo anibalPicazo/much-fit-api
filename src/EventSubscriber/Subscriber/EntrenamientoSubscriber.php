@@ -6,11 +6,13 @@ namespace App\EventSubscriber\Subscriber;
 
 use App\DTO\CuadernoEntrenamiento\CuadernoEntrenamientoCreateDTO;
 use App\DTO\CuadernoEntrenamiento\HojaCuadernoEntrenamientoCreateDTO;
+use App\Entity\Entrenamiento;
 use App\Entity\HojaCuadernoRutina;
 use App\EventSubscriber\Event\EntrenamientoEvent;
 use App\Service\Events\EventStore;
 use App\Service\Managers\CuadernoEntrenamiento\CuadernoEntrenamientoManager;
 use App\Service\Managers\CuadernoEntrenamiento\HojaCuadernoEntrenamiento\HojaEntrenamientoManager;
+use App\Service\Managers\Entrenamiento\EntrenamientoManager;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,18 +30,24 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
      * @var HojaEntrenamientoManager
      */
     private $hojaCuadernoManager;
+    /**
+     * @var EntrenamientoManager
+     */
+    private $entrenamientoManager;
 
     /**
      * EntrenamientoSubscriber constructor.
      * @param EventStore $eventStore
      * @param CuadernoEntrenamientoManager $cuadernoEntrenamientoManager
      * @param HojaEntrenamientoManager $hojaCuadernoManager
+     * @param EntrenamientoManager $entrenamientoManager
      */
-    public function __construct(EventStore $eventStore,CuadernoEntrenamientoManager $cuadernoEntrenamientoManager,HojaEntrenamientoManager $hojaCuadernoManager)
+    public function __construct(EventStore $eventStore,CuadernoEntrenamientoManager $cuadernoEntrenamientoManager,HojaEntrenamientoManager $hojaCuadernoManager, EntrenamientoManager $entrenamientoManager)
     {
         $this->eventStore = $eventStore;
         $this->cuadernoEntrenamientoManager = $cuadernoEntrenamientoManager;
         $this->hojaCuadernoManager = $hojaCuadernoManager;
+        $this->entrenamientoManager = $entrenamientoManager;
     }
 
     /**
@@ -74,22 +82,24 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
             $this->cuadernoEntrenamientoManager->create($DTO);
             $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(),$user->getRutina()->getUuid(),$user->getCuardernoEntrenamiento()->getUuid());
             $this->hojaCuadernoManager->create($hojaEntrenamientoDTO);
-            //todo: Agregar el entrenamiento a la hoja
+            $this->addEntrenamiento($event->getDTO()->getUuid());
+
         }
         else{
             $hojas = $this->hojaCuadernoManager->findBy(['cuaderno' => $user->getCuardernoEntrenamiento()]);
             if(count($hojas) == 0) {
                 $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(), $user->getRutina()->getUuid(), $user->getCuardernoEntrenamiento()->getUuid());
                 $this->hojaCuadernoManager->create($hojaEntrenamientoDTO);
-                //todo: Agregar el entrenamiento a la hoja
-
+                $this->addEntrenamiento($event->getDTO()->getUuid());
             }
                 else{
-                    //todo: Agregar el entrenamiento a la hoja
-
+                    $this->addEntrenamiento($event->getDTO()->getUuid());
                 }
             }
         }
-
-    }
+        protected function addEntrenamiento(String $idEntrenamiento) {
+            /** @var Entrenamiento $entrenamiento */
+            $entrenamiento = $this->entrenamientoManager->findBy(['Uuid' => $idEntrenamiento]);
+            $this->hojaCuadernoManager->addEntrenamiento($entrenamiento);
+        }
 }
