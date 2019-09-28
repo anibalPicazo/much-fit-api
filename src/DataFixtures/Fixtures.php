@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\ActividadFisica;
+use App\Entity\IntensidadRutina;
 use App\Entity\Role;
+use App\Entity\Rutina;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
 use App\Entity\TipoFisico;
@@ -24,10 +26,11 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
     const FRECUENCIA = ['< 2','2 - 3','> 3'];
     const ESTADO_ACTUAL = ['DEFINIDO','SOBREPESO','DELGADO','LIGERAMENTE SOBREPESO','EXTREMA DELGADEZ','MUSCULOSO'];
     const OBJETIVO_METABOLICO = ['DEFINIDO','MUSCULOSO','NORMAL'];
-
+    const INTENSIDAD_ENTRENAMIENTO =["MUY ALTA","ALTA","MEDIA","BAJA","MUY BAJA"];
 
     //QUANTITY
     const USUARIOS = 40;
+
 
 
     /**
@@ -152,6 +155,46 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $testUsuarioDieta->setUser($this->getReference(self::USER.$count));
 
         });
+
+        #Intensidad
+        $intensidad_muy_alta = new IntensidadRutina();
+        $intensidad_muy_alta->setUuid(Uuid::uuid4()->toString());
+        $intensidad_muy_alta->setNombre("Muy Alta");
+        $intensidad_muy_alta->setDescripcion("Intensidad de entrenamiento alto");
+        $manager->persist($intensidad_muy_alta);
+
+
+        $intensidad_alta = new IntensidadRutina();
+        $intensidad_alta->setUuid(Uuid::uuid4()->toString());
+        $intensidad_alta->setNombre("Alta");
+        $intensidad_alta->setDescripcion("Intensidad de entrenamiento alto");
+        $manager->persist($intensidad_alta);
+
+        $intensidad_normal = new IntensidadRutina();
+        $intensidad_normal->setUuid(Uuid::uuid4()->toString());
+        $intensidad_normal->setNombre("Normal");
+        $intensidad_normal->setDescripcion('Intensidad de entrenamiento medio');
+        $manager->persist($intensidad_normal);
+
+        $intensidad_baja = new IntensidadRutina();
+        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
+        $intensidad_baja->setNombre("Normal");
+        $intensidad_baja->setDescripcion("Intensidad de entrenamiento Normal");
+        $manager->persist($intensidad_baja);
+
+
+        $intensidad_baja = new IntensidadRutina();
+        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
+        $intensidad_baja->setNombre("Baja");
+        $intensidad_baja->setDescripcion("Intensidad de entrenamiento baja");
+        $manager->persist($intensidad_baja);
+
+        $intensidad_muy_baja = new IntensidadRutina();
+        $intensidad_muy_baja->setUuid(Uuid::uuid4()->toString());
+        $intensidad_muy_baja->setNombre("Muy Baja");
+        $intensidad_muy_baja->setDescripcion("Intensidad de entrenamiento muy baja");
+        $manager->persist($intensidad_muy_baja);
+
 
         $manager->flush();
     }

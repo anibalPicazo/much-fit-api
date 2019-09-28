@@ -60,6 +60,24 @@ class Rutina
      */
     private $hojas_cuaderno_rutina;
 
+
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $duracion;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $densidad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\IntensidadRutina", inversedBy="rutinas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $intensidad;
+
     public function __construct()
     {
         $this->dia = new ArrayCollection();
@@ -227,6 +245,42 @@ class Rutina
                 $hoja_cuaderno_rutina->setRutina(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    public function setDuracion($duracion): self
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    public function getDensidad()
+    {
+        return $this->densidad;
+    }
+
+    public function setDensidad($densidad): self
+    {
+        $this->densidad = $densidad;
+
+        return $this;
+    }
+
+    public function getIntensidad(): ?IntensidadRutina
+    {
+        return $this->intensidad;
+    }
+
+    public function setIntensidad(?IntensidadRutina $intensidad): self
+    {
+        $this->intensidad = $intensidad;
 
         return $this;
     }
