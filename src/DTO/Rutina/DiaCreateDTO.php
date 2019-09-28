@@ -21,7 +21,7 @@ class DiaCreateDTO implements  DTOInterface
     protected $nombre;
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("Entity<App/Entity/Rutina>")
+     * @JMSSerializer\Type("Entity<App\Entity\Rutina>")
      */
     protected $rutina;
 

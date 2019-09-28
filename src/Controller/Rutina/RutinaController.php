@@ -111,8 +111,6 @@ class RutinaController extends AbstractController
     public function createDia(DiaCreateDTO $DTO, Request $request,Rutina $rutina){
         //SECURITY
         $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
-        //todo: Implements the voter
-
 
         //VALIDATION
         $errors = $this->DTOValidator->validate($request);
