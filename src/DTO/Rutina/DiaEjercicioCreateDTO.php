@@ -18,11 +18,11 @@ class DiaEjercicioCreateDTO implements DTOInterface
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("Entity<App/Entity/Ejercicio>")
+     * @JMSSerializer\Type("Entity<App\Entity\Ejercicios>")
      */
     protected $ejercicio;
 
-    /**
+     /**
      * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
@@ -47,7 +47,16 @@ class DiaEjercicioCreateDTO implements DTOInterface
     protected $intesidad;
 
 
-    public function __construct($uuid, $ejercicio, $serie, $repeticiones,$descanso,$intesidad)
+    /**
+     * DiaEjercicioCreateDTO constructor.
+     * @param $uuid
+     * @param $ejercicio
+     * @param $serie
+     * @param $repeticiones
+     * @param $descanso
+     * @param $intesidad
+     */
+    public function __construct($uuid, $ejercicio, $serie, $repeticiones, $descanso, $intesidad)
     {
         $this->uuid = $uuid;
         $this->ejercicio = $ejercicio;

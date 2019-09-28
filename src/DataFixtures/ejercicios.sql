@@ -1,116 +1,82 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Versión del servidor:         5.7.26 - MySQL Community Server (GPL)
--- SO del servidor:              Linux
--- HeidiSQL Versión:             10.2.0.5599
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
-
--- Volcando estructura de base de datos para much_fit_dev
-CREATE DATABASE IF NOT EXISTS `much_fit_dev` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `much_fit_dev`;
-
--- Volcando estructura para tabla much_fit_dev.ejercicios
-CREATE TABLE IF NOT EXISTS `ejercicios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Volcando datos para la tabla much_fit_dev.ejercicios: ~82 rows (aproximadamente)
-/*!40000 ALTER TABLE `ejercicios` DISABLE KEYS */;
-INSERT INTO `ejercicios` (`id`, `descripcion`, `imagen`) VALUES
-	(1, 'Press de banca Inclinado Mancuernas', ''),
-	(2, 'Fondos en paralelas', ''),
-	(3, 'Press de banca Inclinado', ''),
-	(4, 'Sentadilla', ''),
-	(5, 'Leg press (hinge )', ''),
-	(6, 'Good Morning (Barbell)', ''),
-	(7, 'Squat', ''),
-	(8, 'Leg press', ''),
-	(9, 'Good Morning', ''),
-	(10, 'Chin Up', ''),
-	(11, 'Lat Pulldown ', ''),
-	(12, 'Seated Cable Row (close Grip)', ''),
-	(13, 'Rear delt fly', ''),
-	(14, 'Seated Row', ''),
-	(15, 'Hammer Curl', ''),
-	(16, 'Hammer Curl (Dumbbell )', ''),
-	(17, 'Glute extension. ', ''),
-	(18, 'Seated Military Press', ''),
-	(19, 'Seated Shoulder  Press (Barbell)', ''),
-	(20, 'Leg outward fly', ''),
-	(21, 'Seated Military Press (Dumbbell)', ''),
-	(22, 'Lateral Raise', ''),
-	(23, 'Seated Shoulder Press (Dumbbell)', ''),
-	(24, 'Lateral Raise (Dumbbells)', ''),
-	(25, 'Bicep Curl (Barbell)', ''),
-	(26, 'T-bar Row', ''),
-	(27, 'Bicep Curl (barbell )', ''),
-	(28, 'Incline Press (Dumbbell)', ''),
-	(29, 'Tricep pushdown', ''),
-	(30, 'Tricep Extension', ''),
-	(31, 'Bent Over Row (Dumbbell)', ''),
-	(32, 'Leg curl', ''),
-	(33, 'Cycling', ''),
-	(34, 'Military Press (Standing)', ''),
-	(35, 'Shoulder Press (Standing)', ''),
-	(36, 'Deadlift (Barbell)', ''),
-	(37, 'Deadlift', ''),
-	(38, 'Hammer back row wide 45 angle', ''),
-	(39, 'Hammer lat pulldown', ''),
-	(40, 'Rotator cuff work. ', ''),
-	(41, 'Shrugs (dumbbell)', ''),
-	(42, 'Hammer seated row', ''),
-	(43, 'Hammer seated row (CLOSE GRIP)', ''),
-	(44, 'Pull Up', ''),
-	(45, 'Hammer shoulder press', ''),
-	(46, 'Overhead Press (Dumbbell)', ''),
-	(47, 'Overhead Press (Barbell)', ''),
-	(48, 'Bench Press (Barbell)', ''),
-	(49, 'Hammer Decline Chest Press', ''),
-	(50, 'Front Squat (Barbell)', ''),
-	(51, 'Lateral Raise (Dumbbell)', ''),
-	(52, 'Leg Extension (Machine)', ''),
-	(53, 'Landmine Press', ''),
-	(54, 'Bicep Curl (Dumbbell)', ''),
-	(55, 'Romanian Deadlift (Barbell)', ''),
-	(56, 'Neutral Chin', ''),
-	(57, 'Skullcrusher (Barbell)', ''),
-	(58, 'Lat Pulldown (Cable)', ''),
-	(59, 'Rope Never Ending ', ''),
-	(60, 'Face pull', ''),
-	(61, 'Front Raise (Dumbbell)', ''),
-	(62, 'Deadlift - Trap Bar', ''),
-	(63, 'Stairmaster', ''),
-	(64, 'Hammer Row Stand 1armed', ''),
-	(65, 'Sling Shot Bench', ''),
-	(66, 'Sling Shot Incline', ''),
-	(67, 'Hack Squat', ''),
-	(68, 'Hammer Row - Wide Grip', ''),
-	(69, 'Shrugs', ''),
-	(70, 'Rack Pull - 1 Pin', ''),
-	(71, 'Hammer High Row - 1 Arm', ''),
-	(72, 'Rack Pull 2 Pin', ''),
-	(73, 'kettlebell Swings', ''),
-	(74, 'close grip Bench', ''),
-	(75, 'Low Incline Dumbbell Bench', ''),
-	(76, 'sumo deadlift', ''),
-	(77, 'lying Skullcrusher', ''),
-	(78, 'high bar squat', ''),
-	(79, 'curl ez bar', ''),
-	(80, 'Curl Dumbbell', ''),
-	(81, 'Lat Pulldown Closegrip', ''),
-	(82, 'Cable Fly', '');
-/*!40000 ALTER TABLE `ejercicios` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Press de banca Inclinado Mancuernas','0a4bd769-cac7-4130-87fa-c1d4e1a5ad95','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Fondos en paralelas','722d881a-9467-49be-a036-305db324d8a8','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Press de banca Inclinado','265a43d5-10a5-4484-8cfc-51e209d77181','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Sentadilla','6225b141-051b-4317-b880-fab7110b5421','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Leg press (hinge )','fd84e83a-e6d0-4c8b-8b09-e86d2563bbc8','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Good Morning (Barbell)','2b6b863c-44b5-4f12-b90f-b3b16105d9a7','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Squat','c18f3aa3-9271-4460-ba67-727c21e29bde','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Leg press','6976ce08-f55b-4079-b685-eb726a031c1d','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Good Morning','1cb7ee05-542e-448f-981d-f91df8bbff5b','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Chin Up','9e89e140-5dfb-45f4-9dc5-a1f466306b79','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lat Pulldown ','40eaaedc-7407-474c-b96e-a7c92fa10ba5','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Cable Row (close Grip)','0a7415b1-39db-4850-9e92-c09886c33750','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Rear delt fly','e9fe37b2-417f-4f39-8e71-461ad4b048db','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Row','9bc1cb79-9a6d-4f0d-8af6-1db9df49846a','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer Curl','63ab2829-c6b5-4baa-b284-b34d933449c3','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer Curl (Dumbbell )','8be2a0d7-301f-427f-99a5-410c0c768529','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Glute extension. ','bd396db1-4aa7-4f9a-8ae1-6899a992c4b9','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Military Press','f4a6126d-7117-4306-87db-949e2c8ca601','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Shoulder  Press (Barbell)','1cbffe99-99c6-4caf-8c74-dfb47f50b837','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Leg outward fly','d4be30a5-ac50-4272-9604-0b441e01d1a4','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Military Press (Dumbbell)','e4f14105-c102-4734-9473-93c120a18798','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lateral Raise','949b0439-ec15-4c72-ae9b-f1e33f3799c6','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Seated Shoulder Press (Dumbbell)','f3abd0e6-7c14-4650-bde7-4df7ab441447','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lateral Raise (Dumbbells)','0904cc2d-0c77-4aad-999e-8d641773e864','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Bicep Curl (Barbell)','9a5b4faf-05d2-45cd-8166-170784d4ad2a','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('T-bar Row','4a737a8d-f941-43fe-bbac-34411bca2ce8','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Bicep Curl (barbell )','cc9112f0-122d-4fe0-a856-2fa037fb96e5','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Incline Press (Dumbbell)','aaf0230d-16f2-4953-b64b-99514c5abdaa','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Tricep pushdown','7663bc2f-01ea-4450-bece-0df91c62427b','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Tricep Extension','9672c2ce-18fa-491b-8306-54a22187b6d7','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Bent Over Row (Dumbbell)','e5d5583c-de72-49c4-9180-0b7e00d7b88f','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Leg curl','ec5c5d3d-a280-4c09-ac5c-675db66ae83f','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Cycling','8e286985-5667-44ea-a534-be1318df1769','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Military Press (Standing)','461fc876-7ee4-4d66-8f36-ca3134865336','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Shoulder Press (Standing)','46a7bdf9-85be-4a93-bae2-e37af6622e44','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Deadlift (Barbell)','bfe9eff9-59bf-49ec-aed6-abfb46a1bc3e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Deadlift','66a1f734-7f7d-4b1e-8d88-7ac00994672e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer back row wide 45 angle','bf9caf75-cde8-4cbd-9273-d4236b5a79f8','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer lat pulldown','6033e464-d7c5-431d-814e-b2a632ba6c39','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Rotator cuff work. ','416d244b-ad25-44ac-a081-4fe70489eebc','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Shrugs (dumbbell)','89310854-ab31-405e-b6cf-d782092173c3','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer seated row','0e0d6d6a-81e7-474e-9346-98af5587288e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer seated row (CLOSE GRIP)','caa7b558-d945-433d-b64f-5fe3278e2fed','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Pull Up','2aeacea3-25b7-47f1-b88a-b02dbd6f1932','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer shoulder press','02ceb59e-6dbc-4510-8ad6-7a3e187c98b7','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Overhead Press (Dumbbell)','527c931d-8bae-4ad9-9ad5-f7bbfb3f321a','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Overhead Press (Barbell)','b28fb09d-e6dc-4490-b173-2588c2213892','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Bench Press (Barbell)','65beab60-829c-4920-98c5-fea942194291','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer Decline Chest Press','dc873d96-e868-45e0-9ae2-de7759a6c8da','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Front Squat (Barbell)','e8c143c1-2f90-42ab-ac61-dcf6b9239d04','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lateral Raise (Dumbbell)','738368ad-a3a5-4fac-84f7-6e07858e51ba','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Leg Extension (Machine)','44a47bcb-8b2d-4a1f-9412-ee22b982aac0','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Landmine Press','454ab6a7-3e88-4296-81fd-468c361ffdb0','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Bicep Curl (Dumbbell)','8f39d29b-ae3d-44c7-9bc6-0bd7c1204b1a','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Romanian Deadlift (Barbell)','acc83da5-39f6-4d61-802a-a6278872c688','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Neutral Chin','cf80d998-6f39-45b7-a25c-623c8b77b4ea','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Skullcrusher (Barbell)','a588981f-69d2-478a-a224-e58a8c9563d4','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lat Pulldown (Cable)','0a669661-99c4-4d84-b1f4-70c001c4d5e1','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Rope Never Ending ','935be81a-953a-47d0-aeac-bdfbeb7f7a4b','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Face pull','173d9d19-1278-4e21-aaef-27984f98c55f','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Front Raise (Dumbbell)','0854acdb-8524-4ce7-963d-a8340d5600df','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Deadlift - Trap Bar','d48c3a46-4ec1-49b8-b67c-87344110f967','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Stairmaster','9b681b23-285d-4273-9fc8-d157fba81c0e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer Row Stand 1armed','6b4d3011-0095-4137-89b4-4c2a46e0ada0','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Sling Shot Bench','226163d0-a9e1-4c94-8120-057fbb8946a3','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Sling Shot Incline','375800db-4e77-4690-b5e0-48bf36263cde','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hack Squat','cfa7eddd-dd0e-49ce-b8e9-d6329e7d6543','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer Row - Wide Grip','bb1dd7ac-9f41-4278-bbc8-b0419123725c','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Shrugs','f27142c7-8b0e-42a6-9de3-7a123b960c41','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Rack Pull - 1 Pin','73a40495-c625-40eb-87c6-3bee2c7305a5','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Hammer High Row - 1 Arm','6ea65d9b-9d42-4f12-9b1a-17af1ede55ab','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Rack Pull 2 Pin','61fed653-4dd0-4efd-a1bf-1f6f6e55861c','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('kettlebell Swings','79be5024-e131-4761-9c96-09e421d8ec1e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('close grip Bench','d10f3add-123c-4a8d-b259-61d87f804720','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Low Incline Dumbbell Bench','3721a2ad-076d-43ce-b569-05898936e3f2','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('sumo deadlift','7ba2cb0c-bdaa-444a-96e7-286f4ae007d6','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('lying Skullcrusher','577c19c5-c517-465e-8e24-0794e5c2c45f','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('high bar squat','b6973740-867e-4f6a-a141-a165ccd1f20a','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('curl ez bar','33f26155-6232-4f50-8540-6265ec347df3','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Curl Dumbbell','46f0313a-26b7-40c2-b8f8-c72677c05f5e','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Lat Pulldown Closegrip','e332ab7d-ee11-4172-8966-f72479e86ca7','');
+INSERT INTO much_fit_dev.ejercicios (descripcion,uuid,imagen) VALUES ('Cable Fly','85321200-d654-41b1-9377-398b4e6dab30','');

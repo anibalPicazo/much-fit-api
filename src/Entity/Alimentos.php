@@ -12,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Alimentos
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -313,11 +308,4 @@ class Alimentos
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }

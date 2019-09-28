@@ -11,6 +11,7 @@ use App\Entity\Dia;
 use App\Entity\DiaEjercicio;
 use App\Entity\Event;
 use App\Entity\Rutina;
+use App\EventSubscriber\Event\RutinaEvent;
 use App\Serializer\ApiRestErrorNormalizer;
 use App\Service\Events\EventStore;
 use App\Service\Forms\DTOFormFactory;
@@ -44,7 +45,7 @@ class RutinaManager extends AbstractManager
         $rutina->setVolumen($DTO->getVolumen());
         $rutina->setIntensidad($DTO->getIntensidad());
 
-        $this->dispatcher();
+       // $this->dispatcher(new RutinaEvent(RutinaEvent::RUTINA_CREATED));
 
         $this->save($rutina);
         return $rutina;
@@ -63,7 +64,7 @@ class RutinaManager extends AbstractManager
         /** @var DiaEjercicio $diaEjercicio */
         $diaEjercicio = new DiaEjercicio();
         $diaEjercicio->setUuid($DTO->getUuid());
-        $diaEjercicio->setEjercicio($DTO->getEjercicio());
+        //$diaEjercicio->setEjercicio($DTO->getEjercicio());
         $diaEjercicio->setRepeticiones($DTO->getRepeticiones());
         $diaEjercicio->setDescanso($DTO->getDescanso());
         $diaEjercicio->setIntensidad($DTO->getIntesidad());
