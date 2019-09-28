@@ -46,6 +46,12 @@ class DiaEjercicioCreateDTO implements DTOInterface
      */
     protected $intesidad;
 
+    /**
+     * @Assert\NotNull()
+     * @JMSSerializer\Type("Entity<App\Entity\Dia>")
+     */
+    protected $dia;
+
 
     /**
      * DiaEjercicioCreateDTO constructor.
@@ -55,8 +61,9 @@ class DiaEjercicioCreateDTO implements DTOInterface
      * @param $repeticiones
      * @param $descanso
      * @param $intesidad
+     * @param $dia
      */
-    public function __construct($uuid, $ejercicio, $serie, $repeticiones, $descanso, $intesidad)
+    public function __construct($uuid, $ejercicio, $serie, $repeticiones, $descanso, $intesidad,$dia)
     {
         $this->uuid = $uuid;
         $this->ejercicio = $ejercicio;
@@ -64,6 +71,7 @@ class DiaEjercicioCreateDTO implements DTOInterface
         $this->repeticiones = $repeticiones;
         $this->descanso = $descanso;
         $this->intesidad = $intesidad;
+        $this->dia = $dia;
     }
 
     /**
@@ -112,5 +120,14 @@ class DiaEjercicioCreateDTO implements DTOInterface
     public function getSerie()
     {
         return $this->serie;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getDia()
+    {
+        return $this->dia;
     }
 }

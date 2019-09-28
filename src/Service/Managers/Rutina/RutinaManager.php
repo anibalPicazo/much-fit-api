@@ -69,6 +69,7 @@ class RutinaManager extends AbstractManager
         $diaEjercicio->setDescanso($DTO->getDescanso());
         $diaEjercicio->setIntensidad($DTO->getIntesidad());
         $diaEjercicio->setSeries($DTO->getSerie());
+        $diaEjercicio->setDia($DTO->getDia());
         $this->save($diaEjercicio);
         return $diaEjercicio;
     }
