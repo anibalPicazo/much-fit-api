@@ -170,11 +170,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $intensidad_alta->setDescripcion("Intensidad de entrenamiento alto");
         $manager->persist($intensidad_alta);
 
-        $intensidad_normal = new IntensidadRutina();
-        $intensidad_normal->setUuid(Uuid::uuid4()->toString());
-        $intensidad_normal->setNombre("Normal");
-        $intensidad_normal->setDescripcion('Intensidad de entrenamiento medio');
-        $manager->persist($intensidad_normal);
+
 
         $intensidad_baja = new IntensidadRutina();
         $intensidad_baja->setUuid(Uuid::uuid4()->toString());
