@@ -20,6 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\Encoder\JsonDecode;
 
 class RutinaManager extends AbstractManager
 {
@@ -38,9 +39,13 @@ class RutinaManager extends AbstractManager
         $rutina->setDificultadUsuario($DTO->getDificultadUsuario());
         $rutina->setFrecuencia($DTO->getFrecuencia());
         $rutina->setNombre($DTO->getNombre());
+        //Todo: Serializacion de Objetivos en Base de datos.
         $rutina->setObjetivos($DTO->getObjetivos());
         $rutina->setVolumen($DTO->getVolumen());
-        //todo: Implements event if you want to manage the rutina create
+        $rutina->setIntensidad($DTO->getIntensidad());
+
+        $this->dispatcher();
+
         $this->save($rutina);
         return $rutina;
     }
