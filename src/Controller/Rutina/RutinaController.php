@@ -128,7 +128,7 @@ class RutinaController extends AbstractController
      * @Route("/{uuid_rutina}/dias/{uuid_dia}/ejercicios",methods={"POST"})
      * @ParamConverter("DTO", converter="api.rest.dto.converter")
      * @ParamConverter("rutina", options={"mapping": {"uuid_rutina": "uuid"}})
-     * @ParamConverter("dita", options={"mapping": {"uuid_dia": "uuid"}})
+     * @ParamConverter("dia", options={"mapping": {"uuid_dia": "uuid"}})
      * @param DiaEjercicioCreateDTO $DTO
      * @param Request $request
      * @return JsonResponse

@@ -64,7 +64,7 @@ class RutinaManager extends AbstractManager
         /** @var DiaEjercicio $diaEjercicio */
         $diaEjercicio = new DiaEjercicio();
         $diaEjercicio->setUuid($DTO->getUuid());
-        //$diaEjercicio->setEjercicio($DTO->getEjercicio());
+        $diaEjercicio->setEjercicio($DTO->getEjercicio());
         $diaEjercicio->setRepeticiones($DTO->getRepeticiones());
         $diaEjercicio->setDescanso($DTO->getDescanso());
         $diaEjercicio->setIntensidad($DTO->getIntesidad());

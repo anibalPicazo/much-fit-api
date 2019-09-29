@@ -23,7 +23,7 @@ class DiaEjercicio
     private $serie;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $repeticiones;
 
@@ -38,7 +38,7 @@ class DiaEjercicio
     private $ejercicio;
 
     /**
-     * @ORM\Column(type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $intensidad;
 
