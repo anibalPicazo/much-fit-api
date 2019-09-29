@@ -4,6 +4,7 @@
 namespace App\Service\Managers\Rutina;
 
 
+use App\DTO\Rutina\AsignarRutinaDTO;
 use App\DTO\Rutina\DiaCreateDTO;
 use App\DTO\Rutina\DiaEjercicioCreateDTO;
 use App\DTO\Rutina\RutinaCreateDTO;
@@ -11,6 +12,7 @@ use App\Entity\Dia;
 use App\Entity\DiaEjercicio;
 use App\Entity\Event;
 use App\Entity\Rutina;
+use App\Entity\User;
 use App\EventSubscriber\Event\RutinaEvent;
 use App\Serializer\ApiRestErrorNormalizer;
 use App\Service\Events\EventStore;
@@ -45,7 +47,7 @@ class RutinaManager extends AbstractManager
         $rutina->setVolumen($DTO->getVolumen());
         $rutina->setIntensidad($DTO->getIntensidad());
 
-       // $this->dispatcher(new RutinaEvent(RutinaEvent::RUTINA_CREATED));
+        // $this->dispatcher(new RutinaEvent($DTO));
 
         $this->save($rutina);
         return $rutina;
@@ -72,6 +74,13 @@ class RutinaManager extends AbstractManager
         $diaEjercicio->setDia($DTO->getDia());
         $this->save($diaEjercicio);
         return $diaEjercicio;
+    }
+
+    public function asignarRutina(AsignarRutinaDTO $DTO){
+        /** @var User $user */
+        $user = $DTO->getUser();
+        $user->setRutina($DTO->getRutina());
+        $this->save($user);
     }
 
 }

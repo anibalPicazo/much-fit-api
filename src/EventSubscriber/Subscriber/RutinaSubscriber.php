@@ -47,10 +47,17 @@ class RutinaSubscriber implements EventSubscriberInterface
     {
         return [
             RutinaEvent::RUTINA_CREATED => 'onRutinaCreated',
+            RutinaEvent::RUTINA_ASIGNATED => 'onRutinaAsignated'
         ];
     }
 
-    public function onRutinaCreated(UserEvent $event)
+    public function onRutinaAsignated(RutinaEvent $event)
+    {
+        $this->eventStore->saveEvent(RutinaEvent::RUTINA_ASIGNATED, $event->getDTO());
+
+    }
+
+    public function onRutinaCreated(RutinaEvent $event)
     {
         $this->eventStore->saveEvent(RutinaEvent::RUTINA_CREATED, $event->getDTO());
     }

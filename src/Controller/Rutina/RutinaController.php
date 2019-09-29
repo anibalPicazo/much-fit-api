@@ -4,6 +4,7 @@
 namespace App\Controller\Rutina;
 
 
+use App\DTO\Rutina\AsignarRutinaDTO;
 use App\DTO\Rutina\DiaCreateDTO;
 use App\DTO\Rutina\DiaEjercicioCreateDTO;
 use App\DTO\Rutina\RutinaCreateDTO;
@@ -133,6 +134,20 @@ class RutinaController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      * @throws ExceptionInterface
+     * @SWG\Tag(name="Rutinas")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Crear dia ejercicio"
+     * )
+     * @SWG\Parameter(
+     *     in="body",
+     *     name="DTO",
+     *     @SWG\Schema(
+     *         type="object",
+     *         ref=@Model(type=DiaEjercicioCreateDTO::class)
+     *     )
+     * )
+     * @Security(name="Bearer")
      */
     public function createDiaEjercicio(DiaEjercicioCreateDTO $DTO, Request $request){
         //SECURITY
@@ -145,6 +160,45 @@ class RutinaController extends AbstractController
         }
         //COMAND
         $this->manager->createDiaEjercico($DTO);
+        //RESPONSE
+        return new JsonResponse(null, Response::HTTP_CREATED);
+
+    }
+
+    /**
+     * @Route("/{uuid_rutina}/asignar",methods={"POST"})
+     * @ParamConverter("DTO", converter="api.rest.dto.converter")
+     * @ParamConverter("rutina", options={"mapping": {"uuid_rutina": "uuid"}})
+     * @param AsignarRutinaDTO $DTO
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ExceptionInterface
+     * @SWG\Tag(name="Rutinas")
+     * @SWG\Response(
+     *     response=200,
+     *     description=" Asignar una rutina a un usuario"
+     * )
+     * @SWG\Parameter(
+     *     in="body",
+     *     name="DTO",
+     *     @SWG\Schema(
+     *         type="object",
+     *         ref=@Model(type=DiaEjercicioCreateDTO::class)
+     *     )
+     * )
+     * @Security(name="Bearer")
+     */
+    public function asignarRutina(AsignarRutinaDTO $DTO, Request $request){
+
+        //SECURITY
+        $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
+        //VALIDATION
+        $errors = $this->DTOValidator->validate($request);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
+        }
+        //COMAND
+        $this->manager->asignarRutina($DTO);
         //RESPONSE
         return new JsonResponse(null, Response::HTTP_CREATED);
 

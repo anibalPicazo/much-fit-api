@@ -11,6 +11,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class RutinaEvent extends Event
 {
     const RUTINA_CREATED = "rutina.created";
+    const RUTINA_ASIGNATED = "rutina.asignated";
     /**
      * @var DTOInterface
      */
