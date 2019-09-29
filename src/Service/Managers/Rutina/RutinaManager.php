@@ -43,7 +43,7 @@ class RutinaManager extends AbstractManager
         $rutina->setFrecuencia($DTO->getFrecuencia());
         $rutina->setNombre($DTO->getNombre());
         //Todo: Serializacion de Objetivos en Base de datos.
-        $rutina->setObjetivos($DTO->getObjetivos());
+        $rutina->setObjetivo($DTO->getObjetivos());
         $rutina->setVolumen($DTO->getVolumen());
         $rutina->setIntensidad($DTO->getIntensidad());
 

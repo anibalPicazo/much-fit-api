@@ -28,10 +28,11 @@ class HojaEntrenamientoManager extends AbstractManager
         $hoja->setRutina($DTO->getRutina());
         $hoja->setCuardernoEntrenamiento($DTO->getCuadernoEntrenamiento());
         $hoja->setDesde(New \DateTime());
+        $this->save($hoja);
     }
     public function addEntrenamiento(Entrenamiento $entrenamiento){
         /** @var HojaCuadernoRutina $current_hoja */
-        $current_hoja = $this->findBy(['actual' => true]);
+        $current_hoja = $this->findBy(['actual' => true])[0];
         $current_hoja->addEntrenamiento($entrenamiento);
         //todo: Evento ?
     }

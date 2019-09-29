@@ -59,7 +59,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", options={"default":true})
      * @Serializer\Expose()
      * @Serializer\Groups({"list"})
-     * @Serializer\Expose()
      */
     private $activo;
 
@@ -79,7 +78,6 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -108,6 +106,8 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $rutina;
 

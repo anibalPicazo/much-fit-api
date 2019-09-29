@@ -48,9 +48,9 @@ class RutinaCreateDTO implements DTOInterface
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("array")
+     * @JMSSerializer\Type("string")
      */
-    protected $objetivos;
+    protected $objetivo;
 
     /**
      * @Assert\NotNull()
@@ -69,7 +69,7 @@ class RutinaCreateDTO implements DTOInterface
      * @param $objetivos
      * @param $intesidad
      */
-    public function __construct($uuid, $nombre, $desgaste_calorico, $dificultad_usuario, $frecuencia, $volumen, $objetivos, $intensidad)
+    public function __construct($uuid, $nombre, $desgaste_calorico, $dificultad_usuario, $frecuencia, $volumen, $objetivo, $intensidad)
     {
         $this->uuid = $uuid;
         $this->nombre = $nombre;
@@ -77,7 +77,7 @@ class RutinaCreateDTO implements DTOInterface
         $this->dificultad_usuario = $dificultad_usuario;
         $this->frecuencia = $frecuencia;
         $this->volumen = $volumen;
-        $this->objetivos = $objetivos;
+        $this->objetivo = $objetivo;
         $this->intensidad = $intensidad;
     }
 
@@ -126,7 +126,7 @@ class RutinaCreateDTO implements DTOInterface
      */
     public function getObjetivos()
     {
-        return $this->objetivos;
+        return $this->objetivo;
     }
 
     /**

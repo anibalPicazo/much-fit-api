@@ -25,11 +25,21 @@ class EntrenamientoManager extends AbstractManager
     {
         return $this->doctrine->getRepository(Entrenamiento::class);
     }
+    /**
+     * @return object|string
+     */
+    public function getCurrent()
+    {
+        return $this->tokenStorage->getToken()->getUser();
+    }
+
     public function create(EntrenamientoCreateDTO $DTO){
         $entrenamiento = new Entrenamiento();
         $entrenamiento->setUuid($DTO->getUuid());
         $DTO->getDescripcion() ? $entrenamiento->setDescripcion($DTO->getDescripcion()) : null;
         $entrenamiento->setUser($this->getCurrent());
+
+
 
         $this->save($entrenamiento);
 
