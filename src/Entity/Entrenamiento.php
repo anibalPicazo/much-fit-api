@@ -33,9 +33,11 @@ class Entrenamiento
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="HojaCuadernoRutina", inversedBy="entrenamientos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\HojaCuadernoRutina", inversedBy="entrenamientos")
      */
     private $hoja_cuaderno_rutina;
+
+
 
     public function __construct()
     {
@@ -98,15 +100,16 @@ class Entrenamiento
         return $this;
     }
 
-    public function getHojaCuaderno(): ?HojaCuadernoRutina
+    public function getHojaCuadernoRutina(): ?HojaCuadernoRutina
     {
         return $this->hoja_cuaderno_rutina;
     }
 
-    public function setHojaCuaderno(?HojaCuadernoRutina $hoja_cuaderno_rutina): self
+    public function setHojaCuadernoRutina(?HojaCuadernoRutina $hoja_cuaderno_rutina): self
     {
         $this->hoja_cuaderno_rutina = $hoja_cuaderno_rutina;
 
         return $this;
     }
+
 }

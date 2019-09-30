@@ -31,9 +31,11 @@ class HojaEntrenamientoManager extends AbstractManager
         $this->save($hoja);
     }
     public function addEntrenamiento(Entrenamiento $entrenamiento){
+
         /** @var HojaCuadernoRutina $current_hoja */
         $current_hoja = $this->findBy(['actual' => true])[0];
         $current_hoja->addEntrenamiento($entrenamiento);
+        $this->save($current_hoja);
         //todo: Evento ?
     }
 
