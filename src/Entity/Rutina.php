@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RutinaRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Rutina
 {
@@ -73,7 +74,6 @@ class Rutina
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Serializer\Expose()
      * @Serializer\Groups({"list"})
-     *
      */
     private $duracion;
 

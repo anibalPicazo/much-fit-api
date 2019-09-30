@@ -22,33 +22,17 @@ class EntrenamientoCreateDTO implements DTOInterface
     protected $descripcion;
 
     /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank
-     * @JMSSerializer\Type("Entity<App\Entity\User>")
-     */
-    protected $user;
-
-    /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank
-     * @JMSSerializer\Type("Entity<App\Entity\Rutina>")
-     */
-    protected $rutina;
-
-
-    /**
      * EntrenamientoCreateDTO constructor.
      * @param $uuid
      * @param $descripcion
      * @param $user
      */
-    public function __construct($uuid,$descripcion,$user,$rutina)
+    public function __construct($uuid,$descripcion)
     {
         $this->uuid = $uuid;
         $this->descripcion = $descripcion;
 
-        $this->user = $user;
-        $this->rutina = $rutina;
+
     }
 
     /**
@@ -65,22 +49,6 @@ class EntrenamientoCreateDTO implements DTOInterface
     public function getDescripcion()
     {
         return $this->descripcion;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRutina()
-    {
-        return $this->rutina;
     }
 
 

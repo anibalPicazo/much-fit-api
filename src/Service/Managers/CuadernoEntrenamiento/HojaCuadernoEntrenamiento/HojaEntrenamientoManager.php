@@ -6,8 +6,10 @@ namespace App\Service\Managers\CuadernoEntrenamiento\HojaCuadernoEntrenamiento;
 
 use App\DTO\CuadernoEntrenamiento\HojaCuadernoEntrenamientoCreateDTO;
 use App\DTO\Entrenamiento\EntrenamientoCreateDTO;
+use App\Entity\CuadernoEntrenamiento;
 use App\Entity\Entrenamiento;
 use App\Entity\HojaCuadernoRutina;
+use App\Entity\Rutina;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 
@@ -25,8 +27,9 @@ class HojaEntrenamientoManager extends AbstractManager
         $hoja = new HojaCuadernoRutina();
         $hoja->setUuid($DTO->getUuid());
         $hoja->setActual(true);
-        $hoja->setRutina($DTO->getRutina());
-        $hoja->setCuardernoEntrenamiento($DTO->getCuadernoEntrenamiento());
+        //todo: fix hack
+        $hoja->setRutina($this->doctrine->getRepository(Rutina::class)->findOneBy(['uuid'=>$DTO->getRutina()]));
+        $hoja->setCuardernoEntrenamiento($this->doctrine->getRepository(CuadernoEntrenamiento::class)->findOneBy(['uuid'=>$DTO->getCuadernoEntrenamiento()]));
         $hoja->setDesde(New \DateTime());
         $this->save($hoja);
     }

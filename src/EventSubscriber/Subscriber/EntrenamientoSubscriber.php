@@ -86,7 +86,7 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
         $this->eventStore->saveEvent(EntrenamientoEvent::ENTRENAMIENTO_CREATED,$event->getDTO());
 
         /** @var User $user */
-        $user = $event->getDTO()->getUser();
+        $user = $this->userManager->getCurrent();
 
 
         $cuaderno = $this->cuadernoEntrenamientoManager->findBy(['usuario' => $user]);
@@ -94,7 +94,7 @@ class EntrenamientoSubscriber implements EventSubscriberInterface
         if(count($cuaderno) == 0){
             $DTO = new CuadernoEntrenamientoCreateDTO(Uuid::uuid4());
             $cuaderno_created = $this->cuadernoEntrenamientoManager->create($DTO);
-            $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(),$event->getDTO()->getRutina(),$cuaderno_created);
+            $hojaEntrenamientoDTO = new HojaCuadernoEntrenamientoCreateDTO(Uuid::uuid4(),$user->getRutina(),$cuaderno_created);
             $this->hojaCuadernoManager->create($hojaEntrenamientoDTO);
             $this->addEntrenamiento($event->getDTO()->getUuid());
 
