@@ -9,6 +9,7 @@ use App\Entity\Rutina;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
 use App\Entity\TipoFisico;
+use App\Entity\Unidad;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -155,6 +156,56 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $testUsuarioDieta->setUser($this->getReference(self::USER.$count));
 
         });
+
+        #UNIDAD MEDIDA
+        $unidades = new Unidad();
+        $unidades->setUuid(Uuid::uuid4());
+        $unidades->setDescripcion("Unidades");
+        $unidades->setIniciales("Uds");
+        $manager->persist($unidades);
+
+        $kilos = new Unidad();
+        $kilos->setUuid(Uuid::uuid4());
+        $kilos->setDescripcion("Kilos");
+        $kilos->setIniciales("kg");
+        $manager->persist($kilos);
+
+
+        $gramos = new Unidad();
+        $gramos->setUuid(Uuid::uuid4());
+        $gramos->setDescripcion("Gramos");
+        $gramos->setIniciales("Gr");
+        $manager->persist($gramos);
+
+
+        $onzas = new Unidad();
+        $onzas->setUuid(Uuid::uuid4());
+        $onzas->setDescripcion("Onzas");
+        $onzas->setIniciales("Oz");
+        $manager->persist($onzas);
+
+
+        $tsp= new Unidad();
+        $tsp->setUuid(Uuid::uuid4());
+        $tsp->setDescripcion("Cucharadita");
+        $tsp->setIniciales("Tsp");
+        $manager->persist($tsp);
+
+        $cucharada = new Unidad();
+        $cucharada->setUuid(Uuid::uuid4());
+        $cucharada->setDescripcion("Cucharada");
+        $cucharada->setIniciales("Tbsp");
+        $manager->persist($cucharada);
+
+        $taza = new Unidad();
+        $taza->setUuid(Uuid::uuid4());
+        $taza->setDescripcion("Tazas");
+        $taza->setIniciales("Cups");
+        $manager->persist($taza);
+
+
+
+
 
         #Intensidad
         $intensidad_muy_alta = new IntensidadRutina();

@@ -70,11 +70,6 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\DietaPersonalizada", mappedBy="usuario", cascade={"persist", "remove"})
-     */
-    private $dietaPersonalizada;
-
-    /**
      * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
@@ -115,6 +110,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\TestUsuarioDieta", mappedBy="user", orphanRemoval=true)
      */
     private $testUsuarioDietas;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Dieta", inversedBy="user")
+     */
+    private $dieta;
 
     /**
      * @return mixed
@@ -243,23 +243,6 @@ class User implements UserInterface
         return $this->roles;
     }
 
-    public function getDietaPersonalizada(): ?DietaPersonalizada
-    {
-        return $this->dietaPersonalizada;
-    }
-
-    public function setDietaPersonalizada(?DietaPersonalizada $dietaPersonalizada): self
-    {
-        $this->dietaPersonalizada = $dietaPersonalizada;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUsuario = $dietaPersonalizada === null ? null : $this;
-        if ($newUsuario !== $dietaPersonalizada->getUsuario()) {
-            $dietaPersonalizada->setUsuario($newUsuario);
-        }
-
-        return $this;
-    }
 
 
     public function getCuardernoEntrenamiento(): ?CuadernoEntrenamiento
@@ -403,6 +386,18 @@ class User implements UserInterface
                 $testUsuarioDieta->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDieta(): ?Dieta
+    {
+        return $this->dieta;
+    }
+
+    public function setDieta(?Dieta $dieta): self
+    {
+        $this->dieta = $dieta;
 
         return $this;
     }

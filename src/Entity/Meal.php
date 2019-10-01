@@ -35,6 +35,9 @@ class Meal
      */
     private $dia_dieta;
 
+    //todo: Propiedades virtuales de los macros.
+
+
 
 
     public function getId(): ?int

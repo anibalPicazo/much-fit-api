@@ -87,14 +87,11 @@ class Alimentos
      */
     private $sal;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ComidaDieta", mappedBy="alimento", orphanRemoval=true)
-     */
-    private $comidaDietas;
+
 
     public function __construct()
     {
-        $this->comidaDietas = new ArrayCollection();
+
     }
 
     public function getDescripcion(): ?string
@@ -273,37 +270,6 @@ class Alimentos
     public function setSal($sal): self
     {
         $this->sal = $sal;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ComidaDieta[]
-     */
-    public function getComidaDietas(): Collection
-    {
-        return $this->comidaDietas;
-    }
-
-    public function addComidaDieta(ComidaDieta $comidaDieta): self
-    {
-        if (!$this->comidaDietas->contains($comidaDieta)) {
-            $this->comidaDietas[] = $comidaDieta;
-            $comidaDieta->setAlimento($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComidaDieta(ComidaDieta $comidaDieta): self
-    {
-        if ($this->comidaDietas->contains($comidaDieta)) {
-            $this->comidaDietas->removeElement($comidaDieta);
-            // set the owning side to null (unless already changed)
-            if ($comidaDieta->getAlimento() === $this) {
-                $comidaDieta->setAlimento(null);
-            }
-        }
 
         return $this;
     }

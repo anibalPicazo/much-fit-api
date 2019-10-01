@@ -39,11 +39,6 @@ class HojaCuadernoDieta
      */
     private $fecha_fin;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\DietaPersonalizada")
-     */
-    private $dieta_personalizada;
-
     public function getCuaderno(): ?CuadernoEntrenamiento
     {
         return $this->cuaderno_entrenamiento;
@@ -100,18 +95,6 @@ class HojaCuadernoDieta
     public function setFechaFin(?\DateTimeInterface $fecha_fin): self
     {
         $this->fecha_fin = $fecha_fin;
-
-        return $this;
-    }
-
-    public function getDietaPersonalizada(): ?DietaPersonalizada
-    {
-        return $this->dieta_personalizada;
-    }
-
-    public function setDietaPersonalizada(?DietaPersonalizada $dieta_personalizada): self
-    {
-        $this->dieta_personalizada = $dieta_personalizada;
 
         return $this;
     }
