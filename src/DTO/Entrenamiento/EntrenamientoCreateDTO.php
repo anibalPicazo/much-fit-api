@@ -25,11 +25,14 @@ class EntrenamientoCreateDTO implements DTOInterface
      * EntrenamientoCreateDTO constructor.
      * @param $uuid
      * @param $descripcion
+     * @param $user
      */
     public function __construct($uuid,$descripcion)
     {
         $this->uuid = $uuid;
         $this->descripcion = $descripcion;
+
+
     }
 
     /**
@@ -47,5 +50,6 @@ class EntrenamientoCreateDTO implements DTOInterface
     {
         return $this->descripcion;
     }
+
 
 }

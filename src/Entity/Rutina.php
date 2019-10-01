@@ -6,49 +6,59 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RutinaRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Rutina
 {
     use UuidTrait;
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
-    private $Nombre;
+    private $nombre;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dia", mappedBy="rutina")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $dia;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $desgaste_calorico;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $dificultad_usuario;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $frecuencia;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $volumen;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $objetivos = [];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="rutina")
@@ -60,6 +70,33 @@ class Rutina
      */
     private $hojas_cuaderno_rutina;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
+     */
+    private $duracion;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
+     */
+    private $densidad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\IntensidadRutina", inversedBy="rutinas")
+     * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
+     */
+    private $intensidad;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $objetivo;
+
     public function __construct()
     {
         $this->dia = new ArrayCollection();
@@ -68,12 +105,12 @@ class Rutina
     }
     public function getNombre(): ?string
     {
-        return $this->Nombre;
+        return $this->nombre;
     }
 
-    public function setNombre(?string $Nombre): self
+    public function setNombre(?string $nombre): self
     {
-        $this->Nombre = $Nombre;
+        $this->nombre = $nombre;
 
         return $this;
     }
@@ -157,18 +194,6 @@ class Rutina
         return $this;
     }
 
-    public function getObjetivos(): ?array
-    {
-        return $this->objetivos;
-    }
-
-    public function setObjetivos(array $objetivos): self
-    {
-        $this->objetivos = $objetivos;
-
-        return $this;
-    }
-
     /**
      * @return Collection|User[]
      */
@@ -227,6 +252,54 @@ class Rutina
                 $hoja_cuaderno_rutina->setRutina(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuracion()
+    {
+        return $this->duracion;
+    }
+
+    public function setDuracion($duracion): self
+    {
+        $this->duracion = $duracion;
+
+        return $this;
+    }
+
+    public function getDensidad()
+    {
+        return $this->densidad;
+    }
+
+    public function setDensidad($densidad): self
+    {
+        $this->densidad = $densidad;
+
+        return $this;
+    }
+
+    public function getIntensidad(): ?IntensidadRutina
+    {
+        return $this->intensidad;
+    }
+
+    public function setIntensidad(?IntensidadRutina $intensidad): self
+    {
+        $this->intensidad = $intensidad;
+
+        return $this;
+    }
+
+    public function getObjetivo(): ?string
+    {
+        return $this->objetivo;
+    }
+
+    public function setObjetivo(?string $objetivo): self
+    {
+        $this->objetivo = $objetivo;
 
         return $this;
     }

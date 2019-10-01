@@ -12,12 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ejercicios
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
+    use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

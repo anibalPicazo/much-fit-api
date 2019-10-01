@@ -16,22 +16,12 @@ class HojaCuadernoRutina
     use UuidTrait;
     use TimestampableTrait;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="hojaCuaderno", orphanRemoval=true)
-     */
-    private $entrenamientos;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="hojaCuadernos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $rutina;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dieta", inversedBy="hojaCuadernos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $Dieta;
 
     /**
      * @ORM\Column(type="json")
@@ -45,7 +35,7 @@ class HojaCuadernoRutina
     private $cuaderno_entrenamiento;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $hasta;
 
@@ -64,40 +54,14 @@ class HojaCuadernoRutina
      */
     private $actual;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="hoja_cuaderno_rutina")
+     */
+    private $entrenamientos;
+
     public function __construct()
     {
         $this->entrenamientos = new ArrayCollection();
-    }
-    
-    /**
-     * @return Collection|Entrenamiento[]
-     */
-    public function getEntrenamientos(): Collection
-    {
-        return $this->entrenamientos;
-    }
-
-    public function addEntrenamiento(Entrenamiento $entrenamiento): self
-    {
-        if (!$this->entrenamientos->contains($entrenamiento)) {
-            $this->entrenamientos[] = $entrenamiento;
-            $entrenamiento->setHojaCuaderno($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
-    {
-        if ($this->entrenamientos->contains($entrenamiento)) {
-            $this->entrenamientos->removeElement($entrenamiento);
-            // set the owning side to null (unless already changed)
-            if ($entrenamiento->getHojaCuaderno() === $this) {
-                $entrenamiento->setHojaCuaderno(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getRutina(): ?Rutina
@@ -108,18 +72,6 @@ class HojaCuadernoRutina
     public function setRutina(?Rutina $rutina): self
     {
         $this->rutina = $rutina;
-
-        return $this;
-    }
-
-    public function getDieta(): ?Dieta
-    {
-        return $this->Dieta;
-    }
-
-    public function setDieta(?Dieta $Dieta): self
-    {
-        $this->Dieta = $Dieta;
 
         return $this;
     }
@@ -192,6 +144,37 @@ class HojaCuadernoRutina
     public function setActual(bool $actual): self
     {
         $this->actual = $actual;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entrenamiento[]
+     */
+    public function getEntrenamientos(): Collection
+    {
+        return $this->entrenamientos;
+    }
+
+    public function addEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if (!$this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos[] = $entrenamiento;
+            $entrenamiento->setHojaCuadernoRutina($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
+    {
+        if ($this->entrenamientos->contains($entrenamiento)) {
+            $this->entrenamientos->removeElement($entrenamiento);
+            // set the owning side to null (unless already changed)
+            if ($entrenamiento->getHojaCuadernoRutina() === $this) {
+                $entrenamiento->setHojaCuadernoRutina(null);
+            }
+        }
 
         return $this;
     }

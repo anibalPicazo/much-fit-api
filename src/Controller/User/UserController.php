@@ -75,7 +75,7 @@ class UserController extends AbstractController
      */
     public function getCurrentUser()
     {
-        return $this->getUser();
+        return $this->getUser()->getRutina();
     }
 
     /**

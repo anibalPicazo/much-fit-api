@@ -3,7 +3,6 @@
 
 namespace App\Service\Managers\User;
 
-use App\DTO\User\AsignarEmpresaDTO;
 use App\DTO\User\UserCreateDTO;
 use App\DTO\User\UserRegisterDTO;
 use App\Entity\Role;

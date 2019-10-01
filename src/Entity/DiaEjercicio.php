@@ -18,12 +18,12 @@ class DiaEjercicio
     private $dia;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $Series;
+    private $serie;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $repeticiones;
 
@@ -38,7 +38,7 @@ class DiaEjercicio
     private $ejercicio;
 
     /**
-     * @ORM\Column(type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $intensidad;
 
@@ -55,14 +55,14 @@ class DiaEjercicio
         return $this;
     }
 
-    public function getSeries(): ?int
+    public function getSerie(): ?string
     {
-        return $this->Series;
+        return $this->serie;
     }
 
-    public function setSeries(?int $Series): self
+    public function setSeries(?string $serie): self
     {
-        $this->Series = $Series;
+        $this->serie = $serie;
 
         return $this;
     }

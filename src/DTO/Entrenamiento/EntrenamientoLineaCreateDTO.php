@@ -18,7 +18,7 @@ class EntrenamientoLineaCreateDTO implements DTOInterface
     protected $uuid;
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("Entity<App\Entity\Ejercicio")
+     * @JMSSerializer\Type("Entity<App\Entity\Ejercicio>")
      */
     protected  $ejercicio;
     /**

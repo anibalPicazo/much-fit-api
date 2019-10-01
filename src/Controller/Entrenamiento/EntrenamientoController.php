@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use FOS\RestBundle\Controller\Annotations\View;
+
 
 
 /**
@@ -52,6 +54,7 @@ class EntrenamientoController extends AbstractController
      * @Route("",methods={"POST"})
      * @param EntrenamientoCreateDTO $DTO
      * @param Request $request
+     * @View(serializerGroups={"list", "edit"})
      * @return JsonResponse
      * @throws ExceptionInterface
      * @ParamConverter("DTO", converter="api.rest.dto.converter")
@@ -81,6 +84,7 @@ class EntrenamientoController extends AbstractController
         }
         //COMAND
         $this->manager->create($DTO);
+
         //RESPONSE
         return new JsonResponse(null, Response::HTTP_CREATED);
     }
