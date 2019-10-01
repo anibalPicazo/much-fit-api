@@ -80,10 +80,16 @@ class Dieta
      */
     private $hojaCuadernoDietas;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DiaDieta", mappedBy="dieta")
+     */
+    private $dias_dieta;
+
 
     public function __construct()
     {
         $this->hojaCuadernoDietas = new ArrayCollection();
+        $this->dias_dieta = new ArrayCollection();
     }
     public function getDescripcion(): ?string
     {
@@ -254,6 +260,37 @@ class Dieta
             // set the owning side to null (unless already changed)
             if ($hojaCuadernoDieta->getDieta() === $this) {
                 $hojaCuadernoDieta->setDieta(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DiaDieta[]
+     */
+    public function getDiasDieta(): Collection
+    {
+        return $this->dias_dieta;
+    }
+
+    public function addDiasDietum(DiaDieta $diasDietum): self
+    {
+        if (!$this->dias_dieta->contains($diasDietum)) {
+            $this->dias_dieta[] = $diasDietum;
+            $diasDietum->setDieta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiasDietum(DiaDieta $diasDietum): self
+    {
+        if ($this->dias_dieta->contains($diasDietum)) {
+            $this->dias_dieta->removeElement($diasDietum);
+            // set the owning side to null (unless already changed)
+            if ($diasDietum->getDieta() === $this) {
+                $diasDietum->setDieta(null);
             }
         }
 
