@@ -64,7 +64,6 @@ class UserController extends AbstractController
     /**
      * @Route("/current",  methods={"GET"})
      * @View(serializerGroups={"list", "edit"})
-     *
      * @SWG\Tag(name="Users")
      * @SWG\Response(
      *     response=200,
@@ -75,7 +74,7 @@ class UserController extends AbstractController
      */
     public function getCurrentUser()
     {
-        return $this->getUser()->getRutina();
+        return $this->getUser();
     }
 
     /**
