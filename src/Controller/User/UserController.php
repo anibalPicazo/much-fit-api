@@ -89,7 +89,7 @@ class UserController extends AbstractController
     {
         // SECURITY
         $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
-
+        //prueba
         return $user;
     }
 
