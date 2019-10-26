@@ -58,9 +58,9 @@ class UserController extends AbstractController
      */
     public function getAllUsers()
     {
-        $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
+       //$this->denyAccessUnlessGranted(Role::ROLE_ROOT);
 
-        $this->manager->getList();
+        return $this->manager->getList();
     }
 
     /**
