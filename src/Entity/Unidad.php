@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,17 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Unidad
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use UuidTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $descripcion;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $iniciales;
 
     public function getId(): ?int
     {
@@ -34,6 +35,18 @@ class Unidad
     public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getIniciales(): ?string
+    {
+        return $this->iniciales;
+    }
+
+    public function setIniciales(?string $iniciales): self
+    {
+        $this->iniciales = $iniciales;
 
         return $this;
     }

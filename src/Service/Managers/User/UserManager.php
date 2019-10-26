@@ -37,7 +37,6 @@ class UserManager extends AbstractManager
         $user->setUsername($DTO->getUsername());
         $user->setPassword($this->encoder->encodePassword($user, $DTO->getPassword()));
         $user->setEmail($DTO->getEmail());
-        $user->setEmpresa($this->tokenStorage->getToken()->getUser()->getEmpresa());
         foreach ($DTO->getRoles() as $role){
             $user->addRole($role);
         }
