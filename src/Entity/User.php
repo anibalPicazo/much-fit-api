@@ -73,7 +73,6 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="CuadernoEntrenamiento", mappedBy="usuario", cascade={"persist", "remove"})
      */
     private $cuardernoEntrenamiento;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -93,6 +92,24 @@ class User implements UserInterface
      * @ORM\OneToOne(targetEntity="App\Entity\TestUsuario", mappedBy="user", cascade={"persist", "remove"})
      */
     private $testUsuario;
+
+    /**
+     * @Serializer\Type("array")
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("test_usuario")
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
+     */
+    public function vpTestUsuario()
+    {
+        if($this->testUsuario){
+            return [
+                'uuid' => $this->testUsuario->getUuid(),
+                'created_at' => $this->testUsuario->getCreatedAt()
+            ];
+        }
+        return null;
+    }
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Entrenamiento", mappedBy="user", orphanRemoval=true)
