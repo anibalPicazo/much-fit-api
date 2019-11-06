@@ -5,10 +5,12 @@ namespace App\Service\Managers\TestManager;
 
 
 use App\DTO\TestUsuario\TestNutricionalCreateDTO;
+use App\Entity\PremisasDieta;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TestNutricionManager extends AbstractManager
 {
@@ -35,11 +37,21 @@ class TestNutricionManager extends AbstractManager
         $gasto =  $this->calculateGastoCalorico($DTO, $mb);
         $objetivo = $this->calcObjetivo($DTO);
         $actual = $this->calcEstadoActual($DTO);
+        /** @var PremisasDieta $premisa_objetivo */
+        $premisa_objetivo = $this->doctrine->getRepository(PremisasDieta::class)->findOneBy(['hint'=> $objetivo]);
+        /** @var PremisasDieta $premisa_actual */
+        $premisa_actual = $this->doctrine->getRepository(PremisasDieta::class)->findOneBy(['hint'=> $actual]);
+
+
+        dump('objetivo', $premisa_objetivo->getRuleCode());
+        dump('actual',$premisa_actual->getRuleCode());
+        die();
 
 
 
+        //todo: Entrada al test  $estado_fisico ,$objetivo
 
-        //todo: Entrada al test  $objetivo, $estado_fisico ,$objetivo
+        //todo: salida SBR  $this->doctrine->getRepository(ConsecuenteDieta::class)->findOneBy(['rule_code' => $resultado_salida])
 
 
 
