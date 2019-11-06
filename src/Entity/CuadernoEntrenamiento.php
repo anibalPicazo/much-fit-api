@@ -23,12 +23,12 @@ class CuadernoEntrenamiento
     private $usuario;
 
     /**
-     * @ORM\OneToMany(targetEntity="HojaCuadernoRutina", mappedBy="cuardernoEntrenamiento", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HojaCuadernoRutina", mappedBy="cuaderno_entrenamiento", orphanRemoval=true)
      */
     private $hojas_cuaderno_rutina;
 
     /**
-     * @ORM\OneToMany(targetEntity="HojaCuadernoDieta", mappedBy="cuaderno", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="HojaCuadernoDieta", mappedBy="cuaderno_entrenamiento", orphanRemoval=true)
      */
     private $hojas_cuaderno_dietas;
 

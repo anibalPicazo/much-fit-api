@@ -26,7 +26,7 @@ class Dia
     private $diaEjercicios;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="Dia")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="dia")
      */
     private $rutina;
 
