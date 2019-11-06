@@ -16,10 +16,11 @@ class TestEntrenamientoManager extends AbstractManager{
     {
         $test = new TestUsuario();
         $test->setUuid($DTO->getUuid());
-        $test->setUser($DTO->getUser());
+        $test->setUser($this->getCurrent());
         $test->setFormaFisica($DTO->getFormaFisica());
         $test->setExperienciaDeporte($DTO->getExperienciaDeporte());
         $test->setFrecuenciaEntrenamiento($DTO->getFrecuencia());
+        $DTO->getObjetivo() ? $test->setObjetivo($DTO->getObjetivo()) : null;
 
         $this->save($test);
         return $test;

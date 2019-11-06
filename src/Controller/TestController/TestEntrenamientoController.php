@@ -80,7 +80,7 @@ class TestEntrenamientoController extends AbstractController
      */
     public function createTest(TestUsuarioEntrenamientoCreateDTO $DTO, Request $request){
         //SECURITY
-        $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
+        $this->denyAccessUnlessGranted(Role::ROLE_USER);
 
         //VALIDATION
         $errors = $this->DTOValidator->validate($request);
@@ -95,6 +95,7 @@ class TestEntrenamientoController extends AbstractController
     }
     /**
      * @Rest\Route("", methods={"GET"})
+     * @View(serializerGroups={"list"})
      * @return JsonResponse
      */
     public function list(){

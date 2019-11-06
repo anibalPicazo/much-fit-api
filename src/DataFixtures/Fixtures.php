@@ -103,38 +103,6 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
         #ACTIVIDAD FISICA
 
-        $actividad_fisica_sedentario = new ActividadFisica();
-        $actividad_fisica_sedentario->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_sedentario->setFactorCorrecionMetabolismoBasal(1.2);
-        $actividad_fisica_sedentario->setNivel('SEDENTARIO');
-        $manager->persist($actividad_fisica_sedentario);
-
-
-        $actividad_fisica_ligeramente_activa = new ActividadFisica();
-        $actividad_fisica_ligeramente_activa->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_ligeramente_activa->setFactorCorrecionMetabolismoBasal(1.375);
-        $actividad_fisica_ligeramente_activa->setNivel('LIGERAMENTE ACTIVA');
-        $manager->persist($actividad_fisica_ligeramente_activa);
-
-        $actividad_fisica_modreadamente_activa = new ActividadFisica();
-        $actividad_fisica_modreadamente_activa->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_modreadamente_activa->setFactorCorrecionMetabolismoBasal(1.55);
-        $actividad_fisica_modreadamente_activa->setNivel('MODERADEMENTE ACTIVA');
-        $manager->persist($actividad_fisica_modreadamente_activa);
-
-        $actividad_fisica_muy_activas = new ActividadFisica();
-        $actividad_fisica_muy_activas->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_muy_activas->setFactorCorrecionMetabolismoBasal(1.726);
-        $actividad_fisica_muy_activas->setNivel('MUY ACTIVAS');
-        $manager->persist($actividad_fisica_muy_activas);
-
-
-        $actividad_fisica_hiperactivas = new ActividadFisica();
-        $actividad_fisica_hiperactivas->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_hiperactivas->setFactorCorrecionMetabolismoBasal(1.9);
-        $actividad_fisica_hiperactivas->setNivel('HIPERACTIVAS');
-        $manager->persist($actividad_fisica_hiperactivas);
-
         #TEST USUARIO
         $this->createMany(TestUsuario::class,self::USUARIOS,function(TestUsuario $testUsuario, $count){
            $testUsuario->setUuid(Uuid::uuid4()->toString());
@@ -142,23 +110,6 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
            $testUsuario->setFormaFisica($this->faker->randomElement(self::ESTADO_FISICO));
            $testUsuario->setFrecuenciaEntrenamiento($this->faker->randomElement(self::FRECUENCIA));
            $testUsuario->setUser($this->getReference(self::USER.$count));
-        });
-
-
-        #TEST USUARIO DIETA
-
-        $this->createMany(TestUsuarioDieta::class,self::USUARIOS,function(TestUsuarioDieta $testUsuarioDieta, $count)
-        use($actividad_fisica_hiperactivas,$actividad_fisica_muy_activas,$actividad_fisica_modreadamente_activa, $actividad_fisica_ligeramente_activa,$actividad_fisica_sedentario){
-            $testUsuarioDieta->setUuid(Uuid::uuid4()->toString());
-            $testUsuarioDieta->setAltura($this->faker->randomFloat(null,1.40,2.10));
-            $testUsuarioDieta->setPeso($this->faker->randomFloat(null,40,110));
-            $testUsuarioDieta->setGenero($this->faker->randomElement(['HOMBRE','MUJER']));
-            $testUsuarioDieta->setEdad($this->faker->numberBetween(16,80));
-            $testUsuarioDieta->setEstadoFisico($this->faker->randomElement(self::ESTADO_ACTUAL));
-            $testUsuarioDieta->setEstadoFisicoObjetivo($this->faker->randomElement(self::OBJETIVO_METABOLICO));
-            $testUsuarioDieta->setActividadFisica($this->faker->randomElement([$actividad_fisica_hiperactivas,$actividad_fisica_muy_activas,$actividad_fisica_modreadamente_activa, $actividad_fisica_ligeramente_activa,$actividad_fisica_sedentario]));
-            $testUsuarioDieta->setUser($this->getReference(self::USER.$count));
-
         });
 
         #UNIDAD MEDIDA
@@ -261,8 +212,8 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
 
         $pre_nutri_vol = new PremisasDieta();
         $pre_nutri_vol->setUuid(Uuid::uuid4()->toString());
-        $pre_nutri_vol->setHint('perderGrasa');
-        $pre_nutri_vol->setRuleCode('OBMAN');
+        $pre_nutri_vol->setHint('volumen');
+        $pre_nutri_vol->setRuleCode('OBVOL');
         $manager->persist($pre_nutri_vol);
 
         $pre_nutri_novato = new PremisasDieta();

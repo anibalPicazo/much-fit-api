@@ -5,6 +5,8 @@ namespace App\DTO\TestUsuario;
 
 
 use App\DTO\DTOInterface;
+use JMS\Serializer\Annotation as JMSSerializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class TestNutricionalCreateDTO implements DTOInterface
 {
@@ -15,7 +17,7 @@ class TestNutricionalCreateDTO implements DTOInterface
     protected $uuid;
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("string")
+     * @JMSSerializer\Type("float")
      */
     protected $altura;
 
@@ -39,13 +41,13 @@ class TestNutricionalCreateDTO implements DTOInterface
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("string")
+     * @JMSSerializer\Type("integer")
      */
     protected $grasa;
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("string")
+     * @JMSSerializer\Type("float")
      */
     protected $peso;
 

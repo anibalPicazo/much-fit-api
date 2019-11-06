@@ -13,12 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
 {
-    /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank
-     * @JMSSerializer\Type("Entity<App\Entity\User>")
-     */
-    protected $user;
 
     /**
      * @Assert\NotNull()
@@ -41,9 +35,15 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("integer")
+     * @JMSSerializer\Type("string")
      */
     protected $frecuencia;
+
+    /**
+     * @Assert\NotNull()
+     * @JMSSerializer\Type("string")
+     */
+    protected $objetivo;
 
 
     /**
@@ -54,21 +54,14 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
      * @param $frecuencia
      * @param $forma_fisica
      */
-    public function __construct($uuid,$user,$experiencia_deporte,$frecuencia,$forma_fisica)
+    public function __construct($uuid,$user,$experiencia_deporte,$frecuencia,$forma_fisica,$objetivo)
     {
         $this->uuid = $uuid;
         $this->user = $user;
         $this->experiencia_deporte = $experiencia_deporte;
         $this->forma_fisica = $forma_fisica;
         $this->frecuencia = $frecuencia;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
+        $this->objetivo = $objetivo;
     }
 
     /**
@@ -101,6 +94,14 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     public function getFrecuencia()
     {
         return $this->frecuencia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObjetivo()
+    {
+        return $this->objetivo;
     }
 
 
