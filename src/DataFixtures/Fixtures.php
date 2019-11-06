@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\ActividadFisica;
+use App\Entity\ConsecuenteNutricion;
+use App\Entity\ConsecuenteRutina;
 use App\Entity\IntensidadRutina;
 use App\Entity\PremisasDieta;
 use App\Entity\PremisasRutina;
@@ -205,10 +207,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $taza->setIniciales("Cups");
         $manager->persist($taza);
 
-
-
-
-
+        
         #Intensidad
         $intensidad_muy_alta = new IntensidadRutina();
         $intensidad_muy_alta->setUuid(Uuid::uuid4()->toString());
@@ -383,6 +382,88 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $pre_rutina_objetivo_ganancia->setHint('Bueno');
         $pre_rutina_objetivo_ganancia->setRuleCode('OBFU');
         $manager->persist($pre_rutina_objetivo_ganancia);
+
+        //CONSECUENTES RUTINA
+
+        $consecuente_rutina_acl = new ConsecuenteRutina();
+        $consecuente_rutina_acl->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_acl->setHint('Rutina Aclimatacion');
+        $consecuente_rutina_acl->setRuleCode('RUACL');
+        $manager->persist($consecuente_rutina_acl);
+
+        $consecuente_rutina_princ = new ConsecuenteRutina();
+        $consecuente_rutina_princ->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_princ->setHint('Rutina Principiante');
+        $consecuente_rutina_princ->setRuleCode('RUPRIN');
+        $manager->persist($consecuente_rutina_princ);
+
+        $consecuente_rutina_inter = new ConsecuenteRutina();
+        $consecuente_rutina_inter->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_inter->setHint('Rutina Intermedia');
+        $consecuente_rutina_inter->setRuleCode('RUINT');
+        $manager->persist($consecuente_rutina_inter);
+
+        $consecuente_rutina_inter_hiper = new ConsecuenteRutina();
+        $consecuente_rutina_inter_hiper->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_inter_hiper->setHint('Rutina Intermedia de hipertrofia');
+        $consecuente_rutina_inter_hiper->setRuleCode('RUINTHF');
+        $manager->persist($consecuente_rutina_inter_hiper);
+
+        $consecuente_rutina_inter_fuerza = new ConsecuenteRutina();
+        $consecuente_rutina_inter_fuerza->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_inter_fuerza->setHint('Rutina Intermedia de ganancia de fuerza');
+        $consecuente_rutina_inter_fuerza->setRuleCode('RUINTGF');
+        $manager->persist($consecuente_rutina_inter_fuerza);
+
+        $consecuente_rutina_avanzada = new ConsecuenteRutina();
+        $consecuente_rutina_avanzada->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_avanzada->setHint('Rutina avanzada');
+        $consecuente_rutina_avanzada->setRuleCode('RUAVN');
+        $manager->persist($consecuente_rutina_avanzada);
+
+        $consecuente_rutina_avanzada_hipertrofia = new ConsecuenteRutina();
+        $consecuente_rutina_avanzada_hipertrofia->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_avanzada_hipertrofia->setHint('Rutina avanzada de hipertrofia');
+        $consecuente_rutina_avanzada_hipertrofia->setRuleCode('RUAVNHF');
+        $manager->persist($consecuente_rutina_avanzada_hipertrofia);
+
+        $consecuente_rutina_avanzada_fuerza = new ConsecuenteRutina();
+        $consecuente_rutina_avanzada_fuerza->setUuid(Uuid::uuid4()->toString());
+        $consecuente_rutina_avanzada_fuerza->setHint('Rutina avanzada de ganancia de fuerza');
+        $consecuente_rutina_avanzada_fuerza->setRuleCode('RUAVNGF');
+        $manager->persist($consecuente_rutina_avanzada_fuerza);
+
+        //CONSECUENTES DIETA
+
+        $consecuente_dieta_cal = new ConsecuenteNutricion();
+        $consecuente_dieta_cal->setUuid(Uuid::uuid4()->toString());
+        $consecuente_dieta_cal->setHint('Dieta calórica y alta en hidratos');
+        $consecuente_dieta_cal->setRuleCode('DIECAHI');
+        $manager->persist($consecuente_dieta_cal);
+
+        $consecuente_dieta_med = new ConsecuenteNutricion();
+        $consecuente_dieta_med->setUuid(Uuid::uuid4()->toString());
+        $consecuente_dieta_med->setHint('Dieta de un impacto medio calórico y macros medios');
+        $consecuente_dieta_med->setRuleCode('DIEME');
+        $manager->persist($consecuente_dieta_med);
+
+        $consecuente_dieta_hipo = new ConsecuenteNutricion();
+        $consecuente_dieta_hipo->setUuid(Uuid::uuid4()->toString());
+        $consecuente_dieta_hipo->setHint('Dieta alta Hipocalórica');
+        $consecuente_dieta_hipo->setRuleCode('DIEHIPOAL');
+        $manager->persist($consecuente_dieta_hipo);
+
+        $consecuente_dieta_hipo_med = new ConsecuenteNutricion();
+        $consecuente_dieta_hipo_med->setUuid(Uuid::uuid4()->toString());
+        $consecuente_dieta_hipo_med->setHint('Dieta alta Hipocalórica media');
+        $consecuente_dieta_hipo_med->setRuleCode('DIEHP');
+        $manager->persist($consecuente_dieta_hipo_med);
+
+        $consecuente_dieta_CH = new ConsecuenteNutricion();
+        $consecuente_dieta_CH->setUuid(Uuid::uuid4()->toString());
+        $consecuente_dieta_CH->setHint('Dieta Chris Heria');
+        $consecuente_dieta_CH->setRuleCode('DIECH');
+        $manager->persist($consecuente_dieta_CH);
 
 
         $manager->flush();
