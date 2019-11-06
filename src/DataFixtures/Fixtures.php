@@ -207,7 +207,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $taza->setIniciales("Cups");
         $manager->persist($taza);
 
-        
+
         #Intensidad
         $intensidad_muy_alta = new IntensidadRutina();
         $intensidad_muy_alta->setUuid(Uuid::uuid4()->toString());

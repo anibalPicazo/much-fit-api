@@ -63,8 +63,8 @@ class User implements UserInterface
     private $activo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role", inversedBy="users")
-     * @Serializer\Groups({"edit"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role",cascade={"persist"})
+     * @Serializer\Groups({"list"})
      * @Serializer\Expose()
      */
     private $roles;

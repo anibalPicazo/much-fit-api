@@ -13,7 +13,7 @@ class EntrenamientoLineas
     use UuidTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ejercicios", inversedBy="serie")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ejercicios", inversedBy="entrenamientoLineas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ejercicio;
