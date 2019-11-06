@@ -20,7 +20,7 @@ class PremisasRutina
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ruleCode;
+    private $rule_code;
 
     public function getId(): ?int
     {
@@ -41,12 +41,12 @@ class PremisasRutina
 
     public function getRuleCode(): ?string
     {
-        return $this->ruleCode;
+        return $this->rule_code;
     }
 
     public function setRuleCode(string $ruleCode): self
     {
-        $this->ruleCode = $ruleCode;
+        $this->rule_code = $ruleCode;
 
         return $this;
     }

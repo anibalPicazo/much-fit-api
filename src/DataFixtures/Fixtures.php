@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\ActividadFisica;
 use App\Entity\IntensidadRutina;
 use App\Entity\PremisasDieta;
+use App\Entity\PremisasRutina;
 use App\Entity\Role;
 use App\Entity\Rutina;
 use App\Entity\TestUsuario;
@@ -306,8 +307,82 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         //PREMISAS DE ENTRENAMIENTO //
 
 
+        $pre_rutina_fre_baja = new PremisasRutina();
+        $pre_rutina_fre_baja->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_fre_baja->setHint('Más de un año');
+        $pre_rutina_fre_baja->setRuleCode('EXMAL');
+        $manager->persist($pre_rutina_fre_baja);
+
+        $pre_rutina_exp_alta = new PremisasRutina();
+        $pre_rutina_exp_alta->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_exp_alta->setHint('De ocho meses');
+        $pre_rutina_exp_alta->setRuleCode('EXAL');
+        $manager->persist($pre_rutina_exp_alta);
+
+        $pre_rutina_exp_media = new PremisasRutina();
+        $pre_rutina_exp_media->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_exp_media->setHint('De dos a ocho meses');
+        $pre_rutina_exp_media->setRuleCode('EXME');
+        $manager->persist($pre_rutina_exp_media);
+
+        $pre_rutina_exp_baja = new PremisasRutina();
+        $pre_rutina_exp_baja->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_exp_baja->setHint('De cero meses a dos meses');
+        $pre_rutina_exp_baja->setRuleCode('EXBA');
+        $manager->persist($pre_rutina_exp_baja);
+
+        $pre_rutina_fre_baja = new PremisasRutina();
+        $pre_rutina_fre_baja->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_fre_baja->setHint('Menos de dos días');
+        $pre_rutina_fre_baja->setRuleCode('FRBA');
+        $manager->persist($pre_rutina_fre_baja);
 
 
+        $pre_rutina_fre_media = new PremisasRutina();
+        $pre_rutina_fre_media->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_fre_media->setHint('Entre 2 y 3 días');
+        $pre_rutina_fre_media->setRuleCode('FRME');
+        $manager->persist($pre_rutina_fre_media);
+
+        $pre_rutina_fre_alta= new PremisasRutina();
+        $pre_rutina_fre_alta->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_fre_alta->setHint('Más de 3 días');
+        $pre_rutina_fre_alta->setRuleCode('FRAL');
+        $manager->persist($pre_rutina_fre_alta);
+
+
+        //ESTADO FISICO PERCIBIDO
+
+        $pre_rutina_estado_fis_malo = new PremisasRutina();
+        $pre_rutina_estado_fis_malo->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_estado_fis_malo->setHint('Malo');
+        $pre_rutina_estado_fis_malo->setRuleCode('EFMAL');
+        $manager->persist($pre_rutina_estado_fis_malo);
+
+        $pre_rutina_estado_fis_medio = new PremisasRutina();
+        $pre_rutina_estado_fis_medio->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_estado_fis_medio->setHint('Normal');
+        $pre_rutina_estado_fis_medio->setRuleCode('EFNR');
+        $manager->persist($pre_rutina_estado_fis_medio);
+
+        $pre_rutina_estado_fis_bueno = new PremisasRutina();
+        $pre_rutina_estado_fis_bueno->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_estado_fis_bueno->setHint('Bueno');
+        $pre_rutina_estado_fis_bueno->setRuleCode('EFBU');
+        $manager->persist($pre_rutina_estado_fis_bueno);
+        //OBJETIVOS
+
+        $pre_rutina_objetivo_hiper = new PremisasRutina();
+        $pre_rutina_objetivo_hiper->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_objetivo_hiper->setHint('hipertrofia');
+        $pre_rutina_objetivo_hiper->setRuleCode('OBHI');
+        $manager->persist($pre_rutina_objetivo_hiper);
+
+        $pre_rutina_objetivo_ganancia = new PremisasRutina();
+        $pre_rutina_objetivo_ganancia->setUuid(Uuid::uuid4()->toString());
+        $pre_rutina_objetivo_ganancia->setHint('Bueno');
+        $pre_rutina_objetivo_ganancia->setRuleCode('OBFU');
+        $manager->persist($pre_rutina_objetivo_ganancia);
 
 
         $manager->flush();
