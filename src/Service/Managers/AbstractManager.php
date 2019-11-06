@@ -175,9 +175,9 @@ abstract class AbstractManager
     }
 
     /**
-     * @return object|string
+     * @return User
      */
-    public function getCurrent(){
+    public function getCurrent() : User{
         return $this->tokenStorage->getToken()->getUser();
     }
 }
