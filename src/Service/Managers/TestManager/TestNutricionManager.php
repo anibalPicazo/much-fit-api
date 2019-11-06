@@ -36,7 +36,7 @@ class TestNutricionManager extends AbstractManager
         $objetivo = $this->calcObjetivo($DTO);
         $actual = $this->calcEstadoActual($DTO);
 
-        
+
 
 
         //todo: Entrada al test  $objetivo, $estado_fisico ,$objetivo

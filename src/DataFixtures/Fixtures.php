@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\ActividadFisica;
 use App\Entity\IntensidadRutina;
+use App\Entity\PremisasDieta;
 use App\Entity\Role;
 use App\Entity\Rutina;
 use App\Entity\TestUsuario;
@@ -243,7 +244,74 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $manager->persist($intensidad_muy_baja);
 
 
+        // PREMISAS DE NUTRICION //
+
+        $pre_nutri_definicion = new PremisasDieta();
+        $pre_nutri_definicion->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_definicion->setHint('definicion');
+        $pre_nutri_definicion->setRuleCode('OBDEF');
+        $manager->persist($pre_nutri_definicion);
+
+
+        $pre_nutri_perder_grasa = new PremisasDieta();
+        $pre_nutri_perder_grasa->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_perder_grasa->setHint('perderGrasa');
+        $pre_nutri_perder_grasa->setRuleCode('OBMAN');
+        $manager->persist($pre_nutri_perder_grasa);
+
+        $pre_nutri_vol = new PremisasDieta();
+        $pre_nutri_vol->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_vol->setHint('perderGrasa');
+        $pre_nutri_vol->setRuleCode('OBMAN');
+        $manager->persist($pre_nutri_vol);
+
+        $pre_nutri_novato = new PremisasDieta();
+        $pre_nutri_novato->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_novato->setHint('baja');
+        $pre_nutri_novato->setRuleCode('EXNO');
+        $manager->persist($pre_nutri_novato);
+
+        $pre_nutri_intermedio = new PremisasDieta();
+        $pre_nutri_intermedio->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_intermedio->setHint('media');
+        $pre_nutri_intermedio->setRuleCode('EXINTER');
+        $manager->persist($pre_nutri_intermedio);
+
+        $pre_nutri_avanzado = new PremisasDieta();
+        $pre_nutri_avanzado->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_avanzado->setHint('alta');
+        $pre_nutri_avanzado->setRuleCode('EXPRO');
+        $manager->persist($pre_nutri_avanzado);
+
+
+        $pre_nutri_normo = new PremisasDieta();
+        $pre_nutri_normo->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_normo->setHint('normopeso');
+        $pre_nutri_normo->setRuleCode('ESNP');
+        $manager->persist($pre_nutri_normo);
+
+        $pre_nutri_definido = new PremisasDieta();
+        $pre_nutri_definido->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_definido->setHint('definido');
+        $pre_nutri_definido->setRuleCode('ESDF');
+        $manager->persist($pre_nutri_definido);
+
+        $pre_nutri_sobrepeso = new PremisasDieta();
+        $pre_nutri_sobrepeso->setUuid(Uuid::uuid4()->toString());
+        $pre_nutri_sobrepeso->setHint('sobrepeso');
+        $pre_nutri_sobrepeso->setRuleCode('ESSP');
+        $manager->persist($pre_nutri_sobrepeso);
+
+
+        //PREMISAS DE ENTRENAMIENTO //
+
+
+
+
+
+
         $manager->flush();
+
     }
 
 }
