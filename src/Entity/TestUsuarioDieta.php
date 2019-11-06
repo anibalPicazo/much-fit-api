@@ -55,6 +55,11 @@ class TestUsuarioDieta
      */
     private $estado_fisico_objetivo;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imc;
+
     public function getPeso()
     {
         return $this->peso;
@@ -147,6 +152,18 @@ class TestUsuarioDieta
     public function setEstadoFisicoObjetivo(string $estado_fisico_objetivo): self
     {
         $this->estado_fisico_objetivo = $estado_fisico_objetivo;
+
+        return $this;
+    }
+
+    public function getImc(): ?string
+    {
+        return $this->imc;
+    }
+
+    public function setImc(?string $imc): self
+    {
+        $this->imc = $imc;
 
         return $this;
     }
