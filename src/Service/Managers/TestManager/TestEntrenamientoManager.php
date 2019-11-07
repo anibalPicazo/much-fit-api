@@ -26,14 +26,7 @@ class TestEntrenamientoManager extends AbstractManager{
         $rule_exp = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=> $this->calcExperiencia($DTO)]);
         $rule_frec = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=>$this->calcFrecuencia($DTO)]);
         $rule_ob = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint' => $DTO->getObjetivo()]);
-
-        dump($rule_exp);
-        dump($rule_frec);
-        dump($rule_ob);
-
-
-
-
+        $rule_estadofiscio = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=>$DTO->getFormaFisica()]);
 
 
         $this->save($test);
@@ -42,18 +35,19 @@ class TestEntrenamientoManager extends AbstractManager{
 
     /**
      * @param TestUsuarioEntrenamientoCreateDTO $DTO
+     * @return string
      */
-    public function calcFrecuencia(TestUsuarioEntrenamientoCreateDTO $DTO): void
+    public function calcFrecuencia(TestUsuarioEntrenamientoCreateDTO $DTO)
     {
         switch ($DTO->getFrecuencia()) {
             case 'Menos de dos días':
-                $frec = 'BAJO';
+                $frec = 'Bajo';
                 break;
             case 'Entre 2 y 3 días':
-                $frec = 'MEDIO';
+                $frec = 'Medio';
                 break;
             case 'Más de 3 días':
-                $frec = 'ALTO';
+                $frec = 'Alto';
                 break;
 
         }
@@ -62,8 +56,9 @@ class TestEntrenamientoManager extends AbstractManager{
 
     /**
      * @param TestUsuarioEntrenamientoCreateDTO $DTO
+     * @return string
      */
-    public function calcExperiencia(TestUsuarioEntrenamientoCreateDTO $DTO): void
+    public function calcExperiencia(TestUsuarioEntrenamientoCreateDTO $DTO)
     {
         switch ($DTO->getExperienciaDeporte()) {
             case 'Más de un año':
