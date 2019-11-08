@@ -40,7 +40,7 @@ class TestEntrenamientoManager extends AbstractManager{
     public function calcFrecuencia(TestUsuarioEntrenamientoCreateDTO $DTO)
     {
         switch ($DTO->getFrecuencia()) {
-            case 'Menos de dos días':
+            case 'Menos de dos días';
                 $frec = 'Bajo';
                 break;
             case 'Entre 2 y 3 días':
