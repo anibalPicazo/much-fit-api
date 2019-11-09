@@ -3,15 +3,15 @@ version: '3'
 services:
 
     mysql:
-        container_name: certiapp_mysql
+        container_name: muchfit_mysql
         ports:
-            - 3306:3306
+            - 3333:3306
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: certiapp_dev
-            MYSQL_USER: certiapp
-            MYSQL_PASSWORD: iPj!myVCkW6
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
         volumes:
             - mysql_dev:/var/lib/mysql
             - .:/app

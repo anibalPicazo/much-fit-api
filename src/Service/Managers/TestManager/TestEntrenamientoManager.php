@@ -23,6 +23,7 @@ class TestEntrenamientoManager extends AbstractManager{
 
         $this->save($test);
         return $test;
+
     }
 
     /**
