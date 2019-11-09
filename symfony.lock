@@ -345,6 +345,9 @@
             "config/packages/nelmio_cors.yaml"
         ]
     },
+    "nicoswd/php-rule-parser": {
+        "version": "0.5.7"
+    },
     "nikic/php-parser": {
         "version": "v4.2.1"
     },
