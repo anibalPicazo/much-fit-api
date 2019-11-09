@@ -82,15 +82,16 @@ class TestEntrenamientoManager extends AbstractManager{
     public function ruler(): void
     {
         $experiencia = 'media';
-        $frecuencia = 'alta';
-        $estadofisico = 'bueno';
+        $frecuencia = 'media';
+        $estadofisico = 'normal';
+        $objetivo='hipertrofia';
         //Initialise CLIPS environment and variables.
         ini_set('max_execution_time', 0);
         $arrCtx = array(); // This is the context, in which CLIPS runs.
         clips_init($arrCtx);
         ob_start(); // Turn on output buffering to capture CLIPS command outputs.
 // Comment out above command, if you need debug output.
-        
+
 
         clips_exec('(clear)', false);
         clips_exec('(reset)', false);
@@ -99,11 +100,16 @@ class TestEntrenamientoManager extends AbstractManager{
         clips_exec('(defrule r3 (experiencia media)(estado-fisico malo)(frecuencia media) => (assert (rutina principiante)) )', false);
         clips_exec('(defrule r4 (experiencia media)(estado-fisico normal)(frecuencia media) => (assert (rutina intermedia)) )', false);
         clips_exec('(defrule r5 (experiencia media)(estado-fisico bueno)(frecuencia baja) => (assert (rutina intermedia)) )', false);
+        clips_exec('(defrule r6 (rutina intermedia)(objetivo hipertrofia) => (assert (rutina intermedia-hipertrofia)) )', false);
+        clips_exec('(defrule r7 (rutina intermedia)(objetivo ganancia-fuerza) => (assert (rutina intermedia-ganancia-fuerza)) )', false);
         clips_exec('(defrule r8 (experiencia media)(estado-fisico bueno)(frecuencia alta) => (assert (rutina avanzada)) )', false);
         clips_exec('(defrule r9 (experiencia alta)(estado-fisico normal) => (assert (rutina avanzada)) )', false);
+        clips_exec('(defrule r10 (rutina avanzada)(objetivo hipertrofia) => (assert (rutina avanzada-hipertrofia)) )', false);
+        clips_exec('(defrule r11 (rutina avanzada)(objetivo ganancia-fuerza) => (assert (rutina avanzada-ganancia-fuerza)) )', false);
         clips_exec('(assert (experiencia '.$experiencia.' ))', false);
         clips_exec('(assert (estado-fisico '.$estadofisico.'))', false);
         clips_exec('(assert (frecuencia '.$frecuencia.'))', false);
+        clips_exec('(assert (objetivo '.$objetivo.'))', false);
 
 
         clips_exec('(run)', false);
@@ -112,7 +118,7 @@ class TestEntrenamientoManager extends AbstractManager{
         clips_query_facts($arrFacts, 'rutina');
         //var_dump($arrFacts);
 
-        dump($arrFacts[0]);
+        dump($arrFacts[1]);
         die();
 
 
