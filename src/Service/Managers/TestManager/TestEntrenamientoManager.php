@@ -82,30 +82,30 @@ class TestEntrenamientoManager extends AbstractManager{
     public function ruler(): void
     {
         $experiencia = 'media';
-        $frecuencia = 'frmedia';
-        $estadofisico = 'malo';
+        $frecuencia = 'alta';
+        $estadofisico = 'bueno';
         //Initialise CLIPS environment and variables.
         ini_set('max_execution_time', 0);
         $arrCtx = array(); // This is the context, in which CLIPS runs.
         clips_init($arrCtx);
         ob_start(); // Turn on output buffering to capture CLIPS command outputs.
 // Comment out above command, if you need debug output.
-
-       // clips_exec('(clear)', false);
-       // clips_exec('(reset)', false);
-       // clips_exec('(defrule usuario  (usuario-experiencia MEDIA) => (assert (rutina-is ACLIMATACION)) )', false);
-       // clips_exec('(assert (usuario-experiencia MEDIA))', false);
-       // clips_exec('(run)', false);
-       // ob_end_clean(); //Clear output buffer and cease buffering.
-       // $arrFacts = array();
-       // clips_query_facts($arrFacts, 'rutina-is');
-
+        
 
         clips_exec('(clear)', false);
         clips_exec('(reset)', false);
         clips_exec('(defrule r1 (experiencia media)(estado-fisico malo) => (assert (rutina aclimatacion)) )', false);
+        clips_exec('(defrule r2 (experiencia baja) => (assert (rutina aclimatacion)) )', false);
+        clips_exec('(defrule r3 (experiencia media)(estado-fisico malo)(frecuencia media) => (assert (rutina principiante)) )', false);
+        clips_exec('(defrule r4 (experiencia media)(estado-fisico normal)(frecuencia media) => (assert (rutina intermedia)) )', false);
+        clips_exec('(defrule r5 (experiencia media)(estado-fisico bueno)(frecuencia baja) => (assert (rutina intermedia)) )', false);
+        clips_exec('(defrule r8 (experiencia media)(estado-fisico bueno)(frecuencia alta) => (assert (rutina avanzada)) )', false);
+        clips_exec('(defrule r9 (experiencia alta)(estado-fisico normal) => (assert (rutina avanzada)) )', false);
         clips_exec('(assert (experiencia '.$experiencia.' ))', false);
         clips_exec('(assert (estado-fisico '.$estadofisico.'))', false);
+        clips_exec('(assert (frecuencia '.$frecuencia.'))', false);
+
+
         clips_exec('(run)', false);
         ob_end_clean(); //Clear output buffer and cease buffering.
         $arrFacts = array();
