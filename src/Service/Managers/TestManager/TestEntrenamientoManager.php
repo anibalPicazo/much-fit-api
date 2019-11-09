@@ -81,9 +81,10 @@ class TestEntrenamientoManager extends AbstractManager{
 
     public function ruler(): void
     {
+        //todo: insertar paramtros de la funcion
         $experiencia = 'media';
         $frecuencia = 'media';
-        $estadofisico = 'normal';
+        $estadofisico = 'bueno';
         $objetivo='hipertrofia';
         //Initialise CLIPS environment and variables.
         ini_set('max_execution_time', 0);
