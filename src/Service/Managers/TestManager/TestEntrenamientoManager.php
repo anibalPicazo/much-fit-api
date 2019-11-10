@@ -29,7 +29,8 @@ class TestEntrenamientoManager extends AbstractManager{
        // $rule_estadofiscio = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=>$DTO->getFormaFisica()]);
 
 
-        $this->ruler();
+        $this->ruler('media','' ,'malo');
+
 
         $this->save($test);
         return $test;
@@ -79,49 +80,79 @@ class TestEntrenamientoManager extends AbstractManager{
         return $exp;
     }
 
-    public function ruler(): void
+    public function ruler($experiencia='',$frecuencia='',$estadofisico='',$objetivo='')
     {
-        //todo: insertar paramtros de la funcion
-        $experiencia = 'media';
-        $frecuencia = 'media';
-        $estadofisico = 'bueno';
-        $objetivo='hipertrofia';
+
         //Initialise CLIPS environment and variables.
         ini_set('max_execution_time', 0);
         $arrCtx = array(); // This is the context, in which CLIPS runs.
         clips_init($arrCtx);
         ob_start(); // Turn on output buffering to capture CLIPS command outputs.
-// Comment out above command, if you need debug output.
-
 
         clips_exec('(clear)', false);
         clips_exec('(reset)', false);
-        clips_exec('(defrule r1 (experiencia media)(estado-fisico malo) => (assert (rutina aclimatacion)) )', false);
-        clips_exec('(defrule r2 (experiencia baja) => (assert (rutina aclimatacion)) )', false);
-        clips_exec('(defrule r3 (experiencia media)(estado-fisico malo)(frecuencia media) => (assert (rutina principiante)) )', false);
-        clips_exec('(defrule r4 (experiencia media)(estado-fisico normal)(frecuencia media) => (assert (rutina intermedia)) )', false);
-        clips_exec('(defrule r5 (experiencia media)(estado-fisico bueno)(frecuencia baja) => (assert (rutina intermedia)) )', false);
-        clips_exec('(defrule r6 (rutina intermedia)(objetivo hipertrofia) => (assert (rutina intermedia-hipertrofia)) )', false);
-        clips_exec('(defrule r7 (rutina intermedia)(objetivo ganancia-fuerza) => (assert (rutina intermedia-ganancia-fuerza)) )', false);
-        clips_exec('(defrule r8 (experiencia media)(estado-fisico bueno)(frecuencia alta) => (assert (rutina avanzada)) )', false);
-        clips_exec('(defrule r9 (experiencia alta)(estado-fisico normal) => (assert (rutina avanzada)) )', false);
-        clips_exec('(defrule r10 (rutina avanzada)(objetivo hipertrofia) => (assert (rutina avanzada-hipertrofia)) )', false);
-        clips_exec('(defrule r11 (rutina avanzada)(objetivo ganancia-fuerza) => (assert (rutina avanzada-ganancia-fuerza)) )', false);
-        clips_exec('(assert (experiencia '.$experiencia.' ))', false);
-        clips_exec('(assert (estado-fisico '.$estadofisico.'))', false);
-        clips_exec('(assert (frecuencia '.$frecuencia.'))', false);
-        clips_exec('(assert (objetivo '.$objetivo.'))', false);
+        //REGLA 1:
+        clips_exec('(defrule r1 (experiencia media)
+                                (estado-fisico malo) => 
+                                (assert (rutina aclimatacion)) )', false);
+        //REGLA 2:
+        clips_exec('(defrule r2 (experiencia baja) => 
+                                (assert (rutina aclimatacion)) )', false);
+        //REGLA 3:
+        clips_exec('(defrule r3 (experiencia media)
+                                (estado-fisico malo)
+                                (frecuencia media) => 
+                                (assert (rutina principiante)) )', false);
+        //REGLA 4:
+        clips_exec('(defrule r4 (experiencia media)
+                                (estado-fisico normal)
+                                (frecuencia media) => 
+                                (assert (rutina intermedia)) )', false);
+        //REGLA 5:
+        clips_exec('(defrule r5 (experiencia media)
+                                (estado-fisico bueno)
+                                (frecuencia baja) => 
+                                (assert (rutina intermedia)) )', false);
+        //REGLA 6:
+        clips_exec('(defrule r6 (rutina intermedia)
+                                (objetivo hipertrofia) => 
+                                (assert (rutina intermedia-hipertrofia)) )', false);
+        //REGLA 7:
+        clips_exec('(defrule r7 (rutina intermedia)
+                                (objetivo ganancia-fuerza) => 
+                                (assert (rutina intermedia-ganancia-fuerza)) )', false);
+        //REGLA 8:
+        clips_exec('(defrule r8 (experiencia media)
+                                (estado-fisico bueno)
+                                (frecuencia alta) => 
+                                (assert (rutina avanzada)) )', false);
+        //REGLA 9:
+        clips_exec('(defrule r9 (experiencia alta)
+                                (estado-fisico normal) => 
+                                (assert (rutina avanzada)) )', false);
+        //REGLA 10:
+        clips_exec('(defrule r10 (rutina avanzada)
+                                 (objetivo hipertrofia) => 
+                                 (assert (rutina avanzada-hipertrofia)) )', false);
+        //REGLA 11:
+        clips_exec('(defrule r11 (rutina avanzada)
+                                 (objetivo ganancia-fuerza) => 
+                                 (assert (rutina avanzada-ganancia-fuerza)) )', false);
+        //INSERCION DE LOS HECHOS
+        $experiencia !== '' ? clips_exec('(assert (experiencia '.$experiencia.' ))', false) : null;
+        $estadofisico !== '' ? clips_exec('(assert (estado-fisico '.$estadofisico.'))', false) : null;
+        $frecuencia !== '' ? clips_exec('(assert (frecuencia '.$frecuencia.'))', false) : null;
+        $objetivo !== '' ? clips_exec('(assert (objetivo '.$objetivo.'))', false) : null;
 
-
+        //EJECUTAMOS LAS REGLAS
         clips_exec('(run)', false);
         ob_end_clean(); //Clear output buffer and cease buffering.
         $arrFacts = array();
         clips_query_facts($arrFacts, 'rutina');
-        //var_dump($arrFacts);
 
-        dump($arrFacts[1]);
-        die();
 
+        //CONSECUENTE
+       return sizeof($arrFacts) <= 1 ?   $arrFacts[0][0] : $arrFacts[1][0];
 
 
     }
