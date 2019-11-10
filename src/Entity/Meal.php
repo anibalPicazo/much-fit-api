@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MealRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Meal
 {
@@ -15,17 +18,23 @@ class Meal
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $alimento;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $cantidad;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Unidad")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $unidad;
 
