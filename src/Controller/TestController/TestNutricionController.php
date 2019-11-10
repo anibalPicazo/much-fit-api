@@ -61,7 +61,7 @@ class TestNutricionController extends AbstractController
      * @param TestNutricionalCreateDTO $DTO
      * @param Request $request
      * @return JsonResponse
-     * @View(serializerGroups={"list"})
+     * @View(serializerGroups={"list", "edit"})
      * @throws ExceptionInterface
      * @ParamConverter("DTO", converter="api.rest.dto.converter")
      * @SWG\Tag(name="Test Entrenamiento")
@@ -90,9 +90,9 @@ class TestNutricionController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
         //COMAND
-        $this->manager->create($DTO);
+       return $this->manager->create($DTO);
         //RESPONSE
-        return new JsonResponse(null, Response::HTTP_CREATED);
+        // return new JsonResponse(null, Response::HTTP_CREATED);
     }
     /**
      * @Rest\Route("", methods={"GET"})

@@ -5,6 +5,7 @@ namespace App\Service\Managers\TestManager;
 
 
 use App\DTO\TestUsuario\TestNutricionalCreateDTO;
+use App\Entity\Dieta;
 use App\Entity\PremisasDieta;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
@@ -48,12 +49,12 @@ class TestNutricionManager extends AbstractManager
         $exp = $this->calcExperiencia($DTO);
 
         $dieta_clp = $this->ruler($exp,$actual,$objetivo);
-        $dieta = $this->getRepository()->findOneBy(['descripcion'=> $dieta_clp]);
+        $dieta = $this->doctrine->getRepository(Dieta::class)->findOneBy(['descripcion'=> $dieta_clp]);
         $user->setDieta($dieta);
         $this->save($user);
         $this->save($test);
 
-        return $user;
+        return $dieta;
     }
 
     /**
