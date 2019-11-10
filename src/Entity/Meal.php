@@ -71,13 +71,6 @@ class Meal
 
 
 
-    public function setUnidades(string $unidades): self
-    {
-        $this->unidades = $unidades;
-
-        return $this;
-    }
-
     public function getUnidad(): ?Unidad
     {
         return $this->unidad;

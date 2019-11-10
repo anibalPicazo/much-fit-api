@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\ActividadFisica;
+use App\Entity\Alimentos;
 use App\Entity\ConsecuenteNutricion;
 use App\Entity\ConsecuenteRutina;
 use App\Entity\Dia;
@@ -11,6 +12,7 @@ use App\Entity\DiaEjercicio;
 use App\Entity\Dieta;
 use App\Entity\Ejercicios;
 use App\Entity\IntensidadRutina;
+use App\Entity\Meal;
 use App\Entity\PremisasDieta;
 use App\Entity\PremisasRutina;
 use App\Entity\Role;
@@ -32,6 +34,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
     const USER = 'user';
     const DIAS_EJERCICIO = 150;
+    const UNIDADES_MEDIDAS =7;
     const ESTADO_FISICO = ['MALO','NORMAL','BUENO'];
     const EXPERIENCIA = ['ALTA','MUY ALTA','INTERMEDIO','BAJO'];
     const FRECUENCIA = ['< 2','2 - 3','> 3'];
@@ -153,6 +156,67 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
 
 
+
+
+
+        #UNIDAD MEDIDA
+        $unidades = new Unidad();
+        $unidades->setUuid(Uuid::uuid4());
+        $unidades->setDescripcion("Unidades");
+        $unidades->setIniciales("Uds");
+        $this->addReference('Unidad0',$unidades);
+        $manager->persist($unidades);
+
+        $kilos = new Unidad();
+        $kilos->setUuid(Uuid::uuid4());
+        $kilos->setDescripcion("Kilos");
+        $kilos->setIniciales("kg");
+        $this->addReference('Unidad1',$kilos);
+        $manager->persist($kilos);
+
+
+        $gramos = new Unidad();
+        $gramos->setUuid(Uuid::uuid4());
+        $gramos->setDescripcion("Gramos");
+        $gramos->setIniciales("Gr");
+        $manager->persist($gramos);
+        $this->addReference('Unidad2',$gramos);
+
+
+
+        $onzas = new Unidad();
+        $onzas->setUuid(Uuid::uuid4());
+        $onzas->setDescripcion("Onzas");
+        $onzas->setIniciales("Oz");
+        $this->addReference('Unidad3',$onzas);
+        $manager->persist($onzas);
+
+
+
+        $tsp= new Unidad();
+        $tsp->setUuid(Uuid::uuid4());
+        $tsp->setDescripcion("Cucharadita");
+        $tsp->setIniciales("Tsp");
+        $manager->persist($tsp);
+        $this->addReference('Unidad4',$tsp);
+
+
+        $cucharada = new Unidad();
+        $cucharada->setUuid(Uuid::uuid4());
+        $cucharada->setDescripcion("Cucharada");
+        $cucharada->setIniciales("Tbsp");
+        $manager->persist($cucharada);
+        $this->addReference('Unidad5',$cucharada);
+
+
+        $taza = new Unidad();
+        $taza->setUuid(Uuid::uuid4());
+        $taza->setDescripcion("Tazas");
+        $taza->setIniciales("Cups");
+        $this->addReference('Unidad6',$taza);
+
+        $manager->persist($taza);
+
         #DIETAS
         $this->createMany(Dieta::class,sizeof(Self::TIPO_DIETA),function(Dieta $dieta, $count){
             $dieta->setUuid(Uuid::uuid4()->toString());
@@ -167,66 +231,18 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $this->createMany(DiaDieta::class,sizeof(Self::DIAS),function(DiaDieta $dia_dieta, $count){
             $dia_dieta->setUuid(Uuid::uuid4()->toString());
             $dia_dieta->setDescripcion(self::DIAS[$count]);
-            $dia_dieta->setDieta($this->getReference('Dieta'.sizeof(self::TIPO_DIETA)-1));
+            $dia_dieta->setDieta($this->getReference('Dieta'.$this->faker->numberBetween(0,(sizeof(self::DIAS))-1)));
             $this->addReference('Dia_dieta'.$count,$dia_dieta);
 
         });
+        $this->createMany(Meal::class,sizeof(Self::DIAS)*50,function(Meal $meal, $count){
+            $meal->setUuid(Uuid::uuid4()->toString());
+            $meal->setAlimento($this->faker->randomElement($this->manager->getRepository(Alimentos::class)->findAll()));
+            $meal->setUnidad($this->getReference('Unidad'.$this->faker->numberBetween(0,self::UNIDADES_MEDIDAS-1)));
+            $meal->setCantidad($this->faker->randomFloat(2,20,500));
+            $meal->setDiaDieta($this->getReference('Dia_dieta' . $this->faker->numberBetween(0,(sizeof(self::DIAS))-1)));
 
-
-
-
-
-
-
-
-
-
-
-        #UNIDAD MEDIDA
-        $unidades = new Unidad();
-        $unidades->setUuid(Uuid::uuid4());
-        $unidades->setDescripcion("Unidades");
-        $unidades->setIniciales("Uds");
-        $manager->persist($unidades);
-
-        $kilos = new Unidad();
-        $kilos->setUuid(Uuid::uuid4());
-        $kilos->setDescripcion("Kilos");
-        $kilos->setIniciales("kg");
-        $manager->persist($kilos);
-
-
-        $gramos = new Unidad();
-        $gramos->setUuid(Uuid::uuid4());
-        $gramos->setDescripcion("Gramos");
-        $gramos->setIniciales("Gr");
-        $manager->persist($gramos);
-
-
-        $onzas = new Unidad();
-        $onzas->setUuid(Uuid::uuid4());
-        $onzas->setDescripcion("Onzas");
-        $onzas->setIniciales("Oz");
-        $manager->persist($onzas);
-
-
-        $tsp= new Unidad();
-        $tsp->setUuid(Uuid::uuid4());
-        $tsp->setDescripcion("Cucharadita");
-        $tsp->setIniciales("Tsp");
-        $manager->persist($tsp);
-
-        $cucharada = new Unidad();
-        $cucharada->setUuid(Uuid::uuid4());
-        $cucharada->setDescripcion("Cucharada");
-        $cucharada->setIniciales("Tbsp");
-        $manager->persist($cucharada);
-
-        $taza = new Unidad();
-        $taza->setUuid(Uuid::uuid4());
-        $taza->setDescripcion("Tazas");
-        $taza->setIniciales("Cups");
-        $manager->persist($taza);
+        });
 
 
         // PREMISAS DE NUTRICION //
