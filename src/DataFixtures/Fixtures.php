@@ -32,6 +32,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
     const ESTADO_ACTUAL = ['DEFINIDO','SOBREPESO','DELGADO','LIGERAMENTE SOBREPESO','EXTREMA DELGADEZ','MUSCULOSO'];
     const OBJETIVO_METABOLICO = ['DEFINIDO','MUSCULOSO','NORMAL'];
     const INTENSIDAD_ENTRENAMIENTO =["MUY ALTA","ALTA","MEDIA","BAJA","MUY BAJA"];
+    const TIPO_RUTINA = ["aclimatacion","principiante","intermedia","avanzada","intermedia-ganancia-fuerza","intermedia-hipertrofia","avanzada-hipertrofia","avanzada-ganancia-fuerza"];
 
     //QUANTITY
     const USUARIOS = 40;
@@ -111,6 +112,15 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
            $testUsuario->setFrecuenciaEntrenamiento($this->faker->randomElement(self::FRECUENCIA));
            $testUsuario->setUser($this->getReference(self::USER.$count));
         });
+
+        #RUTINAS
+        $this->createMany(Rutina::class,Self::TIPO_RUTINA.count(),function(Rutina $rutina, $count){
+            $rutina->setUuid(Uuid::uuid4()->toString());
+            $rutina->setNombre(self::TIPO_RUTINA[$count]);
+            
+        });
+
+
 
         #UNIDAD MEDIDA
         $unidades = new Unidad();
