@@ -70,6 +70,12 @@ class TestNutricionalCreateDTO implements DTOInterface
     private $actividad_fisica;
 
     /**
+     * @Assert\NotNull()
+     * @JMSSerializer\Type("string")
+     */
+    private $experiencia;
+
+    /**
      * TestNutricionalCreateDTO constructor.
      * @param $uuid
      * @param $altura
@@ -82,7 +88,7 @@ class TestNutricionalCreateDTO implements DTOInterface
      * @param $estado_fisico_objetivo
      * @param $actividad_fisica
      */
-    public function __construct($uuid, $altura, $edad, $genero, $imc, $grasa, $peso, $estado_fisico, $estado_fisico_objetivo, $actividad_fisica)
+    public function __construct($uuid, $altura, $edad, $genero, $imc, $grasa, $peso, $estado_fisico, $estado_fisico_objetivo, $actividad_fisica,$experiencia)
     {
         $this->uuid = $uuid;
         $this->altura = $altura;
@@ -94,6 +100,7 @@ class TestNutricionalCreateDTO implements DTOInterface
         $this->estado_fisico = $estado_fisico;
         $this->estado_fisico_objetivo = $estado_fisico_objetivo;
         $this->actividad_fisica = $actividad_fisica;
+        $this->experiencia = $experiencia;
     }
 
     /**
@@ -174,6 +181,14 @@ class TestNutricionalCreateDTO implements DTOInterface
     public function getActividadFisica()
     {
         return $this->actividad_fisica;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExperiencia()
+    {
+        return $this->experiencia;
     }
 
 }

@@ -37,7 +37,7 @@ class TestEntrenamientoManager extends AbstractManager{
 
         //BUSCAMOS LA RUTINA
         /** @var Rutina $rutina */
-        $rutina = $this->doctrine->getRepository(Rutina::class)->findBy(['nombre' => $rutina_clp]);
+        $rutina = $this->doctrine->getRepository(Rutina::class)->findOneBy(['nombre' => $rutina_clp]);
 
         //SE LA ASIGNAMOS AL USUARIO
         $user = $this->getCurrent();

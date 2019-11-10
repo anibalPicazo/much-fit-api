@@ -88,9 +88,9 @@ class TestEntrenamientoController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
         //COMAND
-         $this->manager->create($DTO);
+       return  $this->manager->create($DTO);
         //RESPONSE
-        return new JsonResponse(null, Response::HTTP_CREATED);
+       // return new JsonResponse(null, Response::HTTP_CREATED);
 
     }
     /**
