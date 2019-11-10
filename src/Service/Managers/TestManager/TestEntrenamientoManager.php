@@ -6,7 +6,9 @@ namespace App\Service\Managers\TestManager;
 
 use App\DTO\TestUsuario\TestUsuarioEntrenamientoCreateDTO;
 use App\Entity\PremisasRutina;
+use App\Entity\Rutina;
 use App\Entity\TestUsuario;
+use App\Entity\User;
 use App\Service\Managers\AbstractManager;
 use App\Service\Uploads\AbstractUploadStorage;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -15,25 +17,39 @@ class TestEntrenamientoManager extends AbstractManager{
 
     public function create(TestUsuarioEntrenamientoCreateDTO $DTO)
     {
+        /** @var User $user */
+        $user = $this->getCurrent();
         $test = new TestUsuario();
         $test->setUuid($DTO->getUuid());
-        $test->setUser($this->getCurrent());
+        $test->setUser($user);
         $test->setFormaFisica($DTO->getFormaFisica());
         $test->setExperienciaDeporte($DTO->getExperienciaDeporte());
         $test->setFrecuenciaEntrenamiento($DTO->getFrecuencia());
         $DTO->getObjetivo() ? $test->setObjetivo($DTO->getObjetivo()) : null;
 
-      //  $rule_exp = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=> $this->calcExperiencia($DTO)]);
-       // $rule_frec = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=>$this->calcFrecuencia($DTO)]);
-       // $rule_ob = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint' => $DTO->getObjetivo()]);
-       // $rule_estadofiscio = $this->doctrine->getRepository(PremisasRutina::class)->findOneBy(['hint'=>$DTO->getFormaFisica()]);
+        $rule_exp = $this->calcExperiencia($DTO);
+       $rule_frec = $this->calcFrecuencia($DTO);
+       $DTO->getObjetivo() ? $rule_ob = strtolower($DTO->getObjetivo()) : $rule_ob = '';
+       $DTO->getFormaFisica() ? $rule_estadofiscio = strtolower($DTO->getFormaFisica()): $rule_estadofiscio = '';
 
+       //SBR
+        $rutina_clp= $this->ruler($rule_exp,$rule_frec,$rule_estadofiscio,$rule_ob);
 
-        $this->ruler('media','' ,'malo');
+        //BUSCAMOS LA RUTINA
+        /** @var Rutina $rutina */
+        $rutina = $this->doctrine->getRepository(Rutina::class)->findBy(['descripcion' => $rutina_clp]);
 
+        //SE LA ASIGNAMOS AL USUARIO
+        $user = $this->getCurrent();
+        $user->setRutina($rutina);
 
+        //PERSISTIMOS EN BASE DE DATOS
+        $this->save($user);
         $this->save($test);
-        return $test;
+
+        //DEVOLVEMOS EL USUARIO CON LA RUTINA ASIGNADA
+        return $user;
+
     }
 
     /**
@@ -44,14 +60,16 @@ class TestEntrenamientoManager extends AbstractManager{
     {
         switch ($DTO->getFrecuencia()) {
             case 'Menos de dos días';
-                $frec = 'Bajo';
+                $frec = 'baja';
                 break;
             case 'Entre 2 y 3 días':
-                $frec = 'Medio';
+                $frec = 'media';
                 break;
             case 'Más de 3 días':
-                $frec = 'Alto';
+                $frec = 'alta';
                 break;
+            default:
+                $frec = '';
 
         }
         return $frec;
@@ -64,18 +82,18 @@ class TestEntrenamientoManager extends AbstractManager{
     public function calcExperiencia(TestUsuarioEntrenamientoCreateDTO $DTO)
     {
         switch ($DTO->getExperienciaDeporte()) {
-            case 'Más de un año':
-                $exp = 'Muy alta';
-                break;
-            case 'De ocho meses a un año':
-                $exp = 'Alta';
+
+            case 'Mas de un año':
+                $exp = 'alta';
                 break;
             case 'De dos a ocho meses':
-                $exp = 'Media';
+                $exp = 'media';
                 break;
             case 'De cero a dos meses':
-                $exp = 'Baja';
+                $exp = 'baja';
                 break;
+            default:
+                $exp = '';
         }
         return $exp;
     }

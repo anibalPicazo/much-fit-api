@@ -40,7 +40,6 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     protected $frecuencia;
 
     /**
-     * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
     protected $objetivo;
