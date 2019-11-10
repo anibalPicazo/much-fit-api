@@ -64,7 +64,6 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Role",cascade={"persist"})
-     * @Serializer\Groups({"list"})
      * @Serializer\Expose()
      */
     private $roles;
@@ -119,7 +118,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="user")
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $rutina;
 
@@ -130,6 +129,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Dieta", inversedBy="user")
+     * @Serializer\Groups({"edit"})
      */
     private $dieta;
 

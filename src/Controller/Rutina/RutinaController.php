@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
@@ -202,6 +203,14 @@ class RutinaController extends AbstractController
         //RESPONSE
         return new JsonResponse(null, Response::HTTP_CREATED);
 
+    }
+    /**
+     * @Route("",methods={"GET"})
+     * @View(serializerGroups={"list", "edit"})
+     *
+     */
+    public function list(){
+        return $this->manager->getList();
     }
 
 }

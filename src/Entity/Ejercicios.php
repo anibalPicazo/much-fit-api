@@ -6,9 +6,12 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EjerciciosRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Ejercicios
 {
@@ -16,6 +19,8 @@ class Ejercicios
     use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $descripcion;
 

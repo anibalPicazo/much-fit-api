@@ -144,6 +144,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $dia_ejercicio->setSeries('Serie '.$this->faker->numberBetween(1,4));
             $dia_ejercicio->setIntensidad($this->faker->numberBetween(1,3));
             $dia_ejercicio->setDescanso($this->faker->numberBetween(30,60));
+            $dia_ejercicio->setRepeticiones($this->faker->numberBetween(6,12));
             $dia_ejercicio->setEjercicio($this->faker->randomElement($this->manager->getRepository(Ejercicios::class)->findAll()));
             $dia_ejercicio->setDia($this->getReference('Dia'.$this->faker->numberBetween(0,(sizeof((self::DIAS))*12)-1)));
         });
