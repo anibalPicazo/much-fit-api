@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 use App\Entity\ActividadFisica;
 use App\Entity\ConsecuenteNutricion;
 use App\Entity\ConsecuenteRutina;
+use App\Entity\Dia;
+use App\Entity\DiaEjercicio;
 use App\Entity\IntensidadRutina;
 use App\Entity\PremisasDieta;
 use App\Entity\PremisasRutina;
@@ -26,6 +28,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
     const USER = 'user';
+    const DIAS_EJERCICIO = 50;
     const ESTADO_FISICO = ['MALO','NORMAL','BUENO'];
     const EXPERIENCIA = ['ALTA','MUY ALTA','INTERMEDIO','BAJO'];
     const FRECUENCIA = ['< 2','2 - 3','> 3'];
@@ -33,7 +36,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
     const OBJETIVO_METABOLICO = ['DEFINIDO','MUSCULOSO','NORMAL'];
     const INTENSIDAD_ENTRENAMIENTO =["MUY ALTA","ALTA","MEDIA","BAJA","MUY BAJA"];
     const TIPO_RUTINA = ["aclimatacion","principiante","intermedia","avanzada","intermedia-ganancia-fuerza","intermedia-hipertrofia","avanzada-hipertrofia","avanzada-ganancia-fuerza"];
-
+    const DIAS =["Dia A","Dia B","Dia C"];
     //QUANTITY
     const USUARIOS = 40;
 
@@ -114,11 +117,37 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
 
         #RUTINAS
-        $this->createMany(Rutina::class,Self::TIPO_RUTINA.count(),function(Rutina $rutina, $count){
+        $this->createMany(Rutina::class,sizeof(Self::TIPO_RUTINA),function(Rutina $rutina, $count){
             $rutina->setUuid(Uuid::uuid4()->toString());
+            $rutina->setDesgasteCalorico($this->faker->randomFloat(2,400,800));
+            $rutina->setDificultadUsuario($this->faker->randomElement(['facil','medio','dificil']));
+            $rutina->setFrecuencia($this->faker->numberBetween(1,5));
+            $rutina->setVolumen($this->faker->numberBetween(1,3));
             $rutina->setNombre(self::TIPO_RUTINA[$count]);
-            
+            $rutina->setDuracion($this->faker->randomFloat(2,60,120));
+            $rutina->setObjetivo($this->faker->randomElement(['Hipertrofia','Ganancia Muscular']));
+            $this->addReference('Rutina'.$count,$rutina);
+
         });
+
+        $this->createMany(Dia::class,sizeof(Self::DIAS)*12,function(Dia $dia, $count){
+            $dia->setUuid(Uuid::uuid4()->toString());
+            $dia->setNombre($this->faker->randomElement(Self::DIAS));
+            $dia->setRutina($this->getReference('Rutina' .$this->faker->numberBetween(0,sizeof(self::TIPO_RUTINA)-1)));
+            $this->addReference( 'Dia'.$count,$dia);
+        });
+
+
+        $this->createMany(DiaEjercicio::class,self::DIAS_EJERCICIO ,function(DiaEjercicio $dia_ejercicio, $count){
+            $dia_ejercicio->setUuid(Uuid::uuid4()->toString());
+            $dia_ejercicio->setSeries('Serie '.$this->faker->numberBetween(1,4));
+            $dia_ejercicio->setIntensidad($this->faker->numberBetween(1,3));
+            $dia_ejercicio->setDescanso($this->faker->numberBetween(30,60));
+            $dia_ejercicio->setEjercicio();
+
+        });
+
+
 
 
 
@@ -167,42 +196,6 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $taza->setDescripcion("Tazas");
         $taza->setIniciales("Cups");
         $manager->persist($taza);
-
-
-        #Intensidad
-        $intensidad_muy_alta = new IntensidadRutina();
-        $intensidad_muy_alta->setUuid(Uuid::uuid4()->toString());
-        $intensidad_muy_alta->setNombre("Muy Alta");
-        $intensidad_muy_alta->setDescripcion("Intensidad de entrenamiento alto");
-        $manager->persist($intensidad_muy_alta);
-
-
-        $intensidad_alta = new IntensidadRutina();
-        $intensidad_alta->setUuid(Uuid::uuid4()->toString());
-        $intensidad_alta->setNombre("Alta");
-        $intensidad_alta->setDescripcion("Intensidad de entrenamiento alto");
-        $manager->persist($intensidad_alta);
-
-
-
-        $intensidad_baja = new IntensidadRutina();
-        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_baja->setNombre("Normal");
-        $intensidad_baja->setDescripcion("Intensidad de entrenamiento Normal");
-        $manager->persist($intensidad_baja);
-
-
-        $intensidad_baja = new IntensidadRutina();
-        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_baja->setNombre("Baja");
-        $intensidad_baja->setDescripcion("Intensidad de entrenamiento baja");
-        $manager->persist($intensidad_baja);
-
-        $intensidad_muy_baja = new IntensidadRutina();
-        $intensidad_muy_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_muy_baja->setNombre("Muy Baja");
-        $intensidad_muy_baja->setDescripcion("Intensidad de entrenamiento muy baja");
-        $manager->persist($intensidad_muy_baja);
 
 
         // PREMISAS DE NUTRICION //
