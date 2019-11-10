@@ -6,7 +6,9 @@ use App\Entity\ActividadFisica;
 use App\Entity\ConsecuenteNutricion;
 use App\Entity\ConsecuenteRutina;
 use App\Entity\Dia;
+use App\Entity\DiaDieta;
 use App\Entity\DiaEjercicio;
+use App\Entity\Dieta;
 use App\Entity\Ejercicios;
 use App\Entity\IntensidadRutina;
 use App\Entity\PremisasDieta;
@@ -34,6 +36,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
     const EXPERIENCIA = ['ALTA','MUY ALTA','INTERMEDIO','BAJO'];
     const FRECUENCIA = ['< 2','2 - 3','> 3'];
     const ESTADO_ACTUAL = ['DEFINIDO','SOBREPESO','DELGADO','LIGERAMENTE SOBREPESO','EXTREMA DELGADEZ','MUSCULOSO'];
+    const TIPO_DIETA = ['hipocalorica','mantenimiento','calorica-hidratos'];
     const OBJETIVO_METABOLICO = ['DEFINIDO','MUSCULOSO','NORMAL'];
     const INTENSIDAD_ENTRENAMIENTO =["MUY ALTA","ALTA","MEDIA","BAJA","MUY BAJA"];
     const TIPO_RUTINA = ["aclimatacion","principiante","intermedia","avanzada","intermedia-ganancia-fuerza","intermedia-hipertrofia","avanzada-hipertrofia","avanzada-ganancia-fuerza"];
@@ -148,6 +151,32 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
             $dia_ejercicio->setEjercicio($this->faker->randomElement($this->manager->getRepository(Ejercicios::class)->findAll()));
             $dia_ejercicio->setDia($this->getReference('Dia'.$this->faker->numberBetween(0,(sizeof((self::DIAS))*12)-1)));
         });
+
+
+        #DIETAS
+        $this->createMany(Dieta::class,sizeof(Self::TIPO_DIETA),function(Dieta $dieta, $count){
+            $dieta->setUuid(Uuid::uuid4()->toString());
+            $dieta->setDescripcion(self::TIPO_DIETA[$count]);
+            $dieta->setAporteCaloricoDiario($this->faker->randomFloat(2,900,2100));
+            $dieta->setNivelCarbohidratos($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $dieta->setNivelGrasas($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $dieta->setProteina($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $this->addReference('Dieta'.$count,$dieta);
+
+        });
+        $this->createMany(DiaDieta::class,sizeof(Self::DIAS),function(DiaDieta $dia_dieta, $count){
+            $dia_dieta->setUuid(Uuid::uuid4()->toString());
+            $dia_dieta->setDescripcion(self::DIAS[$count]);
+            $dia_dieta->setDieta($this->getReference('Dieta'.sizeof(self::TIPO_DIETA)-1));
+            $this->addReference('Dia_dieta'.$count,$dia_dieta);
+
+        });
+
+
+
+
+
+
 
 
 

@@ -8,6 +8,7 @@ use App\DTO\TestUsuario\TestNutricionalCreateDTO;
 use App\Entity\PremisasDieta;
 use App\Entity\TestUsuario;
 use App\Entity\TestUsuarioDieta;
+use App\Entity\User;
 use App\Service\Managers\AbstractManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,9 +19,12 @@ class TestNutricionManager extends AbstractManager
 
     public function create(TestNutricionalCreateDTO $DTO)
     {
+
+        /** @var User $user */
+        $user = $this->getCurrent();
         $test = new TestUsuarioDieta();
         $test->setUuid($DTO->getUuid());
-        $test->setUser($this->getCurrent());
+        $test->setUser($user);
         $test->setAltura($DTO->getAltura());
         $test->setPeso($DTO->getPeso());
         $test->setEdad($DTO->getEdad());
@@ -43,17 +47,13 @@ class TestNutricionManager extends AbstractManager
         $actual = $this->calcEstadoActual($DTO);
         $exp = $this->calcExperiencia($DTO);
 
-        $this->ruler($exp,$actual,$objetivo);
-
-
-        //todo: Entrada al test  $estado_fisico ,$objetivo
-
-        //todo: salida SBR  $this->doctrine->getRepository(ConsecuenteDieta::class)->findOneBy(['rule_code' => $resultado_salida])
-
-
-
+        $dieta_clp = $this->ruler($exp,$actual,$objetivo);
+        $dieta = $this->getRepository()->findOneBy(['descripcion'=> $dieta_clp]);
+        $user->setDieta($dieta);
+        $this->save($user);
         $this->save($test);
-        return $test;
+
+        return $user;
     }
 
     /**
