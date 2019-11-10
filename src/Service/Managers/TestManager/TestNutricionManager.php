@@ -43,7 +43,7 @@ class TestNutricionManager extends AbstractManager
         $actual = $this->calcEstadoActual($DTO);
         $exp = $this->calcExperiencia($DTO);
 
-        $this->ruler('',$actual,$objetivo);
+        $this->ruler($exp,$actual,$objetivo);
 
 
         //todo: Entrada al test  $estado_fisico ,$objetivo
@@ -94,7 +94,7 @@ class TestNutricionManager extends AbstractManager
                 $objetivo = 'perderGrasa';
                 break;
             case 'Definido':
-                $objetivo = 'defincion';
+                $objetivo = 'definicion';
                 break;
             case 'Tasado':
                 $objetivo = 'volumen';
@@ -123,8 +123,8 @@ class TestNutricionManager extends AbstractManager
     }
     public function ruler($experiencia='',$estadofisico='',$objetivo='')
     {
-        dump($experiencia, $estadofisico,$objetivo);
-        die();
+
+
         //Initialise CLIPS environment and variables.
         ini_set('max_execution_time', 0);
         $arrCtx = array(); // This is the context, in which CLIPS runs.
@@ -164,7 +164,8 @@ class TestNutricionManager extends AbstractManager
 
 
         //CONSECUENTE
-        return   $arrFacts[0][0] ;
+
+        return sizeof($arrFacts) >0 ? $arrFacts[0][0] : 'hipocalorica' ;
 
 
     }
