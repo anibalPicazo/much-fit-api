@@ -48,7 +48,8 @@ class TestNutricionManager extends AbstractManager
         $actual = $this->calcEstadoActual($DTO);
         $exp = $this->calcExperiencia($DTO);
 
-        $dieta_clp = $this->ruler($exp,$actual,$objetivo);
+        $dieta_clp = 'hipocalorica';
+            //$this->ruler($exp,$actual,$objetivo);
         $dieta = $this->doctrine->getRepository(Dieta::class)->findOneBy(['descripcion'=> $dieta_clp]);
         $user->setDieta($dieta);
         $this->save($user);
@@ -182,10 +183,10 @@ class TestNutricionManager extends AbstractManager
                 $exp = 'alta';
                 break;
             case 'Menos de dos años':
-                $exp = 'baja';
+                $exp = 'intermedia';
                 break;
             case  'De dos a cuatro años':
-                $exp = 'media';
+                $exp = 'novato';
                 break;
             default:
                 $exp = '';

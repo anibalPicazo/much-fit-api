@@ -82,7 +82,7 @@ class TestNutricionController extends AbstractController
     public function createTest(TestNutricionalCreateDTO $DTO, Request $request)
     {
         //SECURITY
-        $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
+        $this->denyAccessUnlessGranted(Role::ROLE_USER);
 
         //VALIDATION
         $errors = $this->DTOValidator->validate($request);

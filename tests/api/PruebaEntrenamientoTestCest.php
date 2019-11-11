@@ -28,7 +28,7 @@ class PruebaEntrenamientoTestCest extends BaseApiTestBase
      * @param ApiTester $I
      * @throws \Exception
      */
-    public function adminCanListRutinas(ApiTester $I)
+    public function usuarioPuedeCrearTestEntrenamiento(ApiTester $I)
     {
         $I->wantToTest(Role::ROLE_USER . ' puede crear test de entrenamientos');
         $this->auth($I, Role::ROLE_USER);
