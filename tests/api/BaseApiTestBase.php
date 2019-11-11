@@ -55,6 +55,9 @@ class BaseApiTestBase
             case Role::ROLE_ROOT:
                 $user = ['username' => 'admin', 'password' => 'admin'];
                 break;
+            case Role::ROLE_USER:
+                $user = ['username' => 'demo', 'password' => 'admin'];
+                break;
 
             default:
                 $user = ['username' => 'admin', 'password' => 'admin'];
