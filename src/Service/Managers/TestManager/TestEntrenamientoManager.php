@@ -33,7 +33,8 @@ class TestEntrenamientoManager extends AbstractManager{
        $DTO->getFormaFisica() ? $rule_estadofiscio = strtolower($DTO->getFormaFisica()): $rule_estadofiscio = '';
 
        //SBR
-        $rutina_clp= $this->ruler($rule_exp,$rule_frec,$rule_estadofiscio,$rule_ob);
+        $rutina_clp = 'aclimatacion';
+//            $this->ruler($rule_exp,$rule_frec,$rule_estadofiscio,$rule_ob);
 
         //BUSCAMOS LA RUTINA
         /** @var Rutina $rutina */

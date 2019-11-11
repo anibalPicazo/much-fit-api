@@ -5,6 +5,7 @@ namespace App\Tests\User;
 use App\Entity\Role;
 use App\Tests\api\BaseApiTestBase;
 use App\Tests\ApiTester;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserTestCest extends BaseApiTestBase
@@ -34,6 +35,23 @@ class UserTestCest extends BaseApiTestBase
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $this->user = $I->grabResponse();
+
+    }
+    public function userCanRegister(ApiTester $I)
+    {
+        $I->wantToTest(Role::ROLE_USER .' puede registrarse');
+
+        $request = [
+            'uuid' => Uuid::uuid4()->toString(),
+            'username'=> "apicazo",
+            'password' => 'apicazo',
+            'name' => "Anibal",
+            'surname' => "Picazo",
+            'email' => "anibdal.picazo@hotmail.com"
+        ];
+        $I->sendPOST('/register', json_encode($request));
+        $I->seeResponseCodeIs(200);
+
 
     }
 

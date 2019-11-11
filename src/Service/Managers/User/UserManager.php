@@ -51,6 +51,7 @@ class UserManager extends AbstractManager
     {
         $user = new User();
         $user->setUuid($DTO->getUuid());
+        $user->setUuid($DTO->getUuid());
         $user->setUsername($DTO->getUsername());
         $user->setEmail($DTO->getEmail());
         $user->setName($DTO->getName());
