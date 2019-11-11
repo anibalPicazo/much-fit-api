@@ -36,7 +36,7 @@ class RutinaCreateDTO implements DTOInterface
 
     /**
      * @Assert\NotNull()
-     * @JMSSerializer\Type("string")
+     * @JMSSerializer\Type("integer")
      */
     protected $frecuencia;
 
@@ -52,11 +52,7 @@ class RutinaCreateDTO implements DTOInterface
      */
     protected $objetivo;
 
-    /**
-     * @Assert\NotNull()
-     * @JMSSerializer\Type("Entity<App\Entity\IntensidadRutina>")
-     */
-    protected $intensidad;
+
 
     /**
      * RutinaCreateDTO constructor.
@@ -67,9 +63,8 @@ class RutinaCreateDTO implements DTOInterface
      * @param $frecuencia
      * @param $volumen
      * @param $objetivos
-     * @param $intesidad
      */
-    public function __construct($uuid, $nombre, $desgaste_calorico, $dificultad_usuario, $frecuencia, $volumen, $objetivo, $intensidad)
+    public function __construct($uuid, $nombre, $desgaste_calorico, $dificultad_usuario, $frecuencia, $volumen, $objetivo)
     {
         $this->uuid = $uuid;
         $this->nombre = $nombre;
@@ -78,7 +73,6 @@ class RutinaCreateDTO implements DTOInterface
         $this->frecuencia = $frecuencia;
         $this->volumen = $volumen;
         $this->objetivo = $objetivo;
-        $this->intensidad = $intensidad;
     }
 
     /**
@@ -137,12 +131,5 @@ class RutinaCreateDTO implements DTOInterface
         return $this->nombre;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIntensidad()
-    {
-        return $this->intensidad;
-    }
 
 }
