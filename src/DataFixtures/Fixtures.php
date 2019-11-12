@@ -147,7 +147,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
 
         $this->createMany(DiaEjercicio::class,self::DIAS_EJERCICIO ,function(DiaEjercicio $dia_ejercicio, $count){
             $dia_ejercicio->setUuid(Uuid::uuid4()->toString());
-            $dia_ejercicio->setSeries('Serie '.$this->faker->numberBetween(1,4));
+            $dia_ejercicio->setSeries($this->faker->numberBetween(1,4) .' Series');
             $dia_ejercicio->setIntensidad($this->faker->numberBetween(1,3));
             $dia_ejercicio->setDescanso($this->faker->numberBetween(30,60));
             $dia_ejercicio->setRepeticiones($this->faker->numberBetween(6,12));
