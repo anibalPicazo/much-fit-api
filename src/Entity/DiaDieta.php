@@ -19,7 +19,7 @@ class DiaDieta
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $descripcion;
 

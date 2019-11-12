@@ -237,6 +237,7 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
         $this->createMany(Meal::class,sizeof(Self::DIAS)*50,function(Meal $meal, $count){
             $meal->setUuid(Uuid::uuid4()->toString());
+            $meal->setTipo($this->faker->randomElement(['Desayuno','Comida','Merienda','Cena']));
             $meal->setAlimento($this->faker->randomElement($this->manager->getRepository(Alimentos::class)->findAll()));
             $meal->setUnidad($this->getReference('Unidad'.$this->faker->numberBetween(0,self::UNIDADES_MEDIDAS-1)));
             $meal->setCantidad($this->faker->randomFloat(2,20,500));

@@ -19,14 +19,14 @@ class Meal
      * @ORM\ManyToOne(targetEntity="App\Entity\Alimentos")
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $alimento;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $cantidad;
 
@@ -34,7 +34,7 @@ class Meal
      * @ORM\ManyToOne(targetEntity="App\Entity\Unidad")
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $unidad;
 
@@ -43,6 +43,11 @@ class Meal
      * @ORM\JoinColumn(nullable=false)
      */
     private $dia_dieta;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tipo;
 
     //todo: Propiedades virtuales de los macros.
 
@@ -100,6 +105,18 @@ class Meal
     public function setDiaDieta(?DiaDieta $dia_dieta): self
     {
         $this->dia_dieta = $dia_dieta;
+
+        return $this;
+    }
+
+    public function getTipo(): ?string
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(?string $tipo): self
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }

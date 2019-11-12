@@ -19,7 +19,7 @@ class Alimentos
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      *
      */
     private $descripcion;
@@ -27,14 +27,14 @@ class Alimentos
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\MarcaAlimento", inversedBy="alimentos")
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $marca_alimento;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $descripcion_eng;
 
@@ -45,21 +45,21 @@ class Alimentos
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $energia_kcal;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $energia_kj;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $grasas;
 
@@ -73,49 +73,49 @@ class Alimentos
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $grasas_poli;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $grasas_saturadas;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $carbohidratos;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $carbohidratos_azucar;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $fibra;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $proteina;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"edit"})
      */
     private $sal;
 
