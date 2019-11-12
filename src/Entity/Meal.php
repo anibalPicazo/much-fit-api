@@ -46,6 +46,8 @@ class Meal
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $tipo;
 
