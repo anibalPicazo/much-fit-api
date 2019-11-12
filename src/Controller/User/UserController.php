@@ -180,7 +180,7 @@ class UserController extends AbstractController
         return $user->getRutina();
     }
     /**
-     * @Route("/{uuid}/rutina",  methods={"GET"})
+     * @Route("/{uuid}/dieta",  methods={"GET"})
      * @ParamConverter("user", options={"mapping": {"uuid": "uuid"}})
      * @View(serializerGroups={"list", "edit"})
      * @param User $user
