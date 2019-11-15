@@ -24,10 +24,7 @@ class Ejercicios
      */
     private $descripcion;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\GrupoMuscular", inversedBy="ejercicios")
-     */
-    private $grupo_muscular;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DiaEjercicio", mappedBy="ejercicio")
@@ -48,7 +45,6 @@ class Ejercicios
 
     public function __construct()
     {
-        $this->grupo_muscular = new ArrayCollection();
         $this->diaEjercicios = new ArrayCollection();
         $this->entrenamientoLineas = new ArrayCollection();
     }
@@ -65,31 +61,7 @@ class Ejercicios
         return $this;
     }
 
-    /**
-     * @return Collection|GrupoMuscular[]
-     */
-    public function getGrupoMuscular(): Collection
-    {
-        return $this->grupo_muscular;
-    }
 
-    public function addGrupoMuscular(GrupoMuscular $grupoMuscular): self
-    {
-        if (!$this->grupo_muscular->contains($grupoMuscular)) {
-            $this->grupo_muscular[] = $grupoMuscular;
-        }
-
-        return $this;
-    }
-
-    public function removeGrupoMuscular(GrupoMuscular $grupoMuscular): self
-    {
-        if ($this->grupo_muscular->contains($grupoMuscular)) {
-            $this->grupo_muscular->removeElement($grupoMuscular);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|DiaEjercicio[]

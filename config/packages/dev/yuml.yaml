@@ -1,5 +1,5 @@
 parameters:
-    onurb_yuml.extension: png
+    onurb_yuml.extension: jpg
     onurb_yuml.style: plain
     onurb_yuml.scale: small
     onurb_yuml.direction: TB
@@ -13,11 +13,21 @@ parameters:
         App\Entity\Rutina: deepskyblue
         App\Entity\Dia:  deepskyblue
         App\Entity\DiaEjercicio:  deepskyblue
-        App\Entity\Ejercicio:  deepskyblue
+        App\Entity\Ejercicios:  deepskyblue
+        App\Entity\Event : red
         #DIETA
         App\Entity\Dieta: violet
         App\Entity\DiaDieta:  violet
         App\Entity\Meal:  violet
+        App\Entity\Alimentos:  violet
+        App\Entity\Unidad:  violet
+        #ENTRENAMIENTOS
+        App\Entity\Entrenamiento:  mediumturquoise
+        App\Entity\EntrenamientoLineas:  mediumturquoise
+        #CUADERNO
+        App\Entity\CuadernoEntrenamiento: orange
+        App\Entity\HojaCuadernoDieta: orange
+        App\Entity\HojaCuadernoRutina: orange
 
 
 

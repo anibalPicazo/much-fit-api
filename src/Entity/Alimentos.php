@@ -24,12 +24,6 @@ class Alimentos
      */
     private $descripcion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MarcaAlimento", inversedBy="alimentos")
-     * @Serializer\Expose()
-     * @Serializer\Groups({"edit"})
-     */
-    private $marca_alimento;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -138,17 +132,7 @@ class Alimentos
         return $this;
     }
 
-    public function getMarcaAlimento(): ?MarcaAlimento
-    {
-        return $this->marca_alimento;
-    }
 
-    public function setMarcaAlimento(?MarcaAlimento $marca_alimento): self
-    {
-        $this->marca_alimento = $marca_alimento;
-
-        return $this;
-    }
 
     public function getDescripcionEng(): ?string
     {
