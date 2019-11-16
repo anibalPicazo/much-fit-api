@@ -20,21 +20,21 @@ class TestUsuario
 
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Groups({"list"})
      * @Serializer\Expose()
      */
     private $frecuencia_entrenamiento;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Serializer\Groups({"list"})
      * @Serializer\Expose()
      */
     private $experiencia_deporte;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Serializer\Groups({"list"})
      * @Serializer\Expose()
      */
@@ -48,14 +48,14 @@ class TestUsuario
 
     /**
      * @Serializer\Groups({"list"})
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true,nullable=true)
      * @Serializer\Expose()
      */
     private $objetivo;
 
 
 
-    public function getFrecuenciaEntrenamiento(): ?string
+    public function getFrecuenciaEntrenamiento()
     {
         return $this->frecuencia_entrenamiento;
     }

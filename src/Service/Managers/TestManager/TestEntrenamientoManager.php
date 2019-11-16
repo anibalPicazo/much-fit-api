@@ -22,19 +22,18 @@ class TestEntrenamientoManager extends AbstractManager{
         $test = new TestUsuario();
         $test->setUuid($DTO->getUuid());
         $test->setUser($user);
-        $test->setFormaFisica($DTO->getFormaFisica());
-        $test->setExperienciaDeporte($DTO->getExperienciaDeporte());
-        $test->setFrecuenciaEntrenamiento($DTO->getFrecuencia());
+        $DTO->getFormaFisica() ? $test->setFormaFisica($DTO->getFormaFisica()) : null;
+        $DTO->getExperienciaDeporte() ? $test->setExperienciaDeporte($DTO->getExperienciaDeporte()): null;
+        $DTO->getFrecuencia() ? $test->setFrecuenciaEntrenamiento($DTO->getFrecuencia()): null;
         $DTO->getObjetivo() ? $test->setObjetivo($DTO->getObjetivo()) : null;
 
-        $rule_exp = $this->calcExperiencia($DTO);
-       $rule_frec = $this->calcFrecuencia($DTO);
+        $DTO->getExperienciaDeporte() ? $rule_exp = $this->calcExperiencia($DTO) : $rule_exp = '';
+       $DTO->getFrecuencia() ? $rule_frec = $this->calcFrecuencia($DTO) :$rule_frec = '';
        $DTO->getObjetivo() ? $rule_ob = strtolower($DTO->getObjetivo()) : $rule_ob = '';
        $DTO->getFormaFisica() ? $rule_estadofiscio = strtolower($DTO->getFormaFisica()): $rule_estadofiscio = '';
 
        //SBR
-        $rutina_clp = 'aclimatacion';
-//            $this->ruler($rule_exp,$rule_frec,$rule_estadofiscio,$rule_ob);
+        $rutina_clp = $this->ruler($rule_exp,$rule_frec,$rule_estadofiscio,$rule_ob);
 
         //BUSCAMOS LA RUTINA
         /** @var Rutina $rutina */
@@ -172,10 +171,8 @@ class TestEntrenamientoManager extends AbstractManager{
 
 
         //CONSECUENTE
-       return sizeof($arrFacts) <= 1 ?   $arrFacts[0][0] : $arrFacts[1][0];
-
-
-        return $test;
+        return $arrFacts[0][0];
+      // return sizeof($arrFacts) <= 1 ?   $arrFacts[0][0] : $arrFacts[1][0];
 
     }
 

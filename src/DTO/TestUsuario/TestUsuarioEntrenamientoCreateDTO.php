@@ -28,13 +28,11 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
     protected $uuid;
 
     /**
-     * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
     protected $forma_fisica;
 
     /**
-     * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
     protected $frecuencia;
