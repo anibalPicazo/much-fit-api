@@ -1,13 +1,13 @@
 <?php
 
 
+
 namespace App\Controller\TestController;
-
-
-use App\DTO\TestUsuario\TestUsuarioEntrenamientoCreateDTO;
+use App\DTO\TestUsuario\TestNutricionalCreateDTO;
 use App\Entity\Role;
-use App\Entity\TestUsuario;
+use App\Entity\TestUsuarioDieta;
 use App\Service\Managers\TestManager\TestEntrenamientoManager;
+use App\Service\Managers\TestManager\TestNutricionManager;
 use App\Validator\DTOValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -24,11 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 /**
- * @Route("test_entrenamientos")
+ * @Route("test_nutricion")
  * Class TestEntrenamientoController
  * @package App\Controller\TestController
  */
-class TestEntrenamientoController extends AbstractController
+class TestNutricionController extends AbstractController
 {
     /**
      * @var DTOValidator
@@ -47,9 +47,9 @@ class TestEntrenamientoController extends AbstractController
      * TestEntrenamientoController constructor.
      * @param DTOValidator $DTOValidator
      * @param EventDispatcherInterface $dispatcher
-     * @param TestEntrenamientoManager $manager
+     * @param TestNutricionManager $manager
      */
-    public function __construct(DTOValidator $DTOValidator, EventDispatcherInterface $dispatcher, TestEntrenamientoManager $manager)
+    public function __construct(DTOValidator $DTOValidator, EventDispatcherInterface $dispatcher, TestNutricionManager $manager)
     {
         $this->DTOValidator = $DTOValidator;
         $this->dispatcher = $dispatcher;
@@ -58,27 +58,29 @@ class TestEntrenamientoController extends AbstractController
 
     /**
      * @Rest\Route("", methods={"POST"})
-     * @param TestUsuarioEntrenamientoCreateDTO $DTO
+     * @param TestNutricionalCreateDTO $DTO
      * @param Request $request
      * @return JsonResponse
-     * @ParamConverter("DTO", converter="api.rest.dto.converter")
+     * @View(serializerGroups={"list", "edit"})
      * @throws ExceptionInterface
+     * @ParamConverter("DTO", converter="api.rest.dto.converter")
      * @SWG\Tag(name="Test Entrenamiento")
      * @SWG\Response(
      *     response=200,
-     *     description="Crear Test de Entrenamiento"
+     *     description="Crear Test de Nutricion"
      * )
      * @SWG\Parameter(
      *     in="body",
      *     name="DTO",
      *     @SWG\Schema(
      *         type="object",
-     *         ref=@Model(type=TestUsuarioEntrenamientoCreateDTO::class)
+     *         ref=@Model(type=TestNutricionalCreateDTO::class)
      *     )
      * )
      * @Security(name="Bearer")
      */
-    public function createTest(TestUsuarioEntrenamientoCreateDTO $DTO, Request $request){
+    public function createTest(TestNutricionalCreateDTO $DTO, Request $request)
+    {
         //SECURITY
         $this->denyAccessUnlessGranted(Role::ROLE_USER);
 
@@ -88,31 +90,31 @@ class TestEntrenamientoController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
         //COMAND
-       return  $this->manager->create($DTO);
+       return $this->manager->create($DTO);
         //RESPONSE
-       // return new JsonResponse(null, Response::HTTP_CREATED);
-
+        // return new JsonResponse(null, Response::HTTP_CREATED);
     }
     /**
      * @Rest\Route("", methods={"GET"})
-     * @View(serializerGroups={"list"})
      * @return JsonResponse
+     * @View(serializerGroups={"list"})
      */
     public function list(){
 
         return $this->manager->getList(['user'=>$this->getUser()]);
-
     }
+
     /**
      * @Rest\Route("/{uuid}", methods={"GET"})
      * @ParamConverter("test", options={"mapping": {"uuid": "uuid"}})
-     * @param TestUsuario $test
-     * @return TestUsuario
+     * @param TestUsuarioDieta $test
+     * @return TestUsuarioDieta
      * @View(serializerGroups={"list"})
      */
-    public function getOne(TestUsuario $test){
+    public function getOne(TestUsuarioDieta $test){
 
         return $test;
     }
+
 
 }

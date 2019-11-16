@@ -6,9 +6,12 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DiasRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Dia
 {
@@ -17,16 +20,20 @@ class Dia
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $nombre;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DiaEjercicio", mappedBy="dia")
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $diaEjercicios;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="Dia")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="dia")
      */
     private $rutina;
 

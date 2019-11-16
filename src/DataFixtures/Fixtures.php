@@ -3,7 +3,18 @@
 namespace App\DataFixtures;
 
 use App\Entity\ActividadFisica;
+use App\Entity\Alimentos;
+use App\Entity\ConsecuenteNutricion;
+use App\Entity\ConsecuenteRutina;
+use App\Entity\Dia;
+use App\Entity\DiaDieta;
+use App\Entity\DiaEjercicio;
+use App\Entity\Dieta;
+use App\Entity\Ejercicios;
 use App\Entity\IntensidadRutina;
+use App\Entity\Meal;
+use App\Entity\PremisasDieta;
+use App\Entity\PremisasRutina;
 use App\Entity\Role;
 use App\Entity\Rutina;
 use App\Entity\TestUsuario;
@@ -22,13 +33,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class Fixtures extends BaseFixtures implements ContainerAwareInterface
 {
     const USER = 'user';
+    const DIAS_EJERCICIO = 150;
+    const UNIDADES_MEDIDAS =7;
     const ESTADO_FISICO = ['MALO','NORMAL','BUENO'];
     const EXPERIENCIA = ['ALTA','MUY ALTA','INTERMEDIO','BAJO'];
     const FRECUENCIA = ['< 2','2 - 3','> 3'];
     const ESTADO_ACTUAL = ['DEFINIDO','SOBREPESO','DELGADO','LIGERAMENTE SOBREPESO','EXTREMA DELGADEZ','MUSCULOSO'];
+    const TIPO_DIETA = ['hipocalorica','mantenimiento','calorica-hidratos'];
     const OBJETIVO_METABOLICO = ['DEFINIDO','MUSCULOSO','NORMAL'];
     const INTENSIDAD_ENTRENAMIENTO =["MUY ALTA","ALTA","MEDIA","BAJA","MUY BAJA"];
-
+    const TIPO_RUTINA = ["aclimatacion","principiante","intermedia","avanzada","intermedia-ganancia-fuerza","intermedia-hipertrofia","avanzada-hipertrofia","avanzada-ganancia-fuerza"];
+    const DIAS =["Dia A","Dia B","Dia C"];
     //QUANTITY
     const USUARIOS = 40;
 
@@ -99,38 +114,6 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         });
         #ACTIVIDAD FISICA
 
-        $actividad_fisica_sedentario = new ActividadFisica();
-        $actividad_fisica_sedentario->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_sedentario->setFactorCorrecionMetabolismoBasal(1.2);
-        $actividad_fisica_sedentario->setNivel('SEDENTARIO');
-        $manager->persist($actividad_fisica_sedentario);
-
-
-        $actividad_fisica_ligeramente_activa = new ActividadFisica();
-        $actividad_fisica_ligeramente_activa->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_ligeramente_activa->setFactorCorrecionMetabolismoBasal(1.375);
-        $actividad_fisica_ligeramente_activa->setNivel('LIGERAMENTE ACTIVA');
-        $manager->persist($actividad_fisica_ligeramente_activa);
-
-        $actividad_fisica_modreadamente_activa = new ActividadFisica();
-        $actividad_fisica_modreadamente_activa->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_modreadamente_activa->setFactorCorrecionMetabolismoBasal(1.55);
-        $actividad_fisica_modreadamente_activa->setNivel('MODERADEMENTE ACTIVA');
-        $manager->persist($actividad_fisica_modreadamente_activa);
-
-        $actividad_fisica_muy_activas = new ActividadFisica();
-        $actividad_fisica_muy_activas->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_muy_activas->setFactorCorrecionMetabolismoBasal(1.726);
-        $actividad_fisica_muy_activas->setNivel('MUY ACTIVAS');
-        $manager->persist($actividad_fisica_muy_activas);
-
-
-        $actividad_fisica_hiperactivas = new ActividadFisica();
-        $actividad_fisica_hiperactivas->setUuid(Uuid::uuid4()->toString());
-        $actividad_fisica_hiperactivas->setFactorCorrecionMetabolismoBasal(1.9);
-        $actividad_fisica_hiperactivas->setNivel('HIPERACTIVAS');
-        $manager->persist($actividad_fisica_hiperactivas);
-
         #TEST USUARIO
         $this->createMany(TestUsuario::class,self::USUARIOS,function(TestUsuario $testUsuario, $count){
            $testUsuario->setUuid(Uuid::uuid4()->toString());
@@ -140,34 +123,55 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
            $testUsuario->setUser($this->getReference(self::USER.$count));
         });
 
-
-        #TEST USUARIO DIETA
-
-        $this->createMany(TestUsuarioDieta::class,self::USUARIOS,function(TestUsuarioDieta $testUsuarioDieta, $count)
-        use($actividad_fisica_hiperactivas,$actividad_fisica_muy_activas,$actividad_fisica_modreadamente_activa, $actividad_fisica_ligeramente_activa,$actividad_fisica_sedentario){
-            $testUsuarioDieta->setUuid(Uuid::uuid4()->toString());
-            $testUsuarioDieta->setAltura($this->faker->randomFloat(null,1.40,2.10));
-            $testUsuarioDieta->setPeso($this->faker->randomFloat(null,40,110));
-            $testUsuarioDieta->setGenero($this->faker->randomElement(['HOMBRE','MUJER']));
-            $testUsuarioDieta->setEdad($this->faker->numberBetween(16,80));
-            $testUsuarioDieta->setEstadoFisico($this->faker->randomElement(self::ESTADO_ACTUAL));
-            $testUsuarioDieta->setEstadoFisicoObjetivo($this->faker->randomElement(self::OBJETIVO_METABOLICO));
-            $testUsuarioDieta->setActividadFisica($this->faker->randomElement([$actividad_fisica_hiperactivas,$actividad_fisica_muy_activas,$actividad_fisica_modreadamente_activa, $actividad_fisica_ligeramente_activa,$actividad_fisica_sedentario]));
-            $testUsuarioDieta->setUser($this->getReference(self::USER.$count));
+        #RUTINAS
+        $this->createMany(Rutina::class,sizeof(Self::TIPO_RUTINA),function(Rutina $rutina, $count){
+            $rutina->setUuid(Uuid::uuid4()->toString());
+            $rutina->setDesgasteCalorico($this->faker->randomFloat(2,400,800));
+            $rutina->setDificultadUsuario($this->faker->randomElement(['facil','medio','dificil']));
+            $rutina->setFrecuencia($this->faker->numberBetween(1,5));
+            $rutina->setVolumen($this->faker->numberBetween(1,3));
+            $rutina->setNombre(self::TIPO_RUTINA[$count]);
+            $rutina->setDuracion($this->faker->randomFloat(2,60,120));
+            $rutina->setObjetivo($this->faker->randomElement(['Hipertrofia','Ganancia Muscular']));
+            $this->addReference('Rutina'.$count,$rutina);
 
         });
+
+        $this->createMany(Dia::class,sizeof(Self::DIAS)*12,function(Dia $dia, $count){
+            $dia->setUuid(Uuid::uuid4()->toString());
+            $dia->setNombre($this->faker->randomElement(Self::DIAS));
+            $dia->setRutina($this->getReference('Rutina' .$this->faker->numberBetween(0,sizeof(self::TIPO_RUTINA)-1)));
+            $this->addReference( 'Dia'.$count,$dia);
+        });
+
+
+        $this->createMany(DiaEjercicio::class,self::DIAS_EJERCICIO ,function(DiaEjercicio $dia_ejercicio, $count){
+            $dia_ejercicio->setUuid(Uuid::uuid4()->toString());
+            $dia_ejercicio->setSeries($this->faker->numberBetween(1,4) .' Series');
+            $dia_ejercicio->setIntensidad($this->faker->numberBetween(1,3));
+            $dia_ejercicio->setDescanso($this->faker->numberBetween(30,60));
+            $dia_ejercicio->setRepeticiones($this->faker->numberBetween(6,12));
+            $dia_ejercicio->setEjercicio($this->faker->randomElement($this->manager->getRepository(Ejercicios::class)->findAll()));
+            $dia_ejercicio->setDia($this->getReference('Dia'.$this->faker->numberBetween(0,(sizeof((self::DIAS))*12)-1)));
+        });
+
+
+
+
 
         #UNIDAD MEDIDA
         $unidades = new Unidad();
         $unidades->setUuid(Uuid::uuid4());
         $unidades->setDescripcion("Unidades");
         $unidades->setIniciales("Uds");
+        $this->addReference('Unidad0',$unidades);
         $manager->persist($unidades);
 
         $kilos = new Unidad();
         $kilos->setUuid(Uuid::uuid4());
         $kilos->setDescripcion("Kilos");
         $kilos->setIniciales("kg");
+        $this->addReference('Unidad1',$kilos);
         $manager->persist($kilos);
 
 
@@ -176,13 +180,17 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $gramos->setDescripcion("Gramos");
         $gramos->setIniciales("Gr");
         $manager->persist($gramos);
+        $this->addReference('Unidad2',$gramos);
+
 
 
         $onzas = new Unidad();
         $onzas->setUuid(Uuid::uuid4());
         $onzas->setDescripcion("Onzas");
         $onzas->setIniciales("Oz");
+        $this->addReference('Unidad3',$onzas);
         $manager->persist($onzas);
+
 
 
         $tsp= new Unidad();
@@ -190,60 +198,56 @@ class Fixtures extends BaseFixtures implements ContainerAwareInterface
         $tsp->setDescripcion("Cucharadita");
         $tsp->setIniciales("Tsp");
         $manager->persist($tsp);
+        $this->addReference('Unidad4',$tsp);
+
 
         $cucharada = new Unidad();
         $cucharada->setUuid(Uuid::uuid4());
         $cucharada->setDescripcion("Cucharada");
         $cucharada->setIniciales("Tbsp");
         $manager->persist($cucharada);
+        $this->addReference('Unidad5',$cucharada);
+
 
         $taza = new Unidad();
         $taza->setUuid(Uuid::uuid4());
         $taza->setDescripcion("Tazas");
         $taza->setIniciales("Cups");
+        $this->addReference('Unidad6',$taza);
+
         $manager->persist($taza);
 
+        #DIETAS
+        $this->createMany(Dieta::class,sizeof(Self::TIPO_DIETA),function(Dieta $dieta, $count){
+            $dieta->setUuid(Uuid::uuid4()->toString());
+            $dieta->setDescripcion(self::TIPO_DIETA[$count]);
+            $dieta->setAporteCaloricoDiario($this->faker->randomFloat(2,900,2100));
+            $dieta->setNivelCarbohidratos($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $dieta->setNivelGrasas($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $dieta->setProteina($this->faker->randomElement(['Alto','Medio','Bajo']));
+            $this->addReference('Dieta'.$count,$dieta);
 
+        });
+        $this->createMany(DiaDieta::class,sizeof(Self::DIAS),function(DiaDieta $dia_dieta, $count){
+            $dia_dieta->setUuid(Uuid::uuid4()->toString());
+            $dia_dieta->setDescripcion(self::DIAS[$count]);
+            $dia_dieta->setDieta($this->getReference('Dieta'.$this->faker->numberBetween(0,(sizeof(self::DIAS))-1)));
+            $this->addReference('Dia_dieta'.$count,$dia_dieta);
 
+        });
+        $this->createMany(Meal::class,sizeof(Self::DIAS)*50,function(Meal $meal, $count){
+            $meal->setUuid(Uuid::uuid4()->toString());
+            $meal->setTipo($this->faker->randomElement(['Desayuno','Comida','Merienda','Cena']));
+            $meal->setAlimento($this->faker->randomElement($this->manager->getRepository(Alimentos::class)->findAll()));
+            $meal->setUnidad($this->getReference('Unidad'.$this->faker->numberBetween(0,self::UNIDADES_MEDIDAS-1)));
+            $meal->setCantidad($this->faker->randomFloat(2,20,500));
+            $meal->setDiaDieta($this->getReference('Dia_dieta' . $this->faker->numberBetween(0,(sizeof(self::DIAS))-1)));
 
-
-        #Intensidad
-        $intensidad_muy_alta = new IntensidadRutina();
-        $intensidad_muy_alta->setUuid(Uuid::uuid4()->toString());
-        $intensidad_muy_alta->setNombre("Muy Alta");
-        $intensidad_muy_alta->setDescripcion("Intensidad de entrenamiento alto");
-        $manager->persist($intensidad_muy_alta);
-
-
-        $intensidad_alta = new IntensidadRutina();
-        $intensidad_alta->setUuid(Uuid::uuid4()->toString());
-        $intensidad_alta->setNombre("Alta");
-        $intensidad_alta->setDescripcion("Intensidad de entrenamiento alto");
-        $manager->persist($intensidad_alta);
-
-
-
-        $intensidad_baja = new IntensidadRutina();
-        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_baja->setNombre("Normal");
-        $intensidad_baja->setDescripcion("Intensidad de entrenamiento Normal");
-        $manager->persist($intensidad_baja);
-
-
-        $intensidad_baja = new IntensidadRutina();
-        $intensidad_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_baja->setNombre("Baja");
-        $intensidad_baja->setDescripcion("Intensidad de entrenamiento baja");
-        $manager->persist($intensidad_baja);
-
-        $intensidad_muy_baja = new IntensidadRutina();
-        $intensidad_muy_baja->setUuid(Uuid::uuid4()->toString());
-        $intensidad_muy_baja->setNombre("Muy Baja");
-        $intensidad_muy_baja->setDescripcion("Intensidad de entrenamiento muy baja");
-        $manager->persist($intensidad_muy_baja);
+        });
 
 
         $manager->flush();
+
     }
 
 }

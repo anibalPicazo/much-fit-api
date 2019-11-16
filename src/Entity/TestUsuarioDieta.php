@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TestUsuarioDietaRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class TestUsuarioDieta
 {
@@ -15,27 +17,35 @@ class TestUsuarioDieta
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     */
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()*/
     private $peso;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $edad;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $genero;
 
     /**
-     * @ORM\Column(type="decimal", precision=4, scale=3)
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $altura;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ActividadFisica", inversedBy="test_dietas_usuario")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $actividad_fisica;
 
@@ -47,13 +57,31 @@ class TestUsuarioDieta
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $estado_fisico;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $estado_fisico_objetivo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
+     */
+    private $imc;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
+     */
+    private $grasa;
 
     public function getPeso()
     {
@@ -103,12 +131,12 @@ class TestUsuarioDieta
         return $this;
     }
 
-    public function getActividadFisica(): ?ActividadFisica
+    public function getActividadFisica()
     {
         return $this->actividad_fisica;
     }
 
-    public function setActividadFisica(?ActividadFisica $actividad_fisica): self
+    public function setActividadFisica($actividad_fisica): self
     {
         $this->actividad_fisica = $actividad_fisica;
 
@@ -147,6 +175,30 @@ class TestUsuarioDieta
     public function setEstadoFisicoObjetivo(string $estado_fisico_objetivo): self
     {
         $this->estado_fisico_objetivo = $estado_fisico_objetivo;
+
+        return $this;
+    }
+
+    public function getImc(): ?string
+    {
+        return $this->imc;
+    }
+
+    public function setImc(?string $imc): self
+    {
+        $this->imc = $imc;
+
+        return $this;
+    }
+
+    public function getGrasa()
+    {
+        return $this->grasa;
+    }
+
+    public function setGrasa($grasa): self
+    {
+        $this->grasa = $grasa;
 
         return $this;
     }

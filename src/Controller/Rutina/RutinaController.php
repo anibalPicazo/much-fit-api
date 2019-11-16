@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
@@ -166,42 +167,15 @@ class RutinaController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid_rutina}/asignar",methods={"POST"})
-     * @ParamConverter("DTO", converter="api.rest.dto.converter")
-     * @ParamConverter("rutina", options={"mapping": {"uuid_rutina": "uuid"}})
-     * @param AsignarRutinaDTO $DTO
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ExceptionInterface
-     * @SWG\Tag(name="Rutinas")
-     * @SWG\Response(
-     *     response=200,
-     *     description=" Asignar una rutina a un usuario"
-     * )
-     * @SWG\Parameter(
-     *     in="body",
-     *     name="DTO",
-     *     @SWG\Schema(
-     *         type="object",
-     *         ref=@Model(type=DiaEjercicioCreateDTO::class)
-     *     )
-     * )
-     * @Security(name="Bearer")
+     * @Route("",methods={"GET"})
+     * @View(serializerGroups={"list", "edit"})
+     *
      */
-    public function asignarRutina(AsignarRutinaDTO $DTO, Request $request){
+    public function list(){
 
-        //SECURITY
         $this->denyAccessUnlessGranted(Role::ROLE_ROOT);
-        //VALIDATION
-        $errors = $this->DTOValidator->validate($request);
-        if ($errors) {
-            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
-        }
-        //COMAND
-        $this->manager->asignarRutina($DTO);
-        //RESPONSE
-        return new JsonResponse(null, Response::HTTP_CREATED);
 
+        return $this->manager->getList();
     }
 
 }

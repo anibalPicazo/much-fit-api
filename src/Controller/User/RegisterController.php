@@ -66,7 +66,7 @@ class RegisterController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
         //COMAND
-        $this->manager->register($DTO);
+       return $this->manager->register($DTO);
         //RESPONSE
         return new JsonResponse(null, Response::HTTP_CREATED);
 

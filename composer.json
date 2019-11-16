@@ -15,6 +15,7 @@
         "lexik/jwt-authentication-bundle": "^2.6",
         "nelmio/api-doc-bundle": "^3.4",
         "nelmio/cors-bundle": "^1.5",
+        "nicoswd/php-rule-parser": "^0.5.7",
         "onurb/doctrine-yuml-bundle": "^1.1",
         "ramsey/uuid-doctrine": "^1.5",
         "sensio/framework-extra-bundle": "^5.1",

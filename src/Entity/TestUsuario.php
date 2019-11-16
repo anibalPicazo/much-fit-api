@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Entity\Traits\TimestampableTrait;
 use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TestUsuarioRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class TestUsuario
 {
@@ -17,17 +20,23 @@ class TestUsuario
 
 
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $frecuencia_entrenamiento;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $experiencia_deporte;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $forma_fisica;
 
@@ -36,6 +45,13 @@ class TestUsuario
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @Serializer\Groups({"list"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     */
+    private $objetivo;
 
 
 
@@ -83,6 +99,18 @@ class TestUsuario
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getObjetivo(): ?string
+    {
+        return $this->objetivo;
+    }
+
+    public function setObjetivo(?string $objetivo): self
+    {
+        $this->objetivo = $objetivo;
 
         return $this;
     }

@@ -6,35 +6,47 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DietaRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Dieta
 {
     use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $descripcion;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $aporte_calorico_diario;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $proteina;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $nivel_carbohidratos;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $nivel_grasas;
 
@@ -45,6 +57,8 @@ class Dieta
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DiaDieta", mappedBy="dieta")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $dias_dieta;
 

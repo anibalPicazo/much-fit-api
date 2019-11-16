@@ -6,25 +6,29 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlimentosRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Alimentos
 {
     use UuidTrait;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
+     *
      */
     private $descripcion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MarcaAlimento", inversedBy="alimentos")
-     */
-    private $marca_alimento;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $descripcion_eng;
 
@@ -34,56 +38,78 @@ class Alimentos
     private $descripcion_cientifica;
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $energia_kcal;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $energia_kj;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $grasas;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list"})
      */
     private $grasas_ms;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $grasas_poli;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $grasas_saturadas;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $carbohidratos;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $carbohidratos_azucar;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $fibra;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $proteina;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=3, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"edit"})
      */
     private $sal;
 
@@ -106,17 +132,7 @@ class Alimentos
         return $this;
     }
 
-    public function getMarcaAlimento(): ?MarcaAlimento
-    {
-        return $this->marca_alimento;
-    }
 
-    public function setMarcaAlimento(?MarcaAlimento $marca_alimento): self
-    {
-        $this->marca_alimento = $marca_alimento;
-
-        return $this;
-    }
 
     public function getDescripcionEng(): ?string
     {

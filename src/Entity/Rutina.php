@@ -84,13 +84,6 @@ class Rutina
      */
     private $densidad;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\IntensidadRutina", inversedBy="rutinas")
-     * @ORM\JoinColumn(nullable=false)
-     * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
-     */
-    private $intensidad;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -280,17 +273,6 @@ class Rutina
         return $this;
     }
 
-    public function getIntensidad(): ?IntensidadRutina
-    {
-        return $this->intensidad;
-    }
-
-    public function setIntensidad(?IntensidadRutina $intensidad): self
-    {
-        $this->intensidad = $intensidad;
-
-        return $this;
-    }
 
     public function getObjetivo(): ?string
     {

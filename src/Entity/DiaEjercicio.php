@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DiaEjercicioRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class DiaEjercicio
 {
@@ -19,26 +21,36 @@ class DiaEjercicio
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $serie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $repeticiones;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $descanso;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ejercicios", inversedBy="diaEjercicios")
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $ejercicio;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Serializer\Groups({"list"})
+     * @Serializer\Expose()
      */
     private $intensidad;
 

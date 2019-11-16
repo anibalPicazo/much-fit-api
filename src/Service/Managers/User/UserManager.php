@@ -51,14 +51,15 @@ class UserManager extends AbstractManager
     {
         $user = new User();
         $user->setUuid($DTO->getUuid());
+        $user->setUuid($DTO->getUuid());
         $user->setUsername($DTO->getUsername());
         $user->setEmail($DTO->getEmail());
         $user->setName($DTO->getName());
-        $user->setPassword($this->encoder->encodePassword($user,$DTO->getPassword()));
         $user->setSurname($DTO->getSurname());
-
+        $user->setPassword($this->encoder->encodePassword($user, $DTO->getPassword()));
+        $role = $this->doctrine->getRepository(Role::class)->findOneBy(['name'=>Role::ROLE_USER]);
+        $user->addRole($role);
         $this->save($user);
-
         return $user;
 
     }

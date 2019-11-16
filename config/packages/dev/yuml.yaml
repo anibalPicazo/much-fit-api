@@ -1,29 +1,33 @@
 parameters:
-    onurb_yuml.extension: svg
+    onurb_yuml.extension: jpg
     onurb_yuml.style: plain
     onurb_yuml.scale: small
     onurb_yuml.direction: TB
     onurb_yuml.show_fields_description: false
     onurb_yuml.colors:
-
-#        plantillas
-        App\Entity\PlantillaChecklist: brown
-        App\Entity\PlantillaMuestra: brown
-        App\Entity\PlantillaRequerimiento: brown
-
-#        auth
-        Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken: yellow
-        Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken: yellow
         App\Entity\User: yellow
         App\Entity\Role: yellow
+        App\Entity\TestUsuario: lawngreen
+        App\Entity\TestUsuarioDieta: lawngreen
+        #RUTINA
+        App\Entity\Rutina: deepskyblue
+        App\Entity\Dia:  deepskyblue
+        App\Entity\DiaEjercicio:  deepskyblue
+        App\Entity\Ejercicios:  deepskyblue
+        App\Entity\Event : red
+        #DIETA
+        App\Entity\Dieta: violet
+        App\Entity\DiaDieta:  violet
+        App\Entity\Meal:  violet
+        App\Entity\Alimentos:  violet
+        App\Entity\Unidad:  violet
+        #ENTRENAMIENTOS
+        App\Entity\Entrenamiento:  mediumturquoise
+        App\Entity\EntrenamientoLineas:  mediumturquoise
+        #CUADERNO
+        App\Entity\CuadernoEntrenamiento: orange
+        App\Entity\HojaCuadernoDieta: orange
+        App\Entity\HojaCuadernoRutina: orange
 
-#        core
-        App\Entity\Empresa: orange
-        App\Entity\App: orange
-        App\Entity\GrupoAlcance: orange
-        App\Entity\Alcance: orange
-        App\Entity\EmpresaAlcance: orange
-        App\Entity\Event: orange
-        App\Entity\Flujo: orange
-        App\Entity\TipoNoconformidad: orange
-        App\Entity\Dropdown: orange
+
+

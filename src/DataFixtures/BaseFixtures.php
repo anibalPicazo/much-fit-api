@@ -23,7 +23,7 @@ class BaseFixtures extends Fixture
     protected $encoder;
 
     /** @var ObjectManager */
-    private $manager;
+    protected $manager;
 
     /**
      * BaseFixtures constructor.

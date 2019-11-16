@@ -55,21 +55,10 @@ class BaseApiTestBase
             case Role::ROLE_ROOT:
                 $user = ['username' => 'admin', 'password' => 'admin'];
                 break;
-            case Role::ROLE_AUDITOR_ADMIN:
-                $roleUuid = $I->grabFromRepository(Role::class, 'uuid', ['name' => Role::ROLE_AUDITOR_ADMIN]);
-                $users = $I->grabEntitiesFromRepository(User::class, ['roles' => ['uuid' => $roleUuid]]);
-                $user = ['username' => $users[0]->getUsername(), 'password' => $users[0]->getUsername()];
+            case Role::ROLE_USER:
+                $user = ['username' => 'demo', 'password' => 'admin'];
                 break;
-            case Role::ROLE_AUDITOR:
-                $roleUuid = $I->grabFromRepository(Role::class, 'uuid', ['name' => Role::ROLE_AUDITOR]);
-                $users = $I->grabEntitiesFromRepository(User::class, ['roles' => ['uuid' => $roleUuid]]);
-                $user = ['username' => $users[0]->getUsername(), 'password' => $users[0]->getUsername()];
-                break;
-            case Role::ROLE_AUDITOR_FREELANCE:
-                $roleUuid = $I->grabFromRepository(Role::class, 'uuid', ['name' => Role::ROLE_AUDITOR_FREELANCE]);
-                $users = $I->grabEntitiesFromRepository(User::class, ['roles' => ['uuid' => $roleUuid]]);
-                $user = ['username' => $users[0]->getUsername(), 'password' => $users[0]->getUsername()];
-                break;
+
             default:
                 $user = ['username' => 'admin', 'password' => 'admin'];
                 break;

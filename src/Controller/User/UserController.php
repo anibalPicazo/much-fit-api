@@ -4,11 +4,14 @@ namespace App\Controller\User;
 
 use App\DTO\User\UserCreateDTO;
 use App\DTO\User\UserRegisterDTO;
+use App\Entity\Dieta;
 use App\Entity\Role;
+use App\Entity\Rutina;
 use App\Entity\User;
 use App\EventSubscriber\Event\UserEvent;
 use App\Service\Managers\User\UserManager;
 use App\Validator\DTOValidator;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -164,6 +167,30 @@ class UserController extends AbstractController
         return new JsonResponse(null, Response::HTTP_CREATED);
 
     }
+
+    /**
+     * @Route("/{uuid}/rutina",  methods={"GET"})
+     * @ParamConverter("user", options={"mapping": {"uuid": "uuid"}})
+     * @View(serializerGroups={"list", "edit"})
+     * @param User $user
+     * @return Rutina|null
+     */
+    public function getrutinaAsignada(User $user){
+
+        return $user->getRutina();
+    }
+    /**
+     * @Route("/{uuid}/dieta",  methods={"GET"})
+     * @ParamConverter("user", options={"mapping": {"uuid": "uuid"}})
+     * @View(serializerGroups={"list", "edit"})
+     * @param User $user
+     * @return Dieta|null
+     */
+    public function getdietaAsignada(User $user){
+
+        return $user->getDieta();
+    }
+
 
 
 }

@@ -18,7 +18,7 @@ class HojaCuadernoRutina
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="hojaCuadernos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Rutina", inversedBy="hojas_cuaderno_rutina")
      * @ORM\JoinColumn(nullable=false)
      */
     private $rutina;
