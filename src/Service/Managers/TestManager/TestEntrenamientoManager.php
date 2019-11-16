@@ -48,6 +48,7 @@ class TestEntrenamientoManager extends AbstractManager{
         $this->save($user);
         $this->save($test);
 
+
         //DEVOLVEMOS EL USUARIO CON LA RUTINA ASIGNADA
         return $user;
 
@@ -173,6 +174,8 @@ class TestEntrenamientoManager extends AbstractManager{
         //CONSECUENTE
        return sizeof($arrFacts) <= 1 ?   $arrFacts[0][0] : $arrFacts[1][0];
 
+
+        return $test;
 
     }
 
