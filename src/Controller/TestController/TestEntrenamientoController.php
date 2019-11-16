@@ -7,6 +7,7 @@ namespace App\Controller\TestController;
 use App\DTO\TestUsuario\TestUsuarioEntrenamientoCreateDTO;
 use App\Entity\Role;
 use App\Entity\TestUsuario;
+use App\EventSubscriber\Event\DelegacionEvent;
 use App\Service\Managers\TestManager\TestEntrenamientoManager;
 use App\Validator\DTOValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -88,9 +89,12 @@ class TestEntrenamientoController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
         //COMAND
-       return  $this->manager->create($DTO);
+        $this->manager->create($DTO);
         //RESPONSE
-       // return new JsonResponse(null, Response::HTTP_CREATED);
+        return new JsonResponse(null, Response::HTTP_CREATED);
+
+        $this->dispatcher->dispatch(new DelegacionEvent($DTO), DelegacionEvent::DELEGACION_ASOCIAR_AUDITOR);
+
 
     }
     /**
