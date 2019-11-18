@@ -15,8 +15,6 @@ class TestUsuarioEntrenamientoCreateDTO implements DTOInterface
 {
 
     /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank
      * @JMSSerializer\Type("string")
      */
     protected $experiencia_deporte;
