@@ -48,8 +48,8 @@ class TestNutricionManager extends AbstractManager
         $actual = $this->calcEstadoActual($DTO);
         $exp = $this->calcExperiencia($DTO);
 
-        $dieta_clp = 'hipocalorica';
-            //$this->ruler($exp,$actual,$objetivo);
+        $dieta_clp = $this->ruler($exp,$actual,$objetivo);
+        /** @var Dieta $dieta */
         $dieta = $this->doctrine->getRepository(Dieta::class)->findOneBy(['descripcion'=> $dieta_clp]);
         $user->setDieta($dieta);
         $this->save($user);
