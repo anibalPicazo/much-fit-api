@@ -171,9 +171,17 @@ class TestEntrenamientoManager extends AbstractManager{
 
 
         //CONSECUENTE
-        return $arrFacts[0][0];
-      // return sizeof($arrFacts) <= 1 ?   $arrFacts[0][0] : $arrFacts[1][0];
-
+        switch (sizeof($arrFacts)){
+            case 1:
+                return $arrFacts[0][0];
+                break;
+            case 2:
+                return $arrFacts[1][0];
+                break;
+            default:
+                return 'intermadia';
+        }
+        
     }
 
     /**
