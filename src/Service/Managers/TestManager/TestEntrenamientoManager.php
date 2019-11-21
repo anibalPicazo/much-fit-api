@@ -181,7 +181,7 @@ class TestEntrenamientoManager extends AbstractManager{
             default:
                 return 'intermadia';
         }
-        
+
     }
 
     /**
