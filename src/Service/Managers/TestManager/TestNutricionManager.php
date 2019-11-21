@@ -30,10 +30,11 @@ class TestNutricionManager extends AbstractManager
         $test->setPeso($DTO->getPeso());
         $test->setEdad($DTO->getEdad());
         $test->setActividadFisica($DTO->getEdad());
-        $test->setEstadoFisico($DTO->getEstadoFisico());
-        $test->setEstadoFisicoObjetivo($DTO->getEstadoFisicoObjetivo());
-        $DTO->getImc() ? $test->setImc($DTO->getImc()) : null;
+        $DTO->getEstadoFisico() ? $test->setEstadoFisico($DTO->getEstadoFisico()) : null;
+        $DTO->getEstadoFisicoObjetivo() ? $test->setEstadoFisicoObjetivo($DTO->getEstadoFisicoObjetivo()) : null;
+        $DTO->getImc() ? $test->setImc($DTO->getImc()) : $test->setImc($DTO->getPeso() / ($DTO->getAltura()/100));
         $DTO->getGrasa() ? $test->setGrasa($DTO->getGrasa()) : null;
+
         $test->setGenero($DTO->getGenero());
         $test->setActividadFisica($DTO->getActividadFisica());
         if ($DTO->getGenero() === 'Hombre') {
@@ -41,6 +42,7 @@ class TestNutricionManager extends AbstractManager
         } else {
             $mb = 655.1 + (9.463 * $DTO->getPeso()) + (1.8 * $DTO->getAltura()) - (4.6756 *$DTO->getEdad());
         }
+
 
 
         $gasto =  $this->calculateGastoCalorico($DTO, $mb);
