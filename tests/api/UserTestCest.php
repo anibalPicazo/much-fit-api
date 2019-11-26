@@ -22,13 +22,9 @@ class UserTestCest extends BaseApiTestBase
     {
     }
 
-    public function tryToTest(ApiTester $I)
+    public function adminCangetCurrentUser(ApiTester $I)
     {
-    }
-
-    public function adminCanLogin(ApiTester $I)
-    {
-        $I->wantToTest('Admin can login');
+        $I->wantToTest('Admin can get current user');
         $this->auth($I, Role::ROLE_ROOT);
         $I->amBearerAuthenticated($this->token);
         $I->sendGet('api/users/current');
@@ -51,9 +47,24 @@ class UserTestCest extends BaseApiTestBase
         ];
         $I->sendPOST('/register', json_encode($request));
         $I->seeResponseCodeIs(200);
-
-
     }
+    public function userCanSeeRutina(ApiTester $I)
+    {
+        $I->wantToTest(Role::ROLE_USER .' puede ver su rutina asignada');
+        $this->auth($I, Role::ROLE_ROOT);
+        $I->amBearerAuthenticated($this->token);
+        $I->sendGET('api/users/'.$this->current($I)['uuid'].'/rutina');
+        $I->seeResponseCodeIs(200);
+    }
+    public function userCanSeeDieta(ApiTester $I)
+    {
+        $I->wantToTest(Role::ROLE_USER .' puede ver su dieta asignada');
+        $this->auth($I, Role::ROLE_ROOT);
+        $I->amBearerAuthenticated($this->token);
+        $I->sendGET('api/users/'.$this->current($I)['uuid'].'/dieta');
+        $I->seeResponseCodeIs(200);
+    }
+
 
 
 }
