@@ -1,9 +1,6 @@
 runtime: php
 env: flex
-service: default
-
-manual_scaling:
-  instances: 1
+service: muchfit-api
 
 resources:
   cpu: .5
@@ -14,11 +11,11 @@ runtime_config:
   document_root: public
   front_controller_file: index.php
   skip_lockdown_document_root: true
-  enable_stackdriver_integration: false
 
 env_variables:
   APP_ENV: prod
   GOOGLE_CLOUD_PROJECT: muchfit
+  APP_SECRET: 56hjg7k56jg47654jg7456g7u45gy67ig
   DATABASE_URL: mysql://root:ik7eOF9yedwkAN6E@localhost?unix_socket=/cloudsql/muchfit:europe-west1:muchfitmysql;dbname=much_fit_dev
   JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
   JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
@@ -28,5 +25,5 @@ env_variables:
   CORS_ALLOW_ORIGIN: '^https?://.*?$'
   NELMIO_HOST: 'api-prod-dot-muchfit.appspot.com'
 
-#beta_settings:
-#  cloud_sql_instances: 'certiapp:europe-west1:certiapp-develop'
+beta_settings:
+  cloud_sql_instances: 'muchfit:europe-west1:muchfitmysql'
