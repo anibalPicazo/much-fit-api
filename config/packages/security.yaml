@@ -1,11 +1,5 @@
 security:
 
-#    role_hierarchy:
-#        ROLE_CLIENTE:               ROLE_USER
-#        ROLE_AUDITOR:               ROLE_CLIENTE
-#        ROLE_AUDITOR_FREELANCE:     ROLE_CLIENTE
-#        ROLE_AUDITOR_ADMIN:         [ROLE_AUDITOR, ROLE_AUDITOR_FREELANCE]
-#        ROLE_ROOT:                  [ROLE_AUDITOR_ADMIN]
 
     encoders:
         App\Entity\User:

@@ -9,7 +9,7 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: certiapp_dev
+            MYSQL_DATABASE: muchfit_dev
             MYSQL_USER: root
             MYSQL_PASSWORD: root
         volumes:
