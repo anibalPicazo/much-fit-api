@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-gcloud beta app deploy ../prod.yaml --project=muchfit --version=v2
+gcloud beta app deploy ../prod.yaml --project=muchfit
