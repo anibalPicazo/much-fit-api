@@ -70,7 +70,6 @@ class TestNutricionalCreateDTO implements DTOInterface
     private $actividad_fisica;
 
     /**
-     * @Assert\NotNull()
      * @JMSSerializer\Type("string")
      */
     private $experiencia;
