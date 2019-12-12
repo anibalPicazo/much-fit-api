@@ -16,13 +16,13 @@ env_variables:
   APP_ENV: prod
   GOOGLE_CLOUD_PROJECT: muchfit
   APP_SECRET: 56hjg7k56jg47654jg7456g7u45gy67ig
-  DATABASE_URL: 'mysql://muchfituser:muchfituser01@localhost?unix_socket=/cloudsql/muchfit:europe-west1:muchfitmysql;dbname=much_fit_dev'
+  DATABASE_URL: 'mysql://root:ik7eOF9yedwkAN6E@localhost?unix_socket=/cloudsql/muchfit:europe-west1:muchfitmysql;dbname=much_fit_dev'
   JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
   JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
   JWT_PASSPHRASE: qwerty
   JWT_TOKENTTL: 3600
   CORS_ALLOW_ORIGIN: '*'
-  NELMIO_HOST: 'api-prod-dot-certiapp.appspot.com'
+  NELMIO_HOST: 'muchfit-api-dot-muchfit.appspot.com/'
 
 beta_settings:
   cloud_sql_instances: 'muchfit:europe-west1:muchfitmysql'
